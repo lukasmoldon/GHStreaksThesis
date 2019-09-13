@@ -33,7 +33,6 @@ cnt_contributions_commits = 0
 
 
 logging.info("Accessing issuedata ...")
-cnt = 0
 cur_usrid = ""
 cur_usrdate = ""
 cur_issueid = ""
@@ -69,7 +68,7 @@ for prefix, event, value in jsonfile:
                 data[cur_usrid] = {cur_usrdate: 0}
             cnt_contributions_issues += 1
             if cnt_contributions_issues % 1000000 == 0:
-                logging.info(str(cnt/1000000) + " million issues computed.")
+                logging.info(str(cnt_contributions_issues/1000000) + " million issues computed.")
             next_step = "end"
 
     elif prefix != "" and event == "end_map":
@@ -89,7 +88,6 @@ logging.info("Done. (1/3)")
 
 
 logging.info("Accessing commitdata ...")
-cnt = 0
 cur_usrid = ""
 cur_usrdate = ""
 cur_commitid = ""
@@ -125,7 +123,7 @@ for prefix, event, value in jsonfile:
                 data[cur_usrid] = {cur_usrdate: 0}
             cnt_contributions_commits += 1
             if cnt_contributions_commits % 1000000 == 0:
-                logging.info(str(cnt/1000000) + " million commits computed.")
+                logging.info(str(cnt_contributions_commits/1000000) + " million commits computed.")
             next_step = "end"
 
     elif prefix != "" and event == "end_map":
