@@ -49,7 +49,7 @@ for prefix, event, value in jsonfile:
             cur_issueid = str(prefix)
             next_step = "user_id"
 
-    elif prefix == (cur_issueid + ".userid"):
+    elif prefix == (cur_issueid + ".user_id"):
         if next_step != "user_id":
             logging.critical("Corrupted data: Error at user_id!")
             break
