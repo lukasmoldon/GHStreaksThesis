@@ -1,5 +1,6 @@
 # ---------- IMPORT ------------
 import logging
+import matplotlib
 import matplotlib.pyplot as plt
 import datetime
 import json
@@ -24,6 +25,10 @@ path_results_plot = "/home/lmoldon/results/streakPlot.png"
 # ---------- CONFIG ------------
 threshold = 50 # minimum streak length to get plotted
 mode = 0 # 0 = plot avg streak length, 1 = plot avg number of streaks
+showplot = True # Open a new window and show resulting plot?
+showdata = False # Print plotdata?
+saveplotasimg = False # Save the resulting plot as image file at path_results_plot?
+showcoverage = True # Show streak coverage?
 observedtime_start = date(2015, 1, 1)
 observedtime_end = date(2017, 12, 31)
 # ------------------------------
@@ -35,6 +40,10 @@ datetimeFormat = "%Y-%m-%d"
 plotdata = {} # key = day in observedtime, value = value of selected mode
 start = date(1970, 1, 1)
 end = date(1970, 1, 1)
+list_of_datetimes = []
+values = []
+cnt_streaks = 0 # total number of streaks
+cnt_streaks_survived = 0 # number of streaks observed in plot
 # ------------------------------
 
 
@@ -64,49 +73,71 @@ logging.info("Done. (2/3)")
 
 logging.info("Starting ...")
 streakdata = ijson.parse(open(path_source_streakdata, "r"))
-cnt = 0
 for prefix, event, value in streakdata:
     if ".start" in prefix:
         start = datetime.datetime.strptime(str(value), datetimeFormat).date()
-        cnt += 1
-        if cnt % 1000000 == 0: 
-            logging.info(str(cnt/1000000) + " million streaks computed.")
+        cnt_streaks += 1
+        if cnt_streaks % 1000000 == 0: 
+            logging.info(str(cnt_streaks/1000000) + " million streaks computed.")
     elif ".end" in prefix:
         end = datetime.datetime.strptime(str(value), datetimeFormat).date()
     elif ".len" in prefix:
         if int(value) >= threshold:
                 if start <= observedtime_end and end >= observedtime_start: # streak happend (partially) in observed time
-                        if start >= observedtime_start: # start in observed time
-                                if end <= observedtime_end: # start and end in observed time
-                                        for single_date in daterange(start, end):
+                    cnt_streaks_survived += 1
+                    if start >= observedtime_start: # start in observed time
+                            if end <= observedtime_end: # start and end in observed time
+                                    for single_date in daterange(start, end):
+                                        if mode == 0:
+                                            plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
+                                        elif mode == 1:
+                                            plotdata[str(single_date)] += 1
+                            else: # start in observed time, end not in observed time
+                                    for single_date in daterange(start, observedtime_end):
                                             if mode == 0:
                                                 plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
                                             elif mode == 1:
                                                 plotdata[str(single_date)] += 1
-                                else: # start in observed time, end not in observed time
-                                        for single_date in daterange(start, observedtime_end):
-                                                if mode == 0:
-                                                    plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
-                                                elif mode == 1:
-                                                    plotdata[str(single_date)] += 1
-                        else: # start not in observed time
-                                if end <= observedtime_end: # start not in observed time, but end in observed time
-                                        for single_date in daterange(observedtime_start, end):
-                                                if mode == 0:
-                                                    plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
-                                                elif mode == 1:
-                                                    plotdata[str(single_date)] += 1
-                                else: # start and end not in observed time
-                                        for single_date in daterange(observedtime_start, observedtime_end):
-                                                if mode == 0:
-                                                    plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
-                                                elif mode == 1:
-                                                    plotdata[str(single_date)] += 1
+                    else: # start not in observed time
+                            if end <= observedtime_end: # start not in observed time, but end in observed time
+                                    for single_date in daterange(observedtime_start, end):
+                                            if mode == 0:
+                                                plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
+                                            elif mode == 1:
+                                                plotdata[str(single_date)] += 1
+                            else: # start and end not in observed time
+                                    for single_date in daterange(observedtime_start, observedtime_end):
+                                            if mode == 0:
+                                                plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
+                                            elif mode == 1:
+                                                plotdata[str(single_date)] += 1
 
 
-# TODO: Create .png file
+for entry in plotdata:
+    list_of_datetimes.append(datetime.datetime.strptime(entry, datetimeFormat).date())
+    values.append(plotdata[entry])
 
-logging.info("Plot image saved.")
+# TODO: change plot layout
+dates = matplotlib.dates.date2num(list_of_datetimes)
+matplotlib.pyplot.plot_date(dates, values) 
+
+
+
+if saveplotasimg:
+    plt.savefig("C:/Users/Lukas/Desktop/Bachelorarbeit/code/data/out.png", quality = 100)
+    logging.info("Plot image saved.")
+
+if showdata:
+    logging.info("Data:")
+    print(plotdata)
+
+if showplot:
+    plt.show()
+
+if showcoverage:
+    logging.info("Streaks total: " + str(cnt_streaks))
+    logging.info("Streaks in plot: " + str(cnt_streaks_survived))
+    logging.info(str((cnt_streaks_survived / cnt_streaks) * 100) + "%" + " coverage of reduced_users streaks in plot.")
+
+
 logging.info("Done. (3/3)")
-logging.info("Data:")
-print(plotdata)
