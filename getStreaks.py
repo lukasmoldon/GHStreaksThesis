@@ -58,9 +58,6 @@ cnt = 0
 for prefix, event, value in jsonfile:
     if prefix == "" and event == "map_key":
         # new user dict found
-        cnt += 1
-        if (cnt-1) % 100 == 0: 
-            logging.info(str(cnt-1) + " users computed.")
         cur_usr_id = value
         cur_usr_lat = float(userdata[str(cur_usr_id)]["lat"])
         cur_usr_long = float(userdata[str(cur_usr_id)]["long"])
@@ -90,6 +87,9 @@ for prefix, event, value in jsonfile:
 
     elif prefix == cur_usr_id and event == "end_map":
         # end of user dict => compute streaks/workingORfreetime/save
+        cnt += 1
+        if cnt % 100 == 0: 
+            logging.info(str(cnt) + " users computed.")
         # streaks
         if cur_usr_dates != []:
             cur_usr_streaks = {}
