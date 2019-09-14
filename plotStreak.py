@@ -38,10 +38,10 @@ observedtime_end = date(2017, 12, 31)
 logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
 datetimeFormat = "%Y-%m-%d"
 plotdata = {} # key = day in observedtime, value = value of selected mode
-start = date(2099, 1, 1)
+start = date(1970, 1, 1)
 end = date(1970, 1, 1)
 maxday_usergroupsize = date(1970, 1, 1) # after this day everyone of observed usergroup joined GitHub
-minday_usergroupsize = date(1970, 1, 1)# before this day nobody of observed usergroup joined GitHub
+minday_usergroupsize = date(2099, 1, 1) # before this day nobody of observed usergroup joined GitHub
 list_of_datetimes = []
 values = []
 cnt_streaks = 0 # total number of streaks
