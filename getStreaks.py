@@ -19,8 +19,8 @@ path_source_userdata = "/home/lmoldon/data/users_reduced.json"
 
 
 # ---------- OUTPUT ------------
-path_results_streakdata = "/home/lmoldon/results/users_streaks.json"
-path_results_groupdata = "/home/lmoldon/results/users_groups.json"
+path_results_streakdata = "/home/lmoldon/results/user_streaks.json"
+path_results_groupdata = "/home/lmoldon/results/user_groups.json"
 # ------------------------------
 
 
@@ -119,11 +119,8 @@ for prefix, event, value in jsonfile:
             if cur_usr_streaks != []: 
                 valid_users += 1
                 streaks[cur_usr_id] = cur_usr_streaks
-                # usergroup
-                if cur_usr_freetime >= cur_usr_worktime:
-                    usergroups[cur_usr_id] = 0 # freetime
-                else:
-                    usergroups[cur_usr_id] = 1 # worktime
+                # save number of contributions for both usergroups
+                usergroups[cur_usr_id] = {"f": cur_usr_freetime, "w": cur_usr_worktime}
             else:
                 logging.warning("No streaks survived of user with ID " + str(cur_usr_id))
         else:
