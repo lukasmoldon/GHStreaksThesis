@@ -24,7 +24,7 @@ path_results_plot = "/home/lmoldon/results/streakPlot.png"
 
 # ---------- CONFIG ------------
 threshold = 50 # minimum streak length to get plotted
-mode = 0 # 0 = plot avg streak length, 1 = plot avg number of streaks
+mode = 0 # 0 = plot avg streak length, 1 = plot avg number of streaks, 2 = plot avg streak length in diffrent usergroups
 showplot = True # Open a new window and show resulting plot?
 showdata = False # Print plotdata?
 saveplotasimg = False # Save the resulting plot as image file at path_results_plot?
@@ -38,8 +38,10 @@ observedtime_end = date(2017, 12, 31)
 logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
 datetimeFormat = "%Y-%m-%d"
 plotdata = {} # key = day in observedtime, value = value of selected mode
-start = date(1970, 1, 1)
+start = date(2099, 1, 1)
 end = date(1970, 1, 1)
+maxday_usergroupsize = date(1970, 1, 1) # after this day everyone of observed usergroup joined GitHub
+minday_usergroupsize = date(1970, 1, 1)# before this day nobody of observed usergroup joined GitHub
 list_of_datetimes = []
 values = []
 cnt_streaks = 0 # total number of streaks
@@ -60,6 +62,13 @@ for single_date in daterange(observedtime_start, observedtime_end):
 logging.info("Accessing usergroupsize data ...")
 with open(path_source_usergroupsize, "r") as fp:
     usergroupsize = json.load(fp)
+
+for entry in usergroupsize:
+    thisday = datetime.datetime.strptime(str(entry), datetimeFormat).date()
+    if thisday > maxday_usergroupsize:
+        maxday_usergroupsize = thisday
+    if thisday < minday_usergroupsize:
+        minday_usergroupsize = thisday
 
 logging.info("Done. (1/3)")
 
@@ -92,12 +101,16 @@ for prefix, event, value in streakdata:
                                             plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
                                         elif mode == 1:
                                             plotdata[str(single_date)] += 1
+                                        elif mode == 2:
+                                            logging.critical("Mode 2 not implemented yet") # TODO
                             else: # start in observed time, end not in observed time
                                     for single_date in daterange(start, observedtime_end):
                                             if mode == 0:
                                                 plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
                                             elif mode == 1:
                                                 plotdata[str(single_date)] += 1
+                                            elif mode == 2:
+                                                logging.critical("Mode 2 not implemented yet") # TODO
                     else: # start not in observed time
                             if end <= observedtime_end: # start not in observed time, but end in observed time
                                     for single_date in daterange(observedtime_start, end):
@@ -105,12 +118,31 @@ for prefix, event, value in streakdata:
                                                 plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
                                             elif mode == 1:
                                                 plotdata[str(single_date)] += 1
+                                            elif mode == 2:
+                                                logging.critical("Mode 2 not implemented yet") # TODO
                             else: # start and end not in observed time
                                     for single_date in daterange(observedtime_start, observedtime_end):
                                             if mode == 0:
                                                 plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
                                             elif mode == 1:
                                                 plotdata[str(single_date)] += 1
+                                            elif mode == 2:
+                                                logging.critical("Mode 2 not implemented yet") # TODO
+
+
+for entry in plotdata: # divide by usergroupsize 
+    thisday = datetime.datetime.strptime(str(entry), datetimeFormat).date()
+    latestJoinDay = thisday - timedelta(days=threshold-1) # each user had to join until that day to have a chance for a streak of length <threshold> at <thisday>
+    if str(latestJoinDay) in usergroupsize:
+        plotdata[entry] = (plotdata[entry] / usergroupsize[str(latestJoinDay)])
+    elif latestJoinDay > maxday_usergroupsize:
+        plotdata[entry] = (plotdata[entry] / usergroupsize[str(maxday_usergroupsize)])
+    elif latestJoinDay < minday_usergroupsize:
+        del plotdata[entry]
+    else:
+        logging.critical("Error with date: " + str(thisday))
+        del plotdata[entry]
+
 
 
 for entry in plotdata:
