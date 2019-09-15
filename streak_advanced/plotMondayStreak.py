@@ -135,7 +135,7 @@ for monday_index in plotdata:
         values.append(plotdata[monday_index][day])
 
     dates = matplotlib.dates.date2num(list_of_datetimes)
-    matplotlib.pyplot.plot_date(dates, values, '-', label=str(observed_mondays[monday_index]))
+    matplotlib.pyplot.plot_date(dates, values, '-', label=str(observed_mondays[int(monday_index)]))
 
 
 
