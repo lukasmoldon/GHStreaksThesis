@@ -27,6 +27,7 @@ threshold = 50 # minimum streak length to get plotted
 mode = 0 # 0 = plot avg streak length, 1 = plot avg number of streaks, 2 = plot avg streak length in diffrent usergroups
 showplot = True # Open a new window and show resulting plot?
 showdata = False # Print plotdata?
+savedata = False # Save the resulting plot data at path_results_plot?
 saveplotasimg = False # Save the resulting plot as image file at path_results_plot?
 showcoverage = True # Show streak coverage?
 observedtime_start = date(2015, 1, 1)
@@ -156,8 +157,13 @@ matplotlib.pyplot.plot_date(dates, values)
 
 
 if saveplotasimg:
-    plt.savefig("C:/Users/Lukas/Desktop/Bachelorarbeit/code/data/out.png", quality = 100)
+    plt.savefig(path_results_plot, quality = 100)
     logging.info("Plot image saved.")
+
+if savedata:
+    with open(path_results_values, "w") as fp:
+        json.dump(plotdata, fp)
+    logging.info("Plot data saved.")
 
 if showdata:
     logging.info("Data:")
