@@ -7,20 +7,20 @@ import datetime
 
 
 # ---------- INPUT -------------
-path_source = "/home/johannes/data/github/mysql-2019-06-01/commits.csv"
+path_source = "/home/johannes/data/github/mysql-2019-06-01/users.csv"
 # ------------------------------
 
 
 # ---------- OUTPUT ------------
-path_results = "/home/lmoldon/data/commits_per_day.json"
+path_results = "/home/lmoldon/data/communitysize_per_day.json"
 # ------------------------------
 
 
 # ---------- CONFIG ------------
-chunksize = 1000000
+chunksize = 100000
 datetimeFormat = "%Y-%m-%d %H:%M:%S"
-startinterval = datetime.datetime.strptime("2015-05-19 00:00:01", datetimeFormat) # default: 1 year before removing streak counter
-endinterval = datetime.datetime.strptime("2017-05-19 23:59:59", datetimeFormat) # default: 1 year after removing streak counter
+startinterval = datetime.datetime.strptime("2011-01-01 00:00:01", datetimeFormat)
+endinterval = datetime.datetime.strptime("2019-04-01 23:59:59", datetimeFormat) 
 # ------------------------------
 
 
@@ -35,7 +35,7 @@ log_starttime = datetime.datetime.now()
 
 logging.info("Starting ...")
 cnt = 0
-for chunk in pd.read_csv(path_source, chunksize=chunksize, header=None, delimiter=",", usecols=[5], names=["created_at"]):
+for chunk in pd.read_csv(path_source, chunksize=chunksize, header=None, delimiter=",", usecols=[3], names=["created_at"]):
     for timestamp in list(chunk["created_at"].values):
         try:
             date = datetime.datetime.strptime(timestamp, datetimeFormat)

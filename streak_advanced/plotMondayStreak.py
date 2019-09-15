@@ -26,7 +26,7 @@ path_results_plot = "/home/lmoldon/results/streakPlot.png"
 showplot = False
 showdata = False  # Print plotdata?
 savedata = True  # Save the resulting plot data at path_results_plot?
-saveplotasimg = False  # Save the resulting plot as image file at path_results_plot?
+saveplotasimg = True  # Save the resulting plot as image file at path_results_plot?
 showcoverage = True  # Show streak coverage?
 # ------------------------------
 
