@@ -1,6 +1,7 @@
 # ---------- IMPORT ------------
 import pandas as pd
 import logging
+import datetime
 import json
 import ijson
 # ------------------------------
@@ -33,6 +34,8 @@ cnt_usr = 0
 # ------------------------------
 
 
+
+log_starttime = datetime.datetime.now()
 
 # Get userIDs with at least <threshold> commits:
 logging.info("Getting users with at least " + str(threshold) + " commits ...")
@@ -78,3 +81,7 @@ with open(path_results_ids, "w") as fp:
 
 logging.info("Total users in users_reduced.json: " + str(cnt_usr))
 logging.info("Done. (2/2)")
+
+log_endtime = datetime.datetime.now()
+log_runtime = (log_endtime - log_starttime)
+logging.info("Total runtime: " + str(log_runtime))

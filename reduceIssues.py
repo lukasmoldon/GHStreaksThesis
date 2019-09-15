@@ -1,6 +1,7 @@
 # ---------- IMPORT ------------
 import pandas as pd
 import logging
+import datetime
 import json
 # ------------------------------
 
@@ -31,6 +32,8 @@ cnt_issues = 0
 # ------------------------------
 
 
+
+log_starttime = datetime.datetime.now()
 
 logging.info("Converting userIDs to set() ...")
 with open(path_source_userids, "r") as fp:
@@ -78,3 +81,7 @@ with open(path_results, "w") as fp:
 
 logging.info("Total issues survived: " + str(cnt_issues))
 logging.info("Done. (4/4)")
+
+log_endtime = datetime.datetime.now()
+log_runtime = (log_endtime - log_starttime)
+logging.info("Total runtime: " + str(log_runtime))

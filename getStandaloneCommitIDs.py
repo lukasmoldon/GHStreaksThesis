@@ -1,6 +1,7 @@
 # ---------- IMPORT ------------
 import pandas as pd
 import logging
+import datetime
 import json
 # ------------------------------
 
@@ -29,6 +30,8 @@ cnt_analysed = 0
 # ------------------------------
 
 
+
+log_starttime = datetime.datetime.now()
 
 logging.info("Reading standalone_ProjectIDs.json, please wait ...")
 with open(path_source_project_standaloneIDs, "r") as fp:
@@ -67,3 +70,7 @@ logging.info("Commits analysed " + str(cnt_analysed) + " times.")
 logging.info("Commits made in standalone (and also maybe in forked) projects: " + str(len(data)))
 logging.info("Commits only made in forked projects: " + str(1368240000-len(data)))
 logging.info("Done. (3/3)")
+
+log_endtime = datetime.datetime.now()
+log_runtime = (log_endtime - log_starttime)
+logging.info("Total runtime: " + str(log_runtime))

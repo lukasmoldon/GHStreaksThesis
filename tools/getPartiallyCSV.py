@@ -1,6 +1,7 @@
 # ---------- IMPORT ------------
 import pandas as pd
 import logging
+import datetime
 # ------------------------------
 
 
@@ -32,6 +33,8 @@ logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt=
 # ------------------------------
 
 
+
+log_starttime = datetime.datetime.now()
 
 logging.info("Starting ...")
 
@@ -75,3 +78,7 @@ logging.info("Storing data ... (5/5)")
 data.to_csv(path_results_project_commits, encoding='utf-8', index=False)
 
 logging.info("Done.")
+
+log_endtime = datetime.datetime.now()
+log_runtime = (log_endtime - log_starttime)
+logging.info("Total runtime: " + str(log_runtime))

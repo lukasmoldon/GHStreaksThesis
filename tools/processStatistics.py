@@ -1,5 +1,6 @@
 # ---------- IMPORT ------------
 import logging
+import datetime
 import ijson
 # ------------------------------
 
@@ -39,6 +40,8 @@ logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt=
 
 
 
+log_starttime = datetime.datetime.now()
+
 logging.info("Starting ...")
 
 cnt=0
@@ -59,3 +62,7 @@ logging.info("Users with at least one commit total: " + str(cnt))
 logging.info("Data: ")
 print(data)
 logging.info("Done.")
+
+log_endtime = datetime.datetime.now()
+log_runtime = (log_endtime - log_starttime)
+logging.info("Total runtime: " + str(log_runtime))

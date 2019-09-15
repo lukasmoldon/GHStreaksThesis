@@ -1,6 +1,7 @@
 # ---------- IMPORT ------------
 import pandas as pd
 import logging
+import datetime
 import json
 import ijson
 # ------------------------------
@@ -29,6 +30,8 @@ standalonecommitids = set() # temporary store sommit_standaloneIDs in a set for 
 # ------------------------------
 
 
+
+log_starttime = datetime.datetime.now()
 
 logging.info("Converting standalone_CommitIDs to set() ...")
 cnt = 0
@@ -63,3 +66,7 @@ with open(path_results, "w") as fp:
     json.dump(data, fp)
 
 logging.info("Done. (2/2)")
+
+log_endtime = datetime.datetime.now()
+log_runtime = (log_endtime - log_starttime)
+logging.info("Total runtime: " + str(log_runtime))

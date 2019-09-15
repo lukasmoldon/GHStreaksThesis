@@ -36,6 +36,8 @@ def daterange(observedtime_start, observedtime_end):
 
 
 
+log_starttime = datetime.datetime.now()
+
 # Get GitHub entry dates of all observed users and save them per date
 logging.info("Accessing userdata ...")
 cnt = 0
@@ -87,3 +89,7 @@ logging.info("Start date: " + str(start_date))
 logging.info("End date: " + str(end_date))
 logging.info("Total amount of days in range: " + str(cnt))
 logging.info("Done. (2/2)")
+
+log_endtime = datetime.datetime.now()
+log_runtime = (log_endtime - log_starttime)
+logging.info("Total runtime: " + str(log_runtime))

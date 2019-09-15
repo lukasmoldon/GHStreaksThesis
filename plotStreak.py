@@ -10,8 +10,8 @@ from datetime import timedelta, date
 
 
 # ---------- INPUT -------------
-path_source_streakdata = "/home/lmoldon/results/user_streaks.json"
-path_source_groupdata = "/home/lmoldon/results/user_groups.json"
+path_source_streakdata = "/home/lmoldon/data/user_streaks.json"
+path_source_groupdata = "/home/lmoldon/data/user_groups.json"
 path_source_usergroupsize = "/home/lmoldon/data/usergroupsize.json"
 # ------------------------------
 
@@ -51,6 +51,8 @@ cnt_streaks_survived = 0 # number of streaks observed in plot
 
 
 
+log_starttime = datetime.datetime.now()
+
 def daterange(observedtime_start, observedtime_end):
         for n in range(int((observedtime_end - observedtime_start).days)):
                 yield observedtime_start + timedelta(n)
@@ -71,14 +73,14 @@ for entry in usergroupsize:
     if thisday < minday_usergroupsize:
         minday_usergroupsize = thisday
 
-logging.info("Done. (1/3)")
+logging.info("Done. (1/4)")
 
 
 logging.info("Accessing usergroup data ...")
 with open(path_source_groupdata, "r") as fp:
     groupdata = json.load(fp)
 
-logging.info("Done. (2/3)")
+logging.info("Done. (2/4)")
 
 
 logging.info("Starting ...")
@@ -130,6 +132,10 @@ for prefix, event, value in streakdata:
                                             elif mode == 2:
                                                 logging.critical("Mode 2 not implemented yet") # TODO
 
+logging.info("Done. (3/4)")
+
+
+logging.info("Creating plot ...")
 
 for entry in plotdata: # divide by usergroupsize 
     thisday = datetime.datetime.strptime(str(entry), datetimeFormat).date()
@@ -145,7 +151,6 @@ for entry in plotdata: # divide by usergroupsize
         del plotdata[entry]
 
 
-
 for entry in plotdata:
     list_of_datetimes.append(datetime.datetime.strptime(entry, datetimeFormat).date())
     values.append(plotdata[entry])
@@ -153,7 +158,6 @@ for entry in plotdata:
 # TODO: change plot layout
 dates = matplotlib.dates.date2num(list_of_datetimes)
 matplotlib.pyplot.plot_date(dates, values) 
-
 
 
 if saveplotasimg:
@@ -178,4 +182,8 @@ if showcoverage:
     logging.info(str((cnt_streaks_survived / cnt_streaks) * 100) + "%" + " coverage of reduced_users streaks in plot.")
 
 
-logging.info("Done. (3/3)")
+logging.info("Done. (4/4)")
+
+log_endtime = datetime.datetime.now()
+log_runtime = (log_endtime - log_starttime)
+logging.info("Total runtime: " + str(log_runtime))

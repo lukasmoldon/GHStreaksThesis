@@ -19,8 +19,8 @@ path_source_userdata = "/home/lmoldon/data/users_reduced.json"
 
 
 # ---------- OUTPUT ------------
-path_results_streakdata = "/home/lmoldon/results/user_streaks.json"
-path_results_groupdata = "/home/lmoldon/results/user_groups.json"
+path_results_streakdata = "/home/lmoldon/data/user_streaks.json"
+path_results_groupdata = "/home/lmoldon/data/user_groups.json"
 # ------------------------------
 
 
@@ -42,6 +42,9 @@ singleday = datetime.timedelta(days=1)
 standard_zone = timezone("UTC") # according to "Why do People Give Up Flossing? A Study of Contributor Disengagement in Open Source" GHTorrent only uses UTC as timezone
 # ------------------------------
 
+
+
+log_starttime = datetime.datetime.now()
 
 logging.info("Accessing userdata ...")
 with open(path_source_userdata, "r") as fp:
@@ -138,3 +141,7 @@ with open(path_results_groupdata, "w") as fp:
 
 logging.info("Users survived:" + str(valid_users))
 logging.info("Done. (2/2)")
+
+log_endtime = datetime.datetime.now()
+log_runtime = (log_endtime - log_starttime)
+logging.info("Total runtime: " + str(log_runtime))

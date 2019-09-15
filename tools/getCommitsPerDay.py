@@ -32,6 +32,8 @@ removaldate = datetime.datetime.strptime("2016-05-19 09:00:00", datetimeFormat) 
 
 
 
+log_starttime = datetime.datetime.now()
+
 logging.info("Starting ...")
 cnt = 0
 for chunk in pd.read_csv(path_source, chunksize=chunksize, header=None, delimiter=",", usecols=[5], names=["created_at"]):
@@ -55,3 +57,7 @@ with open(path_results, "w") as fp:
     json.dump(data, fp)
 
 logging.info("Done.")
+
+log_endtime = datetime.datetime.now()
+log_runtime = (log_endtime - log_starttime)
+logging.info("Total runtime: " + str(log_runtime))

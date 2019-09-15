@@ -1,5 +1,6 @@
 # ---------- IMPORT ------------
 import logging
+import datetime
 import json
 import ijson
 # ------------------------------
@@ -27,6 +28,8 @@ cnt_entries = 0
 # ------------------------------
 
 
+
+log_starttime = datetime.datetime.now()
 
 logging.info("Starting ...")
 
@@ -56,3 +59,7 @@ else:
 
 
 logging.info("Total entries in JSON file: " + str(cnt_entries))
+
+log_endtime = datetime.datetime.now()
+log_runtime = (log_endtime - log_starttime)
+logging.info("Total runtime: " + str(log_runtime))

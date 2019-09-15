@@ -1,6 +1,7 @@
 # ---------- IMPORT ------------
 import pandas as pd
 import logging
+import datetime
 import json
 import ijson
 # ------------------------------
@@ -31,6 +32,8 @@ cnt_contributions_commits = 0
 # ------------------------------
 
 
+
+log_starttime = datetime.datetime.now()
 
 logging.info("Accessing issuedata ...")
 cur_usrid = ""
@@ -150,3 +153,7 @@ logging.info("Total contributions saved: " + str(cnt_contributions_commits + cnt
 logging.info("Issues saved: " + str(cnt_contributions_issues))
 logging.info("Commits saved: " + str(cnt_contributions_commits))
 logging.info("Done. (3/3)")
+
+log_endtime = datetime.datetime.now()
+log_runtime = (log_endtime - log_starttime)
+logging.info("Total runtime: " + str(log_runtime))

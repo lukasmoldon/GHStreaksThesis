@@ -1,6 +1,7 @@
 # ---------- IMPORT ------------
 import pandas as pd
 import logging
+import datetime
 import json
 # ------------------------------
 
@@ -31,6 +32,8 @@ cnt_projects_forked = 0
 
 
 
+log_starttime = datetime.datetime.now()
+
 logging.info("Accessing project data ...")
 cnt = 0
 for chunk in pd.read_csv(path_source, chunksize=chunksize, header=None, delimiter=",", usecols=[0,7], names=["id","forked_from"]):
@@ -56,3 +59,7 @@ with open(path_results_standalone, "w") as fp:
 logging.info("Total number of projects: " + str(cnt_projects_total))
 logging.info("Number of forked projects: " + str(cnt_projects_forked) + " (" + str((cnt_projects_forked/cnt_projects_total)*100) + "%)")
 logging.info("Done.")
+
+log_endtime = datetime.datetime.now()
+log_runtime = (log_endtime - log_starttime)
+logging.info("Total runtime: " + str(log_runtime))
