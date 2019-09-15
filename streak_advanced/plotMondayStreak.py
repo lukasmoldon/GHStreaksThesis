@@ -97,14 +97,15 @@ for prefix, event, value in streakdata:
     elif ".end" in prefix:
         end = datetime.datetime.strptime(str(value), datetimeFormat).date()
     elif ".len" in prefix:
-        if start in observed_mondays:
-            monday_index = str(observed_mondays.index(start))
-            if end <= observedtime_end:
-                for single_date in daterange(start, end):
-                    plotdata[monday_index][str(single_date)] += ((single_date - start) + timedelta(days=1)).days
-            else:
-                for single_date in daterange(start, observedtime_end):
-                    plotdata[monday_index][str(single_date)] += ((single_date - start) + timedelta(days=1)).days
+        if int(value) > 1:
+            if start in observed_mondays:
+                monday_index = str(observed_mondays.index(start))
+                if end <= observedtime_end:
+                    for single_date in daterange(start, end):
+                        plotdata[monday_index][str(single_date)] += ((single_date - start) + timedelta(days=1)).days
+                else:
+                    for single_date in daterange(start, observedtime_end):
+                        plotdata[monday_index][str(single_date)] += ((single_date - start) + timedelta(days=1)).days
 
 logging.info("Done. (2/3)")
 
@@ -159,6 +160,7 @@ if showdata:
     print(plotdata)
 
 if showplot:
+    plt.legend()
     plt.show()
 
 if showcoverage:
