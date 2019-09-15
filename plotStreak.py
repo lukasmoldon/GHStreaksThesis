@@ -25,9 +25,9 @@ path_results_plot = "/home/lmoldon/results/streakPlot.png"
 # ---------- CONFIG ------------
 threshold = 50 # minimum streak length to get plotted
 mode = 0 # 0 = plot avg streak length, 1 = plot avg number of streaks, 2 = plot avg streak length in diffrent usergroups
-showplot = True # Open a new window and show resulting plot?
+showplot = False # Open a new window and show resulting plot? (only on desktop)
 showdata = False # Print plotdata?
-savedata = False # Save the resulting plot data at path_results_plot?
+savedata = True # Save the resulting plot data at path_results_plot?
 saveplotasimg = False # Save the resulting plot as image file at path_results_plot?
 showcoverage = True # Show streak coverage?
 observedtime_start = date(2015, 1, 1)
@@ -157,7 +157,7 @@ for entry in plotdata:
 
 # TODO: change plot layout
 dates = matplotlib.dates.date2num(list_of_datetimes)
-matplotlib.pyplot.plot_date(dates, values) 
+matplotlib.pyplot.plot_date(dates, values, '-') 
 
 
 if saveplotasimg:
@@ -174,6 +174,12 @@ if showdata:
     print(plotdata)
 
 if showplot:
+    if mode == 1 or mode == 2:
+        plt.ylabel("Avg. streak length")
+    elif mode == 0:
+        plt.ylabel("Total streak length")
+        
+    plt.xlabel("Time")
     plt.show()
 
 if showcoverage:
