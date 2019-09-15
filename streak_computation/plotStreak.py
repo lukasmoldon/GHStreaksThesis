@@ -155,9 +155,16 @@ for entry in plotdata:
     list_of_datetimes.append(datetime.datetime.strptime(entry, datetimeFormat).date())
     values.append(plotdata[entry])
 
-# TODO: change plot layout
+
 dates = matplotlib.dates.date2num(list_of_datetimes)
 matplotlib.pyplot.plot_date(dates, values, '-') 
+
+plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='r')
+plt.xlabel("Time")
+if mode == 1 or mode == 2:
+    plt.ylabel("Avg. streak length")
+elif mode == 0:
+    plt.ylabel("Total streak length")
 
 
 if saveplotasimg:
@@ -174,12 +181,6 @@ if showdata:
     print(plotdata)
 
 if showplot:
-    if mode == 1 or mode == 2:
-        plt.ylabel("Avg. streak length")
-    elif mode == 0:
-        plt.ylabel("Total streak length")
-        
-    plt.xlabel("Time")
     plt.show()
 
 if showcoverage:
