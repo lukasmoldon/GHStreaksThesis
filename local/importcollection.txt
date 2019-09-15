@@ -11,3 +11,4 @@ import logging
 import matplotlib
 import matplotlib.pyplot as plt
 from datetime import timedelta, date
+import gender_guesser.detector as gender
