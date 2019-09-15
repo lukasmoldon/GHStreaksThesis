@@ -47,6 +47,7 @@ logging.info("Done (1/2) ...")
 logging.info("Creating plot ...")
 dates = matplotlib.dates.date2num(list_of_datetimes)
 matplotlib.pyplot.plot_date(dates, values, '-')
+plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='r')
 plt.xlabel("Time")
 plt.ylabel("Avg. streak length")
 
