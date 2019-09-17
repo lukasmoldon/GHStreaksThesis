@@ -25,7 +25,6 @@ path_results_plot = "/home/lmoldon/results/streakPlot.png"
 # ---------- CONFIG ------------
 threshold = 50 # minimum streak length to get plotted
 mode = 0 # 0 = plot avg streak length, 1 = plot avg number of streaks, 2 = plot avg streak length in diffrent usergroups
-showplot = False # Open a new window and show resulting plot? (only on desktop)
 showdata = False # Print plotdata?
 savedata = True # Save the resulting plot data at path_results_plot?
 saveplotasimg = False # Save the resulting plot as image file at path_results_plot?
@@ -179,9 +178,6 @@ if savedata:
 if showdata:
     logging.info("Data:")
     print(plotdata)
-
-if showplot:
-    plt.show()
 
 if showcoverage:
     logging.info("Streaks total: " + str(cnt_streaks))
