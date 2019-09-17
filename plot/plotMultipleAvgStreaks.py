@@ -32,7 +32,7 @@ values = []
 
 
 # ------------- 3 years -------------
-with open("C:/Users/Lukas/Desktop/avgStreakLength/3_years/streakValues50.json", "r") as fp:
+with open("C:/Users/Lukas/Desktop/avgStreakLength/3_years/streakValuesY3X50.json", "r") as fp:
     plotdata = json.load(fp)
 
 for entry in plotdata:
@@ -46,7 +46,7 @@ plt.ylabel("Avg. streak length")
 
 
 values = []
-with open("C:/Users/Lukas/Desktop/avgStreakLength/3_years/streakValues150.json", "r") as fp:
+with open("C:/Users/Lukas/Desktop/avgStreakLength/3_years/streakValuesY3X150.json", "r") as fp:
     plotdata = json.load(fp)
 
 for entry in plotdata:
@@ -56,7 +56,7 @@ matplotlib.pyplot.plot_date(dates, values, '-', label="x=150")
 
 
 values = []
-with open("C:/Users/Lukas/Desktop/avgStreakLength/3_years/streakValues350.json", "r") as fp:
+with open("C:/Users/Lukas/Desktop/avgStreakLength/3_years/streakValuesY3X350.json", "r") as fp:
     plotdata = json.load(fp)
 
 for entry in plotdata:
@@ -64,7 +64,9 @@ for entry in plotdata:
 
 matplotlib.pyplot.plot_date(dates, values, '-', label="x=350")
 
-plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='r')
+plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='r', label="Streaks removed")
+plt.axvline(x=datetime.datetime.strptime("2016-12-25", datetimeFormat).date(), color='b', label="Christmas 2016")
+plt.axvline(x=datetime.datetime.strptime("2017-12-25", datetimeFormat).date(), color='b', label="Christmas 2017")
 plt.legend()
 plt.show()
 
@@ -75,8 +77,8 @@ values = []
 
 
 
-# ------------- 7 years -------------
-with open("C:/Users/Lukas/Desktop/avgStreakLength/7_years/streakValues50.json", "r") as fp:
+# ------------- 6 years -------------
+with open("C:/Users/Lukas/Desktop/avgStreakLength/6_years/streakValuesY6X50.json", "r") as fp:
     plotdata = json.load(fp)
 
 for entry in plotdata:
@@ -90,7 +92,7 @@ plt.ylabel("Avg. streak length")
 
 
 values = []
-with open("C:/Users/Lukas/Desktop/avgStreakLength/7_years/streakValues150.json", "r") as fp:
+with open("C:/Users/Lukas/Desktop/avgStreakLength/6_years/streakValuesY6X150.json", "r") as fp:
     plotdata = json.load(fp)
 
 for entry in plotdata:
@@ -100,7 +102,7 @@ matplotlib.pyplot.plot_date(dates, values, '-', label="x=150")
 
 
 values = []
-with open("C:/Users/Lukas/Desktop/avgStreakLength/7_years/streakValues350.json", "r") as fp:
+with open("C:/Users/Lukas/Desktop/avgStreakLength/6_years/streakValuesY6X350.json", "r") as fp:
     plotdata = json.load(fp)
 
 for entry in plotdata:
@@ -108,6 +110,8 @@ for entry in plotdata:
 
 matplotlib.pyplot.plot_date(dates, values, '-', label="x=350")
 
-plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='r')
+plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='r', label="Streaks removed")
+plt.axvline(x=datetime.datetime.strptime("2016-12-25", datetimeFormat).date(), color='b', label="Christmas 2016")
+plt.axvline(x=datetime.datetime.strptime("2017-12-25", datetimeFormat).date(), color='b', label="Christmas 2017")
 plt.legend()
 plt.show()
