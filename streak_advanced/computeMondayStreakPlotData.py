@@ -15,7 +15,7 @@ path_source_streakdata = "/home/lmoldon/data/user_streaks.json"
 
 
 # ---------- OUTPUT ------------
-path_results_values = "/home/lmoldon/results/streakValues.json"
+path_results_values = "/home/lmoldon/results/mondayStreakValues.json"
 # ------------------------------
 
 
