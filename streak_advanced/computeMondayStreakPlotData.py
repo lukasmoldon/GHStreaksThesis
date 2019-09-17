@@ -11,7 +11,6 @@ from datetime import timedelta, date
 
 # ---------- INPUT -------------
 path_source_streakdata = "/home/lmoldon/data/user_streaks.json"
-path_source_usergroupsize = "/home/lmoldon/data/usergroupsize.json"
 # ------------------------------
 
 

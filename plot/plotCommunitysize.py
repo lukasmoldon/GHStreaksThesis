@@ -28,7 +28,7 @@ path_source = "C:/Users/Lukas/Desktop/communitysize_per_day.json"
 logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s',
                     datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
 datetimeFormat = "%Y-%m-%d"
-plotdata = {}  # key = monday type, value = {key = day in observedtime, value = value}
+plotdata = {}  # key = date, value = number of users
 list_of_datetimes = []
 values = []
 # ------------------------------

@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 
 # ---------- INPUT -------------
-path_source = "/home/lmoldon/results/"
+path_source = "C:/Users/Lukas/Desktop/streakValues.json"
 # ------------------------------
 
 
@@ -41,15 +41,17 @@ for entry in plotdata:
     list_of_datetimes.append(datetime.datetime.strptime(entry, datetimeFormat).date())
     values.append(plotdata[entry])
 
-logging.info("Done (1/2) ...")
+logging.info("Done. (1/2)")
 
 
 logging.info("Creating plot ...")
+
 dates = matplotlib.dates.date2num(list_of_datetimes)
 matplotlib.pyplot.plot_date(dates, values, '-')
 plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='r')
 plt.xlabel("Time")
 plt.ylabel("Avg. streak length")
-
 plt.show()
-logging.info("Done (2/2) ...")
+
+
+logging.info("Done. (2/2)")
