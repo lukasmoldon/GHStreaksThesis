@@ -17,17 +17,15 @@ path_source_usergroupsize = "/home/lmoldon/data/usergroupsize.json"
 
 
 # ---------- OUTPUT ------------
-path_results_values = "/home/lmoldon/results/streakValues.json"
-path_results_plot = "/home/lmoldon/results/streakPlot.png"
+path_results = "/home/lmoldon/results/streakValues.json"
 # ------------------------------
 
 
 # ---------- CONFIG ------------
 threshold = 50 # minimum streak length to get plotted
 mode = 0 # 0 = plot avg streak length, 1 = plot avg number of streaks, 2 = plot avg streak length in diffrent usergroups
-showdata = False # Print plotdata?
+showdata = False # Print plotdata in console (for debugging)?
 savedata = True # Save the resulting plot data at path_results_plot?
-saveplotasimg = False # Save the resulting plot as image file at path_results_plot?
 showcoverage = True # Show streak coverage?
 observedtime_start = date(2015, 1, 1)
 observedtime_end = date(2017, 12, 31)
@@ -42,8 +40,6 @@ start = date(1970, 1, 1)
 end = date(1970, 1, 1)
 maxday_usergroupsize = date(1970, 1, 1) # after this day everyone of observed usergroup joined GitHub
 minday_usergroupsize = date(2099, 1, 1) # before this day nobody of observed usergroup joined GitHub
-list_of_datetimes = []
-values = []
 cnt_streaks = 0 # total number of streaks
 cnt_streaks_survived = 0 # number of streaks observed in plot
 # ------------------------------
@@ -134,7 +130,7 @@ for prefix, event, value in streakdata:
 logging.info("Done. (3/4)")
 
 
-logging.info("Creating plot ...")
+logging.info("Creating plot data ...")
 
 for entry in plotdata: # divide by usergroupsize 
     thisday = datetime.datetime.strptime(str(entry), datetimeFormat).date()
@@ -150,28 +146,8 @@ for entry in plotdata: # divide by usergroupsize
         del plotdata[entry]
 
 
-for entry in plotdata:
-    list_of_datetimes.append(datetime.datetime.strptime(entry, datetimeFormat).date())
-    values.append(plotdata[entry])
-
-
-dates = matplotlib.dates.date2num(list_of_datetimes)
-matplotlib.pyplot.plot_date(dates, values, '-') 
-
-plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='r')
-plt.xlabel("Time")
-if mode == 1 or mode == 2:
-    plt.ylabel("Avg. streak length")
-elif mode == 0:
-    plt.ylabel("Total streak length")
-
-
-if saveplotasimg:
-    plt.savefig(path_results_plot, quality = 100)
-    logging.info("Plot image saved.")
-
 if savedata:
-    with open(path_results_values, "w") as fp:
+    with open(path_results, "w") as fp:
         json.dump(plotdata, fp)
     logging.info("Plot data saved.")
 
