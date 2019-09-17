@@ -29,7 +29,7 @@ logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s',
                     datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
 datetimeFormat = "%Y-%m-%d"
 plotdata = {}  # key = monday type, value = {key = day in observedtime, value = value}
-list_of_datetimes = []
+indices = []
 values = []
 observed_mondays = [date(2016, 4, 18), date(2016, 4, 25), date(2016, 5, 2), date(2016, 5, 9), date(
     2016, 5, 16), date(2016, 5, 23), date(2016, 5, 30), date(2016, 6, 6), date(2016, 6, 13), date(2016, 6, 20)]
@@ -38,7 +38,6 @@ observed_mondays = [date(2016, 4, 18), date(2016, 4, 25), date(2016, 5, 2), date
 
 
 log_starttime = datetime.datetime.now()
-
 
 
 logging.info("Accessing plotdata ...")
@@ -51,24 +50,23 @@ logging.info("Creating plot ...")
 for monday_index in plotdata:
     values = []
     list_of_datetimes = []
+    maxlen = 1
 
-    for day in plotdata[monday_index]:
-        list_of_datetimes.append(
-            datetime.datetime.strptime(day, datetimeFormat).date())
-        values.append(plotdata[monday_index][day])
+    for length in plotdata[monday_index]:
+        if int(length) > maxlen:
+            maxlen = int(length)
 
-    dates = matplotlib.dates.date2num(list_of_datetimes)
-    matplotlib.pyplot.plot_date(dates, values, '-', label=str(observed_mondays[int(monday_index)]))
+    length = 1
+    while length <= maxlen:
+        indices.append(length)
+        values.append(plotdata[monday_index][str(length)])
+        length += 1
 
-
-
-plt.axvline(x=datetime.datetime.strptime(
-    "2016-05-19", datetimeFormat).date(), color='r')
-plt.xlabel("Time")
-plt.ylabel("Avg. streak length")
-
-plt.legend()
-plt.show()
+    matplotlib.pyplot.bar(indices, values)
+    plt.xlabel("Exact streak length starting from " + str(observed_mondays[int(monday_index)]))
+    plt.ylabel("%" + " of active users on " + str(observed_mondays[int(monday_index)]))
+    plt.show()
+    
 
 
 logging.info("Done.")
