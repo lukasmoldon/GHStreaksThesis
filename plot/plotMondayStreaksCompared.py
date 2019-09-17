@@ -20,7 +20,7 @@ path_source = "C:/Users/Lukas/Desktop/mondayStreakValues.json"
 
 
 # ---------- CONFIG ------------
-threshold = 14 # where to cut bar chart and start counting over this threshold?!
+threshold = 14  # where to cut bar chart and start counting over this threshold?!
 # ------------------------------
 
 
@@ -39,7 +39,6 @@ observed_mondays = [date(2016, 4, 18), date(2016, 4, 25), date(2016, 5, 2), date
 # ------------------------------
 
 
-
 log_starttime = datetime.datetime.now()
 
 
@@ -50,38 +49,41 @@ with open(path_source, "r") as fp:
 
 logging.info("Creating plot ...")
 
-for monday_index in plotdata:
-    values = []
-    indices = []
-    maxlen = 1
-    avg = 0
-    overThreshold = 0
+fig, ax = plt.subplots()
+width = 0.35
 
-    for length in plotdata[monday_index]:
-        if int(length) > maxlen:
-            maxlen = int(length)
+values = []
+indices = []
 
-    length = 1
-    while length <= maxlen:
-        avg += (length * plotdata[monday_index][str(length)])
-        if length > threshold:
-            overThreshold += plotdata[monday_index][str(length)]
-        length += 1
-        
+length = 1
+while length <= threshold:
+    indices.append(length - width/2)
+    values.append(plotdata["0"][str(length)])
+    length += 1
 
-    length = 1
-    while length <= threshold:
-        indices.append(length)
-        values.append(plotdata[monday_index][str(length)])
-        length += 1
+p1 = ax.bar(indices, values, width, color='b', align='center')
 
 
-    matplotlib.pyplot.bar(indices, values)
-    plt.xlabel("Exact streak length starting from " + str(observed_mondays[int(monday_index)]) + "     (Avg streak length: " + str(round(avg, 2)) + ")     (Streaks longer than " + str(threshold) + " : " + str(round(overThreshold*100, 2)) + "%)")
-    plt.xticks(range(1, threshold + 1))
-    plt.ylabel("Distribution of streaklengths of streaks starting on " + str(observed_mondays[int(monday_index)]))
-    plt.show()
-    
+
+values = []
+indices = []
+
+length = 1
+while length <= threshold:
+    indices.append(length + width/2)
+    values.append(plotdata["8"][str(length)])
+    length += 1
+
+p2 = ax.bar(indices, values, width, color='r', align='center')
+
+
+ax.set_xticks(range(1, threshold + 1))
+ax.set_xticklabels(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"])
+ax.legend((p1[0], p2[0]), (str(observed_mondays[0]), str(observed_mondays[8])))
+plt.ylabel("Distribution of streaklengths of streaks starting on both Mondays")
+plt.xlabel("\n2016-04-18: Avg streak length: 2.38    Streaks longer than 14: 0.52%\n2016-06-13: Avg streak length: 2.24    Streaks longer than 14: 0.27%")
+
+plt.show()
 
 
 logging.info("Done.")
