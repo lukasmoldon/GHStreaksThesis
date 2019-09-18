@@ -66,7 +66,7 @@ for monday_index in plotdata:
     length = observed_start
     while length <= observed_end:
         indices.append(length)
-        if length in plotdata[monday_index]:
+        if str(length) in plotdata[monday_index]:
             values.append(plotdata[monday_index][str(length)] / cnt_streaks)
         else:
             values.append(0)

@@ -63,12 +63,13 @@ for length in plotdata["0"]:
         cnt_streaks += plotdata["0"][str(length)]
         avg += (plotdata["0"][str(length)] * int(length))
 
-    avg = (avg / cnt_streaks)
+    
+avg = (avg / cnt_streaks)
 
 length = observed_start
 while length <= observed_end:
     indices.append(length - width/2)
-    if length in plotdata["0"]:
+    if str(length) in plotdata["0"]:
         values.append(plotdata["0"][str(length)] / cnt_streaks)
     else:
         values.append(0)
@@ -90,12 +91,13 @@ for length in plotdata["6"]:
         cnt_streaks += plotdata["6"][str(length)]
         avgI += (plotdata["6"][str(length)] * int(length))
 
-    avgI = (avgI / cnt_streaks)
+    
+avgI = (avgI / cnt_streaks)
 
 length = observed_start
 while length <= observed_end:
     indices.append(length + width/2)
-    if length in plotdata["6"]:
+    if str(length) in plotdata["6"]:
         values.append(plotdata["6"][str(length)] / cnt_streaks)
     else:
         values.append(0)
@@ -104,10 +106,10 @@ while length <= observed_end:
 p2 = ax.bar(indices, values, width, color='r', align='center')
 
 
-ax.set_xticks(range(1, observed_end + 1))
+ax.set_xticks(range(observed_start, observed_end + 1))
 ax.legend((p1[0], p2[0]), (str(observed_mondays[0]), str(observed_mondays[6])))
 plt.ylabel("Distribution of streaklengths of streaks starting on both Mondays")
-plt.xlabel("\n" + str(observed_mondays[0]) + ": Avg streak length: " + str(round(avg, 2)) + "\n" + str(observed_mondays[6]) + ": Avg streak length: " + str(round(avg, 2)))
+plt.xlabel("\n" + str(observed_mondays[0]) + ": Avg streak length: " + str(round(avg, 2)) + "\n" + str(observed_mondays[6]) + ": Avg streak length: " + str(round(avgI, 2)))
 
 plt.show()
 
