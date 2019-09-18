@@ -15,12 +15,13 @@ path_source_streakdata = "/home/lmoldon/data/user_streaks.json"
 
 
 # ---------- OUTPUT ------------
-# IMPORTANT! % values get stored!
-path_results_values = "/home/lmoldon/results/mondayStreakValues.json"
+# IMPORTANT! TOTAL values get stored!
+path_results_values = "/home/lmoldon/results/mondayLongStreakValues.json"
 # ------------------------------
 
 
 # ---------- CONFIG ------------
+observed_startday = 7 # where to start counting lengths? (e.g. 7 = Sunday same week)
 # ------------------------------
 
 
@@ -29,14 +30,14 @@ logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s',
                     datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
 datetimeFormat = "%Y-%m-%d"
 plotdata = {"0": {}, "1": {}, "2": {}, "3": {}, "4": {}, "5": {}, "6": {}, "7": {
-}, "8": {}, "9": {}}  # key = monday type, value = {key = streaklength, value = value}
+}, "8": {}, "9": {}, "10": {}, "11": {}}  # key = monday type, value = {key = streaklength, value = value}
 start = date(1970, 1, 1)
 end = date(1970, 1, 1)
 list_of_datetimes = []
 values = []
 cnt_streaks = 0
-observed_mondays = [date(2016, 4, 18), date(2016, 4, 25), date(2016, 5, 2), date(2016, 5, 9), date(
-    2016, 5, 16), date(2016, 5, 23), date(2016, 5, 30), date(2016, 6, 6), date(2016, 6, 13), date(2016, 6, 20)]
+observed_mondays = [date(2016, 4, 11), date(2016, 4, 18), date(2016, 4, 25), date(2016, 5, 2), date(2016, 5, 9), date(
+    2016, 5, 16), date(2016, 5, 23), date(2016, 5, 30), date(2016, 6, 6), date(2016, 6, 13), date(2016, 6, 20), date(2016, 6, 27)]
 # ------------------------------
 
 
@@ -56,36 +57,15 @@ for prefix, event, value in streakdata:
     elif ".end" in prefix:
         end = datetime.datetime.strptime(str(value), datetimeFormat).date()
     elif ".len" in prefix:
-        if start in observed_mondays:
-            monday_index = str(observed_mondays.index(start))
-            if str(value) in plotdata[monday_index]:
-                plotdata[monday_index][str(value)] += 1
-            else:
-                plotdata[monday_index][str(value)] = 1
+        if int(value) >= observed_startday:
+            if start in observed_mondays:
+                monday_index = str(observed_mondays.index(start))
+                if str(value) in plotdata[monday_index]:
+                    plotdata[monday_index][str(value)] += 1
+                else:
+                    plotdata[monday_index][str(value)] = 1
 
 logging.info("Done. (1/2)")
-
-
-logging.info("Creating plot data ...")
-
-
-for monday_index in plotdata:  # get %
-    maxlen = 1
-    cnt_streaks = 0
-
-    for length in plotdata[monday_index]: 
-        cnt_streaks += plotdata[monday_index][length]
-        if int(length) > maxlen:
-            maxlen = int(length)
-    
-    i = 1
-    while i < maxlen:
-        if not (str(i) in plotdata[monday_index]):
-            plotdata[monday_index][str(i)] = 0
-        i += 1
-
-    for length in plotdata[monday_index]:
-        plotdata[monday_index][length] = (plotdata[monday_index][length] / cnt_streaks)
 
 
 
