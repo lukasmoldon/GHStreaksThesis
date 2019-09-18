@@ -114,7 +114,7 @@ def get_gender_by_coordinates(name, lat, lon):
         else:
             try:
                 gender = gdetector.get_gender(name)
-                logging.info("Following country unknown for gender-detection: " + str(location.raw['address']['country']))
+                logging.debug("Following country unknown for gender-detection: " + str(location.raw['address']['country']))
             except:
                 logging.critical("Failed to get gender without location but valid coordinates(!) for username " + str(name))
                 return "ERROR"
@@ -173,8 +173,8 @@ logging.info("Done.")
 
 for userid in userdata:
     cur_username = userdata[userid]["name"]
-    cur_lat = userdata[userid]["lat"]
-    cur_long = userdata[userid]["long"]
+    cur_lat = float(userdata[userid]["lat"])
+    cur_long = float(userdata[userid]["long"])
 
     answer = session.get(link_userinfo + cur_username, auth=(username, token))
 
@@ -190,7 +190,7 @@ for userid in userdata:
             sys.exit()
 
     if status == "200 OK":
-        if answer.headers["X-RateLimit-Remaining"] % 1000 == 0:
+        if int(answer.headers["X-RateLimit-Remaining"]) % 1000 == 0:
             logging.info("Requests remaining: " + str(answer.headers["X-RateLimit-Remaining"]))
     else:
         logging.error("Unexpected Error occurred while connecting with api.github.com after waiting for counter reset:")
@@ -198,21 +198,25 @@ for userid in userdata:
         print(answer.text)
         sys.exit()
         
-    cur_fullname = answer.json()["name"]
-    cur_firstname = cur_fullname.split()[0]
-    cur_gender = get_gender_by_coordinates(cur_firstname, cur_lat, cur_long)
-    if cur_gender != "ERROR":
-        try:
-            stats[str(gender)] += 1
-            genderdata[str(userid)] = {
-                "name": str(cur_fullname),
-                "gender": str(cur_gender)
-            }
-        except:
-            logging.error("Could not save:" + str(cur_gender))
+    try:
+        cur_fullname = answer.json()["name"]
+        cur_firstname = cur_fullname.split()[0]
+        cur_gender = get_gender_by_coordinates(cur_firstname, cur_lat, cur_long)
+        if cur_gender != "ERROR":
+            try:
+                stats[str(cur_gender)] += 1
+                genderdata[str(userid)] = {
+                    "name": str(cur_fullname),
+                    "gender": str(cur_gender)
+                }
+            except:
+                logging.error("Could not save: " + str(cur_gender))
+                stats["error"] += 1
+        else:
             stats["error"] += 1
-    else:
-        stats["error"] += 1
+    except:
+        logging.warning("Could not compute full name for username: " + str(cur_username))
+    
 
     cnt_users += 1
     if cnt_users % 10000 == 0:
