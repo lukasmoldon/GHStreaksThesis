@@ -28,8 +28,11 @@ username = "XXXXXXXXXXXXXXXXXXXXX"
 token = "XXXXXXXXXXXXXXXXXXXXX"
 useragent = "Research for bachelor thesis on GitHub streaks"
 
-cooldown_geolocate = 0.1 # How many seconds waiting if geolocate requests failed?
-threshold_geolocate = 5 # How many tries for connecting with geopy before rejecting coordinates?
+update_users = 100 # How often an update about users computed?!
+
+failedcooldown_geolocate = 1.1 # How many seconds waiting if geolocate requests failed?
+cooldown_geolocate = 1.05 # How many seconds waiting between two requests? (1 IS MINIMUM ACCORDING TO https://operations.osmfoundation.org/policies/nominatim/)
+threshold_geolocate = 2 # How many tries for connecting with geopy before rejecting coordinates?
 # ------------------------------
 
 
@@ -86,12 +89,13 @@ def get_gender_by_coordinates(name, lat, lon):
         cnt_tries = 0
         while(cnt_tries < threshold_geolocate):
             try:
+                time.sleep(1)
                 location = geolocator.reverse( (lat, lon), language="en")
                 logging.debug(str(location.raw['address']['country']) + "Never delete this line!") # This is NOT a debug print - its for testing the result (string = country or None-type = e.g. ocean)
             except:
                 cnt_tries += 1
                 if cnt_tries == threshold_geolocate:
-                    logging.critical("Could not get country for username: " + str(name) + ", with coordinates: " + str(lat) + ", " + str(lon))
+                    logging.debug("Could not get country for username: " + str(name) + ", with coordinates: " + str(lat) + ", " + str(lon))
                     noGeo = True
                 else:
                     time.sleep(cooldown_geolocate)
@@ -157,6 +161,7 @@ answer = session.get(link_userinfo + "TheLukester", auth=(username, token))
 status = answer.headers["Status"]
 if status == "200 OK":
     logging.info(status)
+    logging.info("Remaining requests with this token: " + str(answer.headers["X-RateLimit-Remaining"]))
 elif int(answer.headers["X-RateLimit-Remaining"]) == 0:
     logging.warning("API counter at 0!")
     sleep_epoch(answer.headers["X-RateLimit-Reset"])
@@ -215,12 +220,12 @@ for userid in userdata:
         else:
             stats["error"] += 1
     except:
-        logging.warning("Could not compute full name for username: " + str(cur_username))
+        logging.debug("Could not compute full name for username: " + str(cur_username))
     
 
     cnt_users += 1
-    if cnt_users % 10000 == 0:
-        logging.info("User count: " + str(cnt_users/1000) + "k")
+    if cnt_users % update_users == 0:
+        logging.info("User count: " + str(cnt_users))
         logging.info("Caching genderdata ...")
 
         with open(path_results, "w") as fp:
