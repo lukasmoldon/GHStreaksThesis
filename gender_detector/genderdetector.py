@@ -26,6 +26,7 @@ path_results = "/home/lmoldon/data/users_gender.json"
 # ---------- CONFIG ------------
 username = "XXXXXXXXXXXXXXXXXXXXX"
 token = "XXXXXXXXXXXXXXXXXXXXX"
+email = "XXXXXXXXXXXXXXXXXXXXX"
 useragent = "Research for bachelor thesis on GitHub streaks"
 
 update_users = 100 # How often an update about users computed?!
@@ -41,6 +42,8 @@ logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt=
 session = requests_html.HTMLSession()
 gdetector = gender.Detector(case_sensitive=False)
 geolocator = Nominatim(user_agent=useragent)
+
+useragent = useragent + "  Contact: " + email
 
 link_userinfo = "https://api.github.com/users/"
 cnt_users = 0
@@ -89,7 +92,7 @@ def get_gender_by_coordinates(name, lat, lon):
         cnt_tries = 0
         while(cnt_tries < threshold_geolocate):
             try:
-                time.sleep(1)
+                time.sleep(cooldown_geolocate)
                 location = geolocator.reverse( (lat, lon), language="en")
                 logging.debug(str(location.raw['address']['country']) + "Never delete this line!") # This is NOT a debug print - its for testing the result (string = country or None-type = e.g. ocean)
             except:
