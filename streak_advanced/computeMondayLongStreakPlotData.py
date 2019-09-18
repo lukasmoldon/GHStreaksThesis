@@ -33,8 +33,6 @@ plotdata = {"0": {}, "1": {}, "2": {}, "3": {}, "4": {}, "5": {}, "6": {}, "7": 
 }, "8": {}, "9": {}, "10": {}, "11": {}}  # key = monday type, value = {key = streaklength, value = value}
 start = date(1970, 1, 1)
 end = date(1970, 1, 1)
-list_of_datetimes = []
-values = []
 cnt_streaks = 0
 observed_mondays = [date(2016, 4, 11), date(2016, 4, 18), date(2016, 4, 25), date(2016, 5, 2), date(2016, 5, 9), date(
     2016, 5, 16), date(2016, 5, 23), date(2016, 5, 30), date(2016, 6, 6), date(2016, 6, 13), date(2016, 6, 20), date(2016, 6, 27)]
