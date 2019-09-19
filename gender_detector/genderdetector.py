@@ -229,6 +229,7 @@ for userid in userdata:
             stats["error"] += 1
     except:
         logging.debug("Could not compute full name for username: " + str(cur_username))
+        stats["error"] += 1
     
 
     cnt_users += 1
