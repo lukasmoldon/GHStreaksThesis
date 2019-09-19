@@ -2,6 +2,7 @@
 import requests
 import requests_html
 import datetime
+from datetime import timedelta
 import json
 import time
 import logging
@@ -33,7 +34,6 @@ update_users = 100 # How often an update about number of users computed?!
 save_users = 1000 # How often save computed users?!
 show_stats = 1000 # How often show stats?!
 
-cooldown_geolocate = 1.05 # How many seconds waiting between two requests? (1 IS MINIMUM ACCORDING TO https://operations.osmfoundation.org/policies/nominatim/)
 threshold_geolocate = 2 # How many tries for connecting with geopy before rejecting coordinates?
 # ------------------------------
 
@@ -48,6 +48,7 @@ useragent = useragent + "  Contact: " + email
 
 link_userinfo = "https://api.github.com/users/"
 cnt_users = 0
+nextreq = datetime.datetime.now()
 
 userdata = {} # from reduced_users
 genderdata = {} # "userID": {"name": "username", "gender":"m/f/mm/mf/a/u/e"}
@@ -84,6 +85,7 @@ def sleep_epoch(epochtime):
 def get_gender_by_coordinates(name, lat, lon):
 
     noGeo = False # if country locating fails, get gender without that information
+    global nextreq # dont forget next request time when leaving the function
 
     if lon < -180 or lon > 180 or lat < -90 or lat > 90 or lat == lon:
         logging.warning("Invalid coordinates for username: " + str(name) + ", with coordinates: " + str(lat) + ", " + str(lon))
@@ -92,11 +94,15 @@ def get_gender_by_coordinates(name, lat, lon):
     if not noGeo:
         cnt_tries = 0
         while(cnt_tries < threshold_geolocate):
+            if not ((nextreq - datetime.datetime.now()) < datetime.timedelta(seconds=0)):
+                waitsec = ((nextreq - datetime.datetime.now()).microseconds / 1000000) + (nextreq - datetime.datetime.now()).seconds
+                time.sleep(waitsec)
             try:
-                time.sleep(cooldown_geolocate)
                 location = geolocator.reverse( (lat, lon), language="en")
                 logging.debug(str(location.raw['address']['country']) + "Never delete this line!") # This is NOT a debug print - its for testing the result (string = country or None-type = e.g. ocean)
+                nextreq = datetime.datetime.now() + datetime.timedelta(seconds=1)
             except:
+                nextreq = datetime.datetime.now() + datetime.timedelta(seconds=1)
                 cnt_tries += 1
                 if cnt_tries == threshold_geolocate:
                     logging.debug("Could not get country for username: " + str(name) + ", with coordinates: " + str(lat) + ", " + str(lon))
