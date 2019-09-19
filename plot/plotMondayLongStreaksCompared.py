@@ -76,7 +76,7 @@ while length <= observed_end:
     length += 1
 
 
-p1 = ax.bar(indices, values, width, color='b', align='center')
+p1 = ax.bar(indices, values, width, align='center')
 
 
 
@@ -103,7 +103,7 @@ while length <= observed_end:
         values.append(0)
     length += 1
 
-p2 = ax.bar(indices, values, width, color='r', align='center')
+p2 = ax.bar(indices, values, width, align='center')
 
 
 ax.set_xticks(range(observed_start, observed_end + 1))

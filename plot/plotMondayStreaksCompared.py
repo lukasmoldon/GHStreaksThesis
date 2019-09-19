@@ -61,7 +61,7 @@ while length <= threshold:
     values.append(plotdata["0"][str(length)])
     length += 1
 
-p1 = ax.bar(indices, values, width, color='b', align='center')
+p1 = ax.bar(indices, values, width, align='center')
 
 
 
@@ -74,7 +74,7 @@ while length <= threshold:
     values.append(plotdata["8"][str(length)])
     length += 1
 
-p2 = ax.bar(indices, values, width, color='r', align='center')
+p2 = ax.bar(indices, values, width, align='center')
 
 
 ax.set_xticks(range(1, threshold + 1))
