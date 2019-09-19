@@ -30,7 +30,7 @@ token = "XXXXXXXXXXXXXXXXXXXXX"
 email = "XXXXXXXXXXXXXXXXXXXXX"
 useragent = "Research for bachelor thesis on GitHub streaks" 
 
-update_users = 100 # How often an update about number of users computed?!
+update_users = 500 # How often an update about number of users computed?!
 save_users = 1000 # How often save computed users?!
 show_stats = 1000 # How often show stats?!
 
@@ -169,7 +169,7 @@ answer = session.get(link_userinfo + "TheLukester", auth=(username, token))
 status = answer.headers["Status"]
 if status == "200 OK":
     logging.info(status)
-    logging.info("Remaining requests with this token: " + str(answer.headers["X-RateLimit-Remaining"]))
+    logging.info("Remaining GitHub requests with this token: " + str(answer.headers["X-RateLimit-Remaining"]))
 elif int(answer.headers["X-RateLimit-Remaining"]) == 0:
     logging.warning("API counter at 0!")
     sleep_epoch(answer.headers["X-RateLimit-Reset"])
@@ -204,7 +204,7 @@ for userid in userdata:
 
     if status == "200 OK":
         if int(answer.headers["X-RateLimit-Remaining"]) % 1000 == 0:
-            logging.info("Requests remaining: " + str(answer.headers["X-RateLimit-Remaining"]))
+            logging.info("GitHub requests remaining: " + str(answer.headers["X-RateLimit-Remaining"]))
     else:
         logging.error("Unexpected Error occurred while connecting with api.github.com after waiting for counter reset:")
         print(answer.headers)
@@ -244,6 +244,7 @@ for userid in userdata:
         logging.info("Done.")
 
     if cnt_users % show_stats == 0:
+        logging.info("--------------------")
         logging.info("Meantime statistics:")
         
         sum = 0
@@ -251,6 +252,7 @@ for userid in userdata:
             sum += stats[entry]
             logging.info(str(entry) + ": " + str(stats[entry]))
         logging.info("Total: " + str(sum))
+        logging.info("--------------------")
 
 
 
