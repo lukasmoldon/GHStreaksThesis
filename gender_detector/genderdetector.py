@@ -204,8 +204,13 @@ for userid in userdata:
             sys.exit()
 
     if status == "200 OK":
-        if int(answer.headers["X-RateLimit-Remaining"]) % 1000 == 0:
-            logging.info("GitHub requests remaining: " + str(answer.headers["X-RateLimit-Remaining"]))
+        try:
+            if int(answer.headers["X-RateLimit-Remaining"]) % 1000 == 0:
+                logging.info("GitHub requests remaining: " + str(answer.headers["X-RateLimit-Remaining"]))
+        except:
+            logging.warning("Unexpected Error occurred while accessing remaining request number at api.github.com:")
+            print(answer.headers)
+            print(answer.text)
     else:
         logging.error("Unexpected Error occurred while connecting with api.github.com after waiting for counter reset:")
         print(answer.headers)
