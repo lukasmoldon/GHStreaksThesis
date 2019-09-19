@@ -27,11 +27,12 @@ path_results = "/home/lmoldon/data/users_gender.json"
 username = "XXXXXXXXXXXXXXXXXXXXX"
 token = "XXXXXXXXXXXXXXXXXXXXX"
 email = "XXXXXXXXXXXXXXXXXXXXX"
-useragent = "Research for bachelor thesis on GitHub streaks"
+useragent = "Research for bachelor thesis on GitHub streaks" 
 
-update_users = 100 # How often an update about users computed?!
+update_users = 100 # How often an update about number of users computed?!
+save_users = 1000 # How often save computed users?!
+show_stats = 1000 # How often show stats?!
 
-failedcooldown_geolocate = 1.1 # How many seconds waiting if geolocate requests failed?
 cooldown_geolocate = 1.05 # How many seconds waiting between two requests? (1 IS MINIMUM ACCORDING TO https://operations.osmfoundation.org/policies/nominatim/)
 threshold_geolocate = 2 # How many tries for connecting with geopy before rejecting coordinates?
 # ------------------------------
@@ -100,8 +101,6 @@ def get_gender_by_coordinates(name, lat, lon):
                 if cnt_tries == threshold_geolocate:
                     logging.debug("Could not get country for username: " + str(name) + ", with coordinates: " + str(lat) + ", " + str(lon))
                     noGeo = True
-                else:
-                    time.sleep(cooldown_geolocate)
             else:
                 cnt_tries = threshold_geolocate
 
@@ -229,6 +228,8 @@ for userid in userdata:
     cnt_users += 1
     if cnt_users % update_users == 0:
         logging.info("User count: " + str(cnt_users))
+    
+    if cnt_users % save_users == 0:
         logging.info("Caching genderdata ...")
 
         with open(path_results, "w") as fp:
@@ -236,7 +237,9 @@ for userid in userdata:
 
         logging.info("Done.")
 
+    if cnt_users % show_stats == 0:
         logging.info("Meantime statistics:")
+        
         sum = 0
         for entry in stats:
             sum += stats[entry]
