@@ -116,28 +116,29 @@ def get_gender_by_coordinates(name, lat, lon):
                 gender = gdetector.get_gender(name, str(location.raw['address']['country'].lower()))
             except:
                 logging.critical("Failed to get gender with valid location for username " + str(name))
-                return "ERROR"
+                return ("ERROR", "")
         elif str(location.raw['address']['country']) in translate:
             try:
                 gender = gdetector.get_gender(name, translate[str(location.raw['address']['country'])])
             except:
                 logging.critical("Failed to get gender with translated location for username " + str(name))
-                return "ERROR"
+                return ("ERROR", "")
         else:
             try:
                 gender = gdetector.get_gender(name)
                 logging.debug("Following country unknown for gender-detection: " + str(location.raw['address']['country']))
             except:
                 logging.critical("Failed to get gender without location but valid coordinates(!) for username " + str(name))
-                return "ERROR"
+                return ("ERROR", "")
     else:
         try:
             gender = gdetector.get_gender(name)
+            return (gender, "")
         except:
             logging.critical("Failed to get gender without location for username " + str(name))
-            return "ERROR"
+            return ("ERROR", "")
     
-    return gender
+    return (gender, str(location.raw['address']['country']))
 
 
 
@@ -215,15 +216,16 @@ for userid in userdata:
         cur_fullname = answer.json()["name"]
         cur_firstname = cur_fullname.split()[0]
         cur_gender = get_gender_by_coordinates(cur_firstname, cur_lat, cur_long)
-        if cur_gender != "ERROR":
+        if cur_gender[0] != "ERROR":
             try:
-                stats[str(cur_gender)] += 1
+                stats[str(cur_gender[0])] += 1
                 genderdata[str(userid)] = {
                     "name": str(cur_fullname),
-                    "gender": str(cur_gender)
+                    "gender": str(cur_gender[0]),
+                    "country": str(cur_gender[1])
                 }
             except:
-                logging.error("Could not save: " + str(cur_gender))
+                logging.error("Could not save: " + str(cur_gender[0]))
                 stats["error"] += 1
         else:
             stats["error"] += 1
