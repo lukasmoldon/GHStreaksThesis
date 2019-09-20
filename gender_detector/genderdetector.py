@@ -87,9 +87,14 @@ def get_gender_by_coordinates(name, lat, lon):
     noGeo = False # if country locating fails, get gender without that information
     global nextreq # dont forget next request time when leaving the function
 
-    if lon < -180 or lon > 180 or lat < -90 or lat > 90 or lat == lon:
-        logging.warning("Invalid coordinates for username: " + str(name) + ", with coordinates: " + str(lat) + ", " + str(lon))
+    if type(lon) == float and type(lat) == float:
+        if lon < -180 or lon > 180 or lat < -90 or lat > 90 or lat == lon:
+            logging.warning("Invalid coordinates for username: " + str(name) + ", with coordinates: " + str(lat) + ", " + str(lon))
+            noGeo = True
+    else:
         noGeo = True
+        logging.warning("Non-int coordinates for username: " + str(name))
+
 
     if not noGeo:
         cnt_tries = 0
@@ -166,19 +171,39 @@ logging.info("Done.")
 
 logging.info("Connecting with api.github.com ...")
 
-answer = session.get(link_userinfo + "TheLukester", auth=(username, token))
-status = answer.headers["Status"]
-if status == "200 OK":
-    logging.info(status)
-    logging.info("Remaining GitHub requests with this token: " + str(answer.headers["X-RateLimit-Remaining"]))
-elif int(answer.headers["X-RateLimit-Remaining"]) == 0:
-    logging.warning("API counter at 0!")
-    sleep_epoch(answer.headers["X-RateLimit-Reset"])
-else:
-    logging.error("Unexpected Error occurred while connecting with api.github.com:")
-    print(answer.headers)
-    print(answer.text)
-    sys.exit()
+cnt_triesGH = 0
+done = False
+while(not done):
+    try:
+        answer = session.get(link_userinfo + "TheLukester", auth=(username, token))
+
+        status = answer.headers["Status"]
+        if status != "200 OK":
+            if int(answer.headers["X-RateLimit-Remaining"]) == 0:
+                logging.info("API counter at 0!")
+                sleep_epoch(answer.headers["X-RateLimit-Reset"])
+                answer = session.get(link_userinfo + "TheLukester", auth=(username, token))
+
+        if status == "200 OK":
+            done = True
+        else:
+            logging.error("Received unexpected answer while connecting with api.github.com:")
+            print(answer.headers)
+            print(answer.text)
+            time.sleep(0.72)
+            cnt_triesGH += 1
+            if cnt_triesGH > 50:
+                logging.fatal("Too many failed GET requests without 200 OK:")
+                print(answer.headers)
+                print(answer.text)
+                sys.exit()
+    except:
+        logging.warning("Could not send GET request to api.github.com")
+        time.sleep(0.72)
+        cnt_triesGH += 1
+        if cnt_triesGH > 50:
+            logging.fatal("Too many failed GET requests")
+            sys.exit()
 
 logging.info("Done.")
 
@@ -190,32 +215,49 @@ for userid in userdata:
     cur_lat = float(userdata[userid]["lat"])
     cur_long = float(userdata[userid]["long"])
 
-    answer = session.get(link_userinfo + cur_username, auth=(username, token))
-
-    if status != "200 OK":
-        if int(answer.headers["X-RateLimit-Remaining"]) == 0:
-            logging.info("API counter at 0!")
-            sleep_epoch(answer.headers["X-RateLimit-Reset"])
-            answer = session.get(link_userinfo + cur_username, auth=(username, token))
-        else:
-            logging.error("Unexpected Error occurred while connecting with api.github.com:")
-            print(answer.headers)
-            print(answer.text)
-            sys.exit()
-
-    if status == "200 OK":
+    cnt_triesGH = 0
+    done = False
+    while(not done):
         try:
-            if int(answer.headers["X-RateLimit-Remaining"]) % 1000 == 0:
-                logging.info("GitHub requests remaining: " + str(answer.headers["X-RateLimit-Remaining"]))
+            answer = session.get(link_userinfo + cur_username, auth=(username, token))
+
+            status = answer.headers["Status"]
+            if status != "200 OK":
+                if int(answer.headers["X-RateLimit-Remaining"]) == 0:
+                    logging.info("API counter at 0!")
+                    sleep_epoch(answer.headers["X-RateLimit-Reset"])
+                    answer = session.get(link_userinfo + cur_username, auth=(username, token))
+
+            if status == "200 OK":
+                done = True
+            else:
+                logging.error("Received unexpected answer while connecting with api.github.com:")
+                print(answer.headers)
+                print(answer.text)
+                time.sleep(0.72)
+                cnt_triesGH += 1
+                if cnt_triesGH > 50:
+                    logging.fatal("Too many failed GET requests without 200 OK:")
+                    print(answer.headers)
+                    print(answer.text)
+                    sys.exit()
         except:
-            logging.warning("Unexpected Error occurred while accessing remaining request number at api.github.com:")
-            print(answer.headers)
-            print(answer.text)
-    else:
-        logging.error("Unexpected Error occurred while connecting with api.github.com after waiting for counter reset:")
+            logging.warning("Could not send GET request to api.github.com")
+            time.sleep(0.72)
+            cnt_triesGH += 1
+            if cnt_triesGH > 50:
+                logging.fatal("Too many failed GET requests")
+                sys.exit()
+
+
+    
+    try:
+        if int(answer.headers["X-RateLimit-Remaining"]) % 1000 == 0:
+            logging.info("GitHub requests remaining: " + str(answer.headers["X-RateLimit-Remaining"]))
+    except:
+        logging.warning("Unexpected Error occurred while accessing remaining request number at api.github.com:")
         print(answer.headers)
         print(answer.text)
-        sys.exit()
         
     try:
         cur_fullname = answer.json()["name"]
