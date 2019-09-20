@@ -150,7 +150,7 @@ def get_gender_by_coordinates(name, lat, lon):
 
 
 
-logging.info("Loading data ...")
+logging.info("Loading data:")
 
 logging.info("Loading userdata ...")
 with open(path_source_userdata, "r") as fp:
@@ -169,7 +169,7 @@ logging.info("Done.")
 
 
 
-logging.info("Connecting with api.github.com ...")
+logging.info("Connecting with api.github.com:")
 
 cnt_triesGH = 0
 done = False
@@ -186,6 +186,7 @@ while(not done):
 
         if status == "200 OK":
             done = True
+            logging.info("Requests remaining for GitHub API: " + str(int(answer.headers["X-RateLimit-Remaining"])))
         else:
             logging.error("Received unexpected answer while connecting with api.github.com:")
             print(answer.headers)
@@ -209,11 +210,11 @@ logging.info("Done.")
 
 
 
-
 for userid in userdata:
     cur_username = userdata[userid]["name"]
     cur_lat = float(userdata[userid]["lat"])
     cur_long = float(userdata[userid]["long"])
+    skip = False
 
     cnt_triesGH = 0
     done = False
@@ -222,30 +223,39 @@ for userid in userdata:
             answer = session.get(link_userinfo + cur_username, auth=(username, token))
 
             status = answer.headers["Status"]
-            if status != "200 OK":
+            if status == "404 Not Found" or status == "403 Forbidden":
+                done = True
+                skip = True
+            elif status != "200 OK":
                 if int(answer.headers["X-RateLimit-Remaining"]) == 0:
                     logging.info("API counter at 0!")
                     sleep_epoch(answer.headers["X-RateLimit-Reset"])
                     answer = session.get(link_userinfo + cur_username, auth=(username, token))
 
-            if status == "200 OK":
-                done = True
-            else:
-                logging.error("Received unexpected answer while connecting with api.github.com:")
-                print(answer.headers)
-                print(answer.text)
-                time.sleep(0.72)
-                cnt_triesGH += 1
-                if cnt_triesGH > 50:
-                    logging.fatal("Too many failed GET requests without 200 OK:")
+            if not skip:
+                if status == "200 OK":
+                    done = True
+                else:
+                    logging.error("Received unexpected answer while connecting with api.github.com:")
+                    print(link_userinfo + cur_username)
                     print(answer.headers)
                     print(answer.text)
-                    sys.exit()
+                    time.sleep(0.72)
+                    cnt_triesGH += 1
+                    if cnt_triesGH > 50:
+                        logging.fatal("Too many failed GET requests without 200 OK:")
+                        print(link_userinfo + cur_username)
+                        print(answer.headers)
+                        print(answer.text)
+                        sys.exit()
         except:
             logging.warning("Could not send GET request to api.github.com")
             time.sleep(0.72)
             cnt_triesGH += 1
             if cnt_triesGH > 50:
+                logging.critical("Too many failed GET requests. Waiting 60 min ...")
+                time.sleep(3600)
+            elif cnt_triesGH > 70:
                 logging.fatal("Too many failed GET requests")
                 sys.exit()
 
@@ -259,24 +269,28 @@ for userid in userdata:
         print(answer.headers)
         print(answer.text)
         
-    try:
-        cur_fullname = answer.json()["name"]
-        cur_firstname = cur_fullname.split()[0]
-        cur_gender = get_gender_by_coordinates(cur_firstname, cur_lat, cur_long)
-        if cur_gender[0] != "ERROR":
-            try:
-                stats[str(cur_gender[0])] += 1
-                genderdata[str(userid)] = {
-                    "name": str(cur_fullname),
-                    "gender": str(cur_gender[0]),
-                    "country": str(cur_gender[1])
-                }
-            except:
-                logging.error("Could not save: " + str(cur_gender[0]))
+    if not skip:
+        try:
+            cur_fullname = answer.json()["name"]
+            cur_firstname = cur_fullname.split()[0]
+            cur_gender = get_gender_by_coordinates(cur_firstname, cur_lat, cur_long)
+            if cur_gender[0] != "ERROR":
+                try:
+                    stats[str(cur_gender[0])] += 1
+                    genderdata[str(userid)] = {
+                        "name": str(cur_fullname),
+                        "gender": str(cur_gender[0]),
+                        "country": str(cur_gender[1])
+                    }
+                except:
+                    logging.error("Could not save: " + str(cur_gender[0]))
+                    stats["error"] += 1
+            else:
                 stats["error"] += 1
-        else:
+        except:
+            logging.debug("Could not compute full name for username: " + str(cur_username))
             stats["error"] += 1
-    except:
+    else:
         logging.debug("Could not compute full name for username: " + str(cur_username))
         stats["error"] += 1
     
