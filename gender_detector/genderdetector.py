@@ -51,7 +51,7 @@ cnt_users = 0
 nextreq = datetime.datetime.now()
 
 userdata = {} # from reduced_users
-genderdata = {} # "userID": {"name": "username", "gender":"m/f/mm/mf/a/u/e"}
+genderdata = {} # "userID": {"name": "username", "gender":"m/f/mm/mf/a/u/e/d"}
 stats = {
     "male": 0, # m
     "female": 0, # f
@@ -60,6 +60,7 @@ stats = {
     "andy": 0, # a (androgynous)
     "unknown": 0, # u
     "error": 0 # e
+    "deleted": 0 # d
 }
 
 # Dict of country names gender-guesser knows
@@ -291,8 +292,8 @@ for userid in userdata:
             logging.debug("Could not compute full name for username: " + str(cur_username))
             stats["error"] += 1
     else:
-        logging.debug("Could not compute full name for username: " + str(cur_username))
-        stats["error"] += 1
+        logging.debug("Username not found: " + str(cur_username))
+        stats["deleted"] += 1
     
 
     cnt_users += 1
