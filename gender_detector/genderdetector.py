@@ -35,11 +35,17 @@ save_users = 1000 # How often save computed users?!
 show_stats = 1000 # How often show stats?!
 
 threshold_geolocate = 2 # How many tries for connecting with geopy before rejecting coordinates?
+
+debugmode = False # Enable debug messages in console
 # ------------------------------
 
 
 # ---------- INITIAL -----------
-logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
+if debugmode:
+    logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt='%d-%m-%y %H:%M:%S', level=logging.DEBUG)
+else:
+    logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
+
 session = requests_html.HTMLSession()
 gdetector = gender.Detector(case_sensitive=False)
 geolocator = Nominatim(user_agent=useragent)
