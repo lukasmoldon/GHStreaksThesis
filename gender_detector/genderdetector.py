@@ -65,7 +65,7 @@ stats = {
     "mostly_female": 0, # mf
     "andy": 0, # a (androgynous)
     "unknown": 0, # u
-    "error": 0 # e
+    "error": 0, # e
     "deleted": 0 # d
 }
 
