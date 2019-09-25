@@ -8,8 +8,8 @@ from scipy import stats
 
 
 # ---------- INPUT -------------
-path_source_x = ""
-path_source_y = ""
+path_source_x = "/home/lmoldon/results/streakLengthsBefore.json"
+path_source_y = "/home/lmoldon/results/streakLengthsAfter.json"
 # ------------------------------
 
 
@@ -22,7 +22,7 @@ path_source_y = ""
 # see https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.mannwhitneyu.html
 
 continuity = True
-alternative = "greater" # None (deprecated), "less", "two-sided", or "greater"
+alternative = "less" # None (deprecated), "less", "two-sided", or "greater"
 # ------------------------------
 
 
