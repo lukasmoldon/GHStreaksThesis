@@ -1,6 +1,5 @@
 # ---------- IMPORT ------------
 import logging
-import datetime
 import json
 import scipy
 from scipy import stats
@@ -23,6 +22,11 @@ path_source_y = "/home/lmoldon/results/streakLengthsAfter.json"
 
 continuity = True
 alternative = "less" # None (deprecated), "less", "two-sided", or "greater"
+
+# for null hypothesis (H0): 
+# p <= alpha: reject H0, different distribution
+# p > alpha: fail to reject H0, same distribution
+alpha = 0.05
 # ------------------------------
 
 
@@ -32,24 +36,21 @@ logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt=
 
 
 
-log_starttime = datetime.datetime.now()
 
-logging.info("Accessing dataset x ...")
 with open(path_source_x, "r") as fp:
     x = json.load(fp)
 
-logging.info("Accessing dataset y ...")
 with open(path_source_y, "r") as fp:
     y = json.load(fp)
 
-logging.info("Done. (1/2)")
 
-results = scipy.stats.mannwhitneyu(x, y, use_continuity=continuity, alternative=alternative)
+statistics, p = scipy.stats.mannwhitneyu(x, y, alternative=alternative, use_continuity=continuity)
 
-logging.info("Results:" + str(results))
+logging.info("U_max = " + str(len(x)*len(y)))
+logging.info("U_y = " + str(statistics))
+logging.info("p = " + str(p))
 
-
-logging.info("Done. (2/2)")
-log_endtime = datetime.datetime.now()
-log_runtime = (log_endtime - log_starttime)
-logging.info("Total runtime: " + str(log_runtime))
+if p > alpha:
+	logging.info("Same distribution (fail to reject H0)")
+else:
+    logging.info("Different distribution (reject H0)")
