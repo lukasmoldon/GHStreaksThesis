@@ -20,8 +20,8 @@ path_source = "C:/Users/Lukas/Desktop/mondayLongStreakValues.json"
 
 
 # ---------- CONFIG ------------
-observed_start = 7 # range of bar chart AND calculation
-observed_end = 35 # range of bar chart AND calculation
+observed_start = 8 # range of bar chart AND calculation
+observed_end = 21 # range of bar chart AND calculation
 # ------------------------------
 
 
@@ -49,7 +49,7 @@ with open(path_source, "r") as fp:
 
 
 logging.info("Creating plot ...")
-
+del plotdata["0"]
 for monday_index in plotdata:
     values = []
     indices = []
@@ -75,8 +75,10 @@ for monday_index in plotdata:
 
     matplotlib.pyplot.bar(indices, values)
     plt.xlabel("Exact streak length starting from " + str(observed_mondays[int(monday_index)]) + "     (Avg streak length: " + str(round(avg, 2)) + ")")
-    plt.xticks(range(observed_start, observed_end + 1))
-    plt.ylabel("Distribution of streaklengths of streaks in interval starting on " + str(observed_mondays[int(monday_index)]))
+    plt.xticks(range(observed_start, observed_end + 1), labels=["Mon\n(8)", "Tue\n(9)", "Wed\n(10)", "Thu\n(11)", "Fri\n(12)", "Sat\n(13)", "Sun\n(14)", "Mon\n(15)", "Tue\n(16)", "Wed\n(17)", "Thu\n(18)", "Fri\n(19)", "Sat\n(20)", "Sun\n(21)"])
+    plt.ylabel("Distribution of streaklengths starting on " + str(observed_mondays[int(monday_index)]))
+    plt.annotate("Friday peak", xy=(11.5,0.21), xytext=(7.3,0.18), arrowprops=dict(facecolor='black', shrink=0.03))
+    plt.annotate("Friday peak", xy=(19,0.04), xytext=(15,0.07), arrowprops=dict(facecolor='black', shrink=0.03))
     plt.show()
     
 
