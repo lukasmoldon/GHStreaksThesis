@@ -108,7 +108,7 @@ p2 = ax.bar(indices, values, width, align='center')
 
 ax.set_xticks(range(observed_start, observed_end + 1))
 ax.legend((p1[0], p2[0]), (str(observed_mondays[0]), str(observed_mondays[6])))
-plt.ylabel("Distribution of streaklengths of streaks starting on both Mondays")
+plt.ylabel("Distribution of streaklengths starting on both Mondays")
 plt.xlabel("\n" + str(observed_mondays[0]) + ": Avg streak length: " + str(round(avg, 2)) + "\n" + str(observed_mondays[6]) + ": Avg streak length: " + str(round(avgI, 2)))
 
 plt.show()
