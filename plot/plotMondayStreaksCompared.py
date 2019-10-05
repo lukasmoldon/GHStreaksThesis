@@ -82,7 +82,8 @@ ax.set_xticklabels(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "Mon", "Tue
 ax.legend((p1[0], p2[0]), (str(observed_mondays[0]), str(observed_mondays[8])))
 plt.ylabel("Distribution of streaklengths of streaks starting on both Mondays")
 plt.xlabel("\n2016-04-18: Avg streak length: 2.38    Streaks longer than 14: 0.52%\n2016-06-13: Avg streak length: 2.24    Streaks longer than 14: 0.27%")
-
+plt.annotate("Friday peak", xy=(5.1,0.1), xytext=(6,0.15), arrowprops=dict(facecolor='black', shrink=0.03))
+plt.annotate("Friday peak", xy=(11.7,0.014), xytext=(8,0.06), arrowprops=dict(facecolor='black', shrink=0.03))
 plt.show()
 
 
