@@ -73,9 +73,9 @@ logging.info("Total users: " + str(cnt_users))
 logging.info("Fake users: " + str(cnt_fake_users))
 logging.info("Share fake: " + str((cnt_fake_users/cnt_users))*100)
 logging.info("------------------------------")
-logging.info("Total users: " + str(cnt_commits))
-logging.info("Fake users: " + str(cnt_fake_commits))
-logging.info("Share fake: " + str((cnt_fake_commits/cnt_commits))*100)
+logging.info("Total commits: " + str(cnt_commits))
+logging.info("Commits by fake users: " + str(cnt_fake_commits))
+logging.info("Share fake commits by fake users: " + str((cnt_fake_commits/cnt_commits))*100)
 logging.info("------------------------------")
 
 
