@@ -18,8 +18,7 @@ path_results_fakeids = "/home/lmoldon/data/fakeuser_IDs.json"
 
 
 # ---------- CONFIG ------------
-chunksize_users = 100000
-chunksize_commits = 1000000
+chunksize = 1000000
 # ------------------------------
 
 
@@ -38,7 +37,7 @@ log_starttime = datetime.datetime.now()
 
 logging.info("Accessing userdata ...")
 cnt = 0
-for chunk in pd.read_csv(path_source_userdata, chunksize=chunksize_users, header=None, delimiter=",", usecols=[0,5], names=["id","fake"]):
+for chunk in pd.read_csv(path_source_userdata, chunksize=chunksize, header=None, delimiter=",", usecols=[0,5], names=["id","fake"]):
     for row in list(chunk.values):
         cnt_users += 1
         if str(row[1]) == "1":
@@ -58,7 +57,7 @@ logging.info("Done. (1/2)")
 
 logging.info("Accessing commitdata ...")
 cnt = 0
-for chunk in pd.read_csv(path_source_commits, chunksize=chunksize_commits, header=None, delimiter=",", usecols=[3], names=["committer_id"]):
+for chunk in pd.read_csv(path_source_commits, chunksize=chunksize, header=None, delimiter=",", usecols=[3], names=["committer_id"]):
     for row in list(chunk.values):
         cnt_commits += 1
         if str(row[0]) in fakeuserids:
@@ -71,11 +70,11 @@ logging.info("Done. (2/2)")
 logging.info("------------------------------")
 logging.info("Total users: " + str(cnt_users))
 logging.info("Fake users: " + str(cnt_fake_users))
-logging.info("Share fake: " + str((cnt_fake_users/cnt_users))*100)
+logging.info("Share fake: " + str((cnt_fake_users/cnt_users)*100))
 logging.info("------------------------------")
 logging.info("Total commits: " + str(cnt_commits))
 logging.info("Commits by fake users: " + str(cnt_fake_commits))
-logging.info("Share fake commits by fake users: " + str((cnt_fake_commits/cnt_commits))*100)
+logging.info("Share fake commits by fake users: " + str((cnt_fake_commits/cnt_commits)*100))
 logging.info("------------------------------")
 
 
