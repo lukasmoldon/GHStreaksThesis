@@ -30,6 +30,7 @@ data = {} # dict for saving IDs as keys and amount of commits as value
 standalonecommitids = set() # temporary store sommit_standaloneIDs in a set for better performance (membership query is faster on sets)
 year_start = datetime.datetime.strptime("2016-01-01 00:00:01", datetimeFormat)
 year_end = datetime.datetime.strptime("2016-12-31 23:59:59", datetimeFormat)
+validtimestamp = True
 # ------------------------------
 
 
@@ -53,8 +54,12 @@ logging.info("Starting ...")
 cnt = 0
 for chunk in pd.read_csv(path_source_commits, chunksize=chunksize, header=None, delimiter=",", usecols=[0,3,5], names=["id","committer_id","created_at"]):
     for row in list(chunk.values):
-        timestamp = datetime.datetime.strptime(str(row[2]), datetimeFormat)
-        if timestamp > year_start and timestamp < year_end:
+        try:
+            timestamp = datetime.datetime.strptime(str(row[2]), datetimeFormat)
+            validtimestamp = True
+        except:
+            validtimestamp = False
+        if timestamp > year_start and timestamp < year_end and validtimestamp:
             commitid = str(row[0])
             if commitid in standalonecommitids:
                 userid = str(row[1])
