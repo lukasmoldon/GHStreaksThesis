@@ -34,7 +34,7 @@ end_workers = datetime.datetime.strptime("1900-01-01 17:00:00", datetimeFormat).
 # ---------- INITIAL -----------
 logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
 streaks = {} # key = userID, value = {1: {"start": date, "end": date, "len": int}, ...}
-usergroups = {} # key = userID, value = 0 (freetime) or value = 1 (worker)
+usergroups = {} # key = userID, value = {"f": cur_usr_freetime, "w": cur_usr_worktime}
 userdata = {} # for location (timezone)
 valid_users = 0 # how many users have valid date data?
 tf = TimezoneFinder()
