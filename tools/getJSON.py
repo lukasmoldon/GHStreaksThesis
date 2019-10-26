@@ -17,8 +17,8 @@ import ijson
 
 
 # ---------- CONFIG ------------
-targetfile = "/home/lmoldon/data/standalone_CommitIDs.json"
-filesizeoverlimit = True # False = filesize < 2GB | True = filezize > 2GB
+targetfile = "/home/lmoldon/data/contributions_per_user_per_day.json"
+filesizeoverlimit = False # False = filesize < 2GB | True = filezize > 2GB
 # ------------------------------
 
 
@@ -48,14 +48,14 @@ if filesizeoverlimit:
             print(str(prefix) + "|" + str(event) + "|" + str(value))
             print("--------------------------------")
             cnt_temp += 1
-            if cnt_temp >= 30:
+            if cnt_temp >= 40:
                 break
 else:
     logging.info("Computing file size ...")
     with open(targetfile, "r") as fp:
         jsonfile = json.load(fp)
     cnt_entries = len(jsonfile)
-    logging.info(str(jsonfile)[:30])
+    logging.info(str(jsonfile)[:3000] + "  ...  }")
 
 
 logging.info("Total entries in JSON file: " + str(cnt_entries))
