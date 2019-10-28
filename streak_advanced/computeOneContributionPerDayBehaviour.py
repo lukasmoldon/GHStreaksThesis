@@ -13,7 +13,7 @@ path_source_streakdata = "/home/lmoldon/data/user_streaks.json"
 
 
 # ---------- OUTPUT ------------
-path_results = "/home/lmoldon/results/streakDensityValues.json"
+path_results = "/home/lmoldon/results/streakOneContributionDays.json"
 # ------------------------------
 
 
@@ -95,7 +95,7 @@ for userid in streakdata: # for each user
             if cnt_streaks_total % 1000000 == 0:
                 logging.info(str(cnt_streaks_total/1000000) + " million streaks computed.")
 
-            if length >= minlen and start >= observed_start and end <= observed_end: # streak is fully in observed time
+            if length >= minlen and start >= observed_start and end <= observed_end:
                 cnt_streaks_observed += 1
                 setup = splitDaysInBins(length) # only for binsize
 
@@ -107,18 +107,19 @@ for userid in streakdata: # for each user
                 
                 for timestamp in contributionamount[userid]:
                     day = datetime.datetime.strptime(timestamp, datetimeFormat).date()
-                    if day >= start and day <= end: # day is part of current streak
-                        amount = int(contributionamount[userid][timestamp])
-                        tempbins[whichbin(day, start, length)] += amount
+                    amount = int(contributionamount[userid][timestamp])
+                    if day >= start and day <= end and amount == 1: # day is part of current streak AND there was only one contribution!
+                        tempbins[whichbin(day, start, length)] += 1
             
-                totalstreakcontributions = 0 # avg during the streak
-                for index in tempbins: # calculate avg contributions per day (bins dont always have same size)
+                numberOneContributionDays = 0 # avg during the streak
+                for index in tempbins: # calculate avg share of 1 contribution days (bins dont always have same size)
                     tempbins[index] = tempbins[index] / setup[index][2] # divide by binsize
-                    totalstreakcontributions += tempbins[index]
+                    numberOneContributionDays += tempbins[index]
 
-                for index in tempbins: # calculate distibution over all bins in %
-                    tempbins[index] = tempbins[index] / totalstreakcontributions # divide by totalstreakcontributions
-                    bins[index] += tempbins[index] # add to bins
+                if numberOneContributionDays > 0:
+                    for index in tempbins: # calculate distibution over all bins in %
+                        tempbins[index] = tempbins[index] / numberOneContributionDays # divide by numberOneContributionDays
+                        bins[index] += tempbins[index] # add to bins
                     
     else:
         logging.warning("UserID " + str(userid) + ": no data found in contributions_per_user_per_day.json")
