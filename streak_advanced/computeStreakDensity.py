@@ -21,8 +21,10 @@ path_results = "/home/lmoldon/results/streakDensityValues.json"
 minlen = 30 # minimum observed streak lentgh
 binsize = 0.1 # in % size of each bin
 datetimeFormat = "%Y-%m-%d"
-observed_start = datetime.datetime.strptime("2014-01-01", datetimeFormat).date() # start of observed time
-observed_end = datetime.datetime.strptime("2016-05-19", datetimeFormat).date() # end of observed time
+observed_start = datetime.datetime.strptime("2015-05-19", datetimeFormat).date() # start of observed time, 1 year before the change
+observed_end = datetime.datetime.strptime("2016-05-19", datetimeFormat).date() # end of observed time, day of the change
+#observed_start = datetime.datetime.strptime("2016-05-20", datetimeFormat).date() # start of observed time, one day after the change
+#observed_end = datetime.datetime.strptime("2017-05-20", datetimeFormat).date() # end of observed time, 1 year after the change
 # ------------------------------
 
 
