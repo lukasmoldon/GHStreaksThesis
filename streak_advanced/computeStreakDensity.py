@@ -48,7 +48,7 @@ def splitDaysInBins(length):
         newthreshold = round(factor*length)
         bins_maxthreshold.append( (lastthreshold+1, newthreshold, newthreshold-lastthreshold) )
         lastthreshold = newthreshold
-        factor += 0.1
+        factor += binsize
     return bins_maxthreshold # format [(start, end, sizeofbin)]
 
 def whichbin(day, start, length):
@@ -61,6 +61,8 @@ def whichbin(day, start, length):
         else:
             index +=1
     logging.critical("Could not find a bin!")
+    logging.critical("Binsetup: " + str(binsetup))
+    logging.critical("Dayrank: " + str(dayrank))
 
 
 
