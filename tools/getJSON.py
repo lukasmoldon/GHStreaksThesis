@@ -17,7 +17,7 @@ import ijson
 
 
 # ---------- CONFIG ------------
-targetfile = "/home/lmoldon/data/contributions_per_user_per_day.json"
+targetfile = "/home/lmoldon/data/user_streaks.json"
 filesizeoverlimit = False # False = filesize < 2GB | True = filezize > 2GB
 # ------------------------------
 
@@ -55,7 +55,7 @@ else:
     with open(targetfile, "r") as fp:
         jsonfile = json.load(fp)
     cnt_entries = len(jsonfile)
-    logging.info(str(jsonfile)[:3000] + "  ...  }")
+    logging.info(str(jsonfile)[:5000] + "  ...  }")
 
 
 logging.info("Total entries in JSON file: " + str(cnt_entries))

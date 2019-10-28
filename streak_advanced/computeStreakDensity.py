@@ -18,7 +18,7 @@ path_results = "/home/lmoldon/results/streakDensityValues.json"
 
 
 # ---------- CONFIG ------------
-minlen = 10 # minimum observed streak lentgh
+minlen = 30 # minimum observed streak lentgh
 binsize = 0.1 # in % size of each bin
 datetimeFormat = "%Y-%m-%d"
 observed_start = datetime.datetime.strptime("2014-01-01", datetimeFormat).date() # start of observed time
@@ -31,7 +31,7 @@ logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt=
 cnt_streaks_total = 0
 cnt_streaks_observed = 0
 bins = {}
-numberbins = 1/binsize
+numberbins = round(1/binsize)
 # ------------------------------
 
 
@@ -50,7 +50,7 @@ def splitDaysInBins(length):
     return bins_maxthreshold # format [(start, end, sizeofbin)]
 
 def whichbin(day, start, length):
-    dayrank = (start - day).days + 1
+    dayrank = (day - start).days + 1
     binsetup = splitDaysInBins(length)
     index = 0
     while index < numberbins:
@@ -75,15 +75,16 @@ logging.info("Starting ...")
 
 i = 0
 while i < numberbins:
-    bins[str(i)] = 0
+    bins[i] = 0
     i += 1
 
 
-for userid in streakdata:
+for userid in streakdata: # for each user
 
     if userid in contributionamount:
 
-        for streakid in streakdata[userid]:
+        for streakid in streakdata[userid]: # for each streak of that user
+            
             start = datetime.datetime.strptime(str(streakdata[userid][streakid]["start"]), datetimeFormat).date()
             end = datetime.datetime.strptime(str(streakdata[userid][streakid]["end"]), datetimeFormat).date()
             length = int(streakdata[userid][streakid]["len"])
@@ -94,27 +95,29 @@ for userid in streakdata:
 
             if length >= minlen and start >= observed_start and end <= observed_end:
                 cnt_streaks_observed += 1
-                totalstreakcontributions = 0 # during the streak
-                # setup = splitDaysInBins(length) # only divide by binsize
+                setup = splitDaysInBins(length) # only for binsize
 
-                tempbins = []
+                tempbins = {}
                 i = 0
                 while i < numberbins:
-                    tempbins.append(0)
+                    tempbins[i] = 0
                     i += 1
                 
                 for timestamp in contributionamount[userid]:
                     day = datetime.datetime.strptime(timestamp, datetimeFormat).date()
                     if day >= start and day <= end: # day is part of current streak
                         amount = int(contributionamount[userid][timestamp])
-                        totalstreakcontributions += amount
-                        tempbins[whichbin(start, day, length)] += amount
+                        tempbins[whichbin(day, start, length)] += amount
             
-                for index in tempbins:
-                    # tempbins[index] = tempbins[index] / setup[index][2] # divide by binsize ?!
-                    tempbins[index] = tempbins[index] / totalstreakcontributions # divide by totalstreakcontributions
-                    bins[str(index)] += tempbins[index] # add to bins
+                totalstreakcontributions = 0 # avg during the streak
+                for index in tempbins: # calculate avg contributions per day (bins dont always have same size)
+                    tempbins[index] = tempbins[index] / setup[index][2] # divide by binsize
+                    totalstreakcontributions += tempbins[index]
 
+                for index in tempbins: # calculate distibution over all bins in %
+                    tempbins[index] = tempbins[index] / totalstreakcontributions # divide by totalstreakcontributions
+                    bins[index] += tempbins[index] # add to bins
+                    
     else:
         logging.warning("UserID " + str(userid) + ": no data found in contributions_per_user_per_day.json")
         
