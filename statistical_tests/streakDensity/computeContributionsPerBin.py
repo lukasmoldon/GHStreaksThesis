@@ -114,10 +114,7 @@ for userid in streakdata: # for each user
                         tempbins[whichbin(day, start, length)] += amount
             
                 for index in tempbins: # calculate avg contributions per day (bins dont always have same size)
-                    tempbins[index] = tempbins[index] / setup[index][2] # divide by binsize
-
-                for index in tempbins: # add to bins
-                    bins[index] += tempbins[index]
+                    bins[index] = round(tempbins[index] / setup[index][2]) # divide by binsize and add to bins
                     
     else:
         logging.warning("UserID " + str(userid) + ": no data found in contributions_per_user_per_day.json")
