@@ -22,6 +22,8 @@ path_source = "/home/lmoldon/results/contributionsPerBin.json"
 
 # ---------- INITIAL -----------
 logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
+bindata = {}
+bins = []
 # ------------------------------
 
 
@@ -37,7 +39,10 @@ logging.info("Done (1/2)")
 
 logging.info("Starting ...")
 
-result = chisquare(bindata)
+for index in bindata:
+    bins.append(bindata[index])
+
+result = chisquare(bins)
 
 logging.info("Done. (2/2)")
 
