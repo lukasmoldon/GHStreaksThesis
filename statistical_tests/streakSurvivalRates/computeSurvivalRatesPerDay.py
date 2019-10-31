@@ -34,7 +34,7 @@ cnt_streaks_observed = 0
 
 
 def daterange(observedtime_start, observedtime_end):
-        for n in range(int((observedtime_end - observedtime_start).days)):
+        for n in range(int((observedtime_end - observedtime_start).days + 1)):
                 yield observedtime_start + timedelta(n)
 
 
@@ -51,7 +51,7 @@ logging.info("Starting ...")
 
 # Initial dict for survival rates
 for single_date in daterange(observed_start, observed_end):
-        survivalRates[str(single_date.strftime(datetime))] = { # day X
+        survivalRates[str(single_date.strftime(datetimeFormat))] = { # day X
             "0": 0, # #abandoned (contribution on day X - 1, no contribution on day X)
             "1": 0, # #survived  (contribution on day X - 1, contribution on day X)
             "r": 0  # survival rate
@@ -73,13 +73,13 @@ for userid in streakdata: # for each user
 
             if start <= observed_start: # start is not in observed time
                 for single_date in daterange((observed_start + timedelta(days=1)), end):
-                    survivalRates[str(single_date.strftime(datetime))]["1"] += 1
+                    survivalRates[str(single_date.strftime(datetimeFormat))]["1"] += 1
             else: # start is in observed time
                 for single_date in daterange((start + timedelta(days=1)), end):
-                    survivalRates[str(single_date.strftime(datetime))]["1"] += 1
+                    survivalRates[str(single_date.strftime(datetimeFormat))]["1"] += 1
 
             endpoint = end + timedelta(days=1) # streak abandoned on that day
-            survivalRates[str(endpoint.strftime(datetime))]["0"] += 1
+            survivalRates[str(endpoint.strftime(datetimeFormat))]["0"] += 1
 
 
 for date in survivalRates:
@@ -99,6 +99,9 @@ with open(path_results, "w") as fp:
     json.dump(survivalRates, fp)
 logging.info("Done. (3/3)")
 
+
+logging.info("Total streaks: " + str(cnt_streaks_total))
+logging.info("Observed streaks: " + str(cnt_streaks_observed))
 
 log_endtime = datetime.datetime.now()
 log_runtime = (log_endtime - log_starttime)
