@@ -53,6 +53,8 @@ logging.info("Done. (1/2)")
 logging.info("Creating plot ...")
 
 matplotlib.pyplot.plot_date(dates, values, '-')
+#matplotlib.pyplot.plot_date(dates, lb, '-')
+#matplotlib.pyplot.plot_date(dates, ub, '-')
 plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='r')
 plt.xlabel("Time")
 plt.ylabel("Streak survival rate")

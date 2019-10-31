@@ -101,7 +101,7 @@ for userid in streakdata: # for each user
             cnt_streaks_observed += 1
 
             if start >= observed_start: # start in observed time
-                if end <= observed_end: # start and end in observed time
+                if end < observed_end: # start and end in observed time
                     for single_date in daterange((start + timedelta(days=1)), end):
                         survivalRates[str(single_date.strftime(datetimeFormat))]["1"] += 1
                     endpoint = end + timedelta(days=1) # streak abandoned on that day
@@ -110,7 +110,7 @@ for userid in streakdata: # for each user
                     for single_date in daterange((start + timedelta(days=1)), observed_end):
                         survivalRates[str(single_date.strftime(datetimeFormat))]["1"] += 1
             else: # start not in observed time
-                if end <= observed_end: # start not in observed time, but end in observed time
+                if end < observed_end: # start not in observed time, but end in observed time
                     for single_date in daterange((observed_start + timedelta(days=1)), end):
                         survivalRates[str(single_date.strftime(datetimeFormat))]["1"] += 1
                     endpoint = end + timedelta(days=1) # streak abandoned on that day
