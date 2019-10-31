@@ -97,19 +97,27 @@ for userid in streakdata: # for each user
         if cnt_streaks_total % 1000000 == 0:
             logging.info(str(cnt_streaks_total/1000000) + " million streaks computed.")
 
-        if length >= minLength and end >= observed_start and end < observed_end: # streak endpoint(!) is in observed time
+        if length >= minLength and start <= observed_end and end >= observed_start: # streak happend (partially) in observed time
             cnt_streaks_observed += 1
 
-            if start <= observed_start: # start is not in observed time
-                for single_date in daterange((observed_start + timedelta(days=1)), end):
-                    survivalRates[str(single_date.strftime(datetimeFormat))]["1"] += 1
-            else: # start is in observed time
-                for single_date in daterange((start + timedelta(days=1)), end):
-                    survivalRates[str(single_date.strftime(datetimeFormat))]["1"] += 1
-
-            endpoint = end + timedelta(days=1) # streak abandoned on that day
-            survivalRates[str(endpoint.strftime(datetimeFormat))]["0"] += 1
-
+            if start >= observed_start: # start in observed time
+                if end <= observed_end: # start and end in observed time
+                    for single_date in daterange((start + timedelta(days=1)), end):
+                        survivalRates[str(single_date.strftime(datetimeFormat))]["1"] += 1
+                    endpoint = end + timedelta(days=1) # streak abandoned on that day
+                    survivalRates[str(endpoint.strftime(datetimeFormat))]["0"] += 1
+                else: # start in observed time, end not in observed time
+                    for single_date in daterange((start + timedelta(days=1)), observed_end):
+                        survivalRates[str(single_date.strftime(datetimeFormat))]["1"] += 1
+            else: # start not in observed time
+                if end <= observed_end: # start not in observed time, but end in observed time
+                    for single_date in daterange((observed_start + timedelta(days=1)), end):
+                        survivalRates[str(single_date.strftime(datetimeFormat))]["1"] += 1
+                    endpoint = end + timedelta(days=1) # streak abandoned on that day
+                    survivalRates[str(endpoint.strftime(datetimeFormat))]["0"] += 1
+                else: # start and end not in observed time
+                    for single_date in daterange((observed_start + timedelta(days=1)), observed_end):
+                        survivalRates[str(single_date.strftime(datetimeFormat))]["1"] += 1
 
 for date in survivalRates:
     if survivalRates[date]["0"] > 0 and survivalRates[date]["1"] > 0:
