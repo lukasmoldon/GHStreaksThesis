@@ -100,35 +100,35 @@ for prefix, event, value in streakdata:
                 if start <= observedtime_end and end >= observedtime_start: # streak happend (partially) in observed time
                     cnt_streaks_survived += 1
                     if start >= observedtime_start: # start in observed time
-                            if end <= observedtime_end: # start and end in observed time
-                                    for single_date in daterange(start, end):
-                                        if mode == 0:
-                                            plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
-                                        elif mode == 1:
-                                            if single_date >= (start + timedelta(days=threshold-1)):
-                                                plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
-                            else: # start in observed time, end not in observed time
-                                    for single_date in daterange(start, observedtime_end):
-                                            if mode == 0:
-                                                plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
-                                            elif mode == 1:
-                                                if single_date >= (start + timedelta(days=threshold-1)):
-                                                    plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
+                        if end <= observedtime_end: # start and end in observed time
+                            for single_date in daterange(start, end):
+                                if mode == 0:
+                                    plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
+                                elif mode == 1:
+                                    if single_date >= (start + timedelta(days=threshold-1)):
+                                        plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
+                        else: # start in observed time, end not in observed time
+                            for single_date in daterange(start, observedtime_end):
+                                if mode == 0:
+                                    plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
+                                elif mode == 1:
+                                    if single_date >= (start + timedelta(days=threshold-1)):
+                                        plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
                     else: # start not in observed time
-                            if end <= observedtime_end: # start not in observed time, but end in observed time
-                                    for single_date in daterange(observedtime_start, end):
-                                            if mode == 0:
-                                                plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
-                                            elif mode == 1:
-                                                if single_date >= (start + timedelta(days=threshold-1)):
-                                                    plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
-                            else: # start and end not in observed time
-                                    for single_date in daterange(observedtime_start, observedtime_end):
-                                            if mode == 0:
-                                                plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
-                                            elif mode == 1:
-                                                if single_date >= (start + timedelta(days=threshold-1)):
-                                                    plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
+                        if end <= observedtime_end: # start not in observed time, but end in observed time
+                            for single_date in daterange(observedtime_start, end):
+                                if mode == 0:
+                                    plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
+                                elif mode == 1:
+                                    if single_date >= (start + timedelta(days=threshold-1)):
+                                        plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
+                        else: # start and end not in observed time
+                            for single_date in daterange(observedtime_start, observedtime_end):
+                                if mode == 0:
+                                    plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
+                                elif mode == 1:
+                                    if single_date >= (start + timedelta(days=threshold-1)):
+                                        plotdata[str(single_date)] += ((single_date - start) + timedelta(days=1)).days
 logging.info("Done. (3/4)")
 
 
