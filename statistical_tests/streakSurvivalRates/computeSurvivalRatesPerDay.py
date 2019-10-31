@@ -15,7 +15,7 @@ path_source_streakdata = "/home/lmoldon/data/user_streaks.json"
 
 
 # ---------- OUTPUT ------------
-path_results = "/home/lmoldon/data/streakSurvivalRates.json"
+path_results = "..."
 # ------------------------------
 
 
@@ -36,6 +36,7 @@ cnt_streaks_total = 0
 cnt_streaks_observed = 0
 lowerbound = (100 - confidenceInterval) / 2
 upperbound = confidenceInterval + (100 - confidenceInterval) / 2
+path_results = "/home/lmoldon/results/streakSurvivalRatesMIN" + str(minLength) + ".json"
 # ------------------------------
 
 
@@ -124,9 +125,17 @@ logging.info("Done. (2/4)")
 logging.info("Calculating confidence intervals ...")
 i = 0
 for date in survivalRates:
-    sampleAvgs = getBootstrapSampleAvgs(survivalRates[date]["0"], survivalRates[date]["1"], amountSamples)
-    survivalRates[date]["a"] = np.percentile(sampleAvgs, lowerbound)
-    survivalRates[date]["b"] = np.percentile(sampleAvgs, upperbound)
+    if survivalRates[date]["0"] > 0 and survivalRates[date]["1"] > 0:
+        sampleAvgs = getBootstrapSampleAvgs(survivalRates[date]["0"], survivalRates[date]["1"], amountSamples)
+        survivalRates[date]["a"] = np.percentile(sampleAvgs, lowerbound)
+        survivalRates[date]["b"] = np.percentile(sampleAvgs, upperbound)
+    elif survivalRates[date]["0"] == 0:
+        survivalRates[date]["a"] = 1
+        survivalRates[date]["b"] = 1
+    elif survivalRates[date]["1"] == 0:
+        survivalRates[date]["a"] = 0
+        survivalRates[date]["b"] = 0
+
     i += 1
     if i % 100 == 0:
         logging.info(str(i) + " days computed.") 
