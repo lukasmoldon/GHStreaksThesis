@@ -22,8 +22,8 @@ path_source = "C:/Users/Lukas/Desktop/streakSurvivalRatesMIN30.json"
 
 # ---------- CONFIG ------------
 datetimeFormat = "%Y-%m-%d"
-observed_start = datetime.datetime.strptime("2016-04-28", datetimeFormat).date() # start of observed time, 3 weeks before the change
-observed_end = datetime.datetime.strptime("2016-06-09", datetimeFormat).date() # end of observed time, 3 weeks after the change
+observed_start = datetime.datetime.strptime("2016-01-01", datetimeFormat).date()
+observed_end = datetime.datetime.strptime("2017-01-01", datetimeFormat).date()
 # ------------------------------
 
 
@@ -56,7 +56,14 @@ logging.info("Creating plot ...")
 
 matplotlib.pyplot.plot_date(dates, valuesActive, '-', label="Active")
 matplotlib.pyplot.plot_date(dates, valuesAbandoned, '-', label="Abandoned")
+plt.axvline(x=datetime.datetime.strptime("2016-02-15", datetimeFormat).date(), color='c', label="President's day 2016")
 plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='r', label="Streaks removed")
+plt.axvline(x=datetime.datetime.strptime("2016-05-30", datetimeFormat).date(), color='y', label="Memorial Day 2016")
+plt.axvline(x=datetime.datetime.strptime("2016-07-04", datetimeFormat).date(), color='g', label="Independence Day 2016")
+plt.axvline(x=datetime.datetime.strptime("2016-09-05", datetimeFormat).date(), color='c', label="Labor Day 2016")
+plt.axvline(x=datetime.datetime.strptime("2016-11-11", datetimeFormat).date(), color='m', label="Veteran's Day 2016")
+plt.axvline(x=datetime.datetime.strptime("2016-12-06", datetimeFormat).date(), color='k', label="GitHub Major Service Outage")
+plt.axvline(x=datetime.datetime.strptime("2016-12-25", datetimeFormat).date(), color='b', label="Christmas 2016")
 plt.xlabel("Time")
 plt.ylabel("Number streaks")
 plt.legend()
