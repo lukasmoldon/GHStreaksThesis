@@ -77,7 +77,7 @@ for prefix, event, value in jsonfile:
             pass
 
     elif prefix == cur_usr_id and event == "end_map":
-        # end of user dict => compute streaks/workingORfreetime/save
+        # end of user dict
         cnt += 1
         if cnt % 1000 == 0: 
             logging.info(str(int(cnt/1000)) + " thousand users computed.")
