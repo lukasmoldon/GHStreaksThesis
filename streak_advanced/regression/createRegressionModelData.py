@@ -19,7 +19,7 @@ path_results = "/home/lmoldon/results/regressionData.csv"
 
 
 # ---------- CONFIG ------------
-datetimeFormat = "%Y-%m-%d %H:%M:%S"
+datetimeFormat = "%Y-%m-%d"
 observed_start = datetime.datetime.strptime("2015-05-19", datetimeFormat).date() # start of observed time, 1 year before the change
 observed_end = datetime.datetime.strptime("2017-05-20", datetimeFormat).date() # end of observed time, 1 year after the change
 minLength = 1 # minimum streak length for observations
@@ -28,7 +28,7 @@ minLength = 1 # minimum streak length for observations
 
 # ---------- INITIAL -----------
 logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
-changeDate = datetime.datetime.strptime("2016-05-19 00:00:00", datetimeFormat).date()
+changeDate = datetime.datetime.strptime("2016-05-19", datetimeFormat).date()
 data = pd.DataFrame(columns=["userday", "after_change", "current_streak", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"])
 row = {
     "userday": "",
@@ -43,6 +43,7 @@ row = {
     "sunday": 0
     }
 cnt_streaks_total = 0
+cnt_streaks_observed = 0
 cnt_users = 0
 # ------------------------------
 
@@ -147,6 +148,8 @@ logging.info("Saving csv ...")
 data.to_csv(path_results, encoding='utf-8', index=False)
 logging.info("Done. (4/4)")
 
+logging.info("Streaks total: " + str(cnt_streaks_total))
+logging.info("Streaks observed: " + str(cnt_streaks_observed))
 
 log_endtime = datetime.datetime.now()
 log_runtime = (log_endtime - log_starttime)
