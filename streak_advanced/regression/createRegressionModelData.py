@@ -4,6 +4,7 @@ import datetime
 from datetime import timedelta, date
 import json
 import pandas as pd
+import random
 # ------------------------------
 
 
@@ -23,6 +24,7 @@ datetimeFormat = "%Y-%m-%d"
 observed_start = datetime.datetime.strptime("2015-05-19", datetimeFormat).date() # start of observed time, 1 year before the change
 observed_end = datetime.datetime.strptime("2017-05-20", datetimeFormat).date() # end of observed time, 1 year after the change
 minLength = 1 # minimum streak length for observations
+user_sample_size = 10000
 # ------------------------------
 
 
@@ -45,6 +47,8 @@ row = {
 cnt_streaks_total = 0
 cnt_streaks_observed = 0
 cnt_users = 0
+user_sample = {} # key = userID, value = 0 (ignore)
+userIDs = []
 # ------------------------------
 
 
@@ -64,12 +68,27 @@ with open(path_source_streakdata, "r") as fp:
 
 with open(path_source_dates_per_user, "r") as fp:
     contributiondata = json.load(fp)
-logging.info("Done. (1/4)")
+logging.info("Done. (1/5)")
+
+
+logging.info("Creating user sample ...")
+
+userIDs = list(streakdata)
+
+while len(user_sample) != 10000:
+    cur_userid = random.choice(userIDs)
+    if cur_userid not in user_sample:
+        if cur_userid in contributiondata:
+            user_sample[cur_userid] = 0
+        else:
+            logging.info("UserID " + str(cur_userid) + " has an entry in the streakdata but not in the contributiondata!")
+
+logging.info("Done. (2/5)")
 
 
 logging.info("Computing streak data ...")
 # for all days where current_streak != 0
-for userid in streakdata: # for each user
+for userid in user_sample: # for each user in sample
     for streakid in streakdata[userid]: # for each streak of that user
 
         start = datetime.datetime.strptime(str(streakdata[userid][streakid]["start"]), datetimeFormat).date()
@@ -77,8 +96,8 @@ for userid in streakdata: # for each user
         length = int(streakdata[userid][streakid]["len"])
             
         cnt_streaks_total += 1
-        if cnt_streaks_total % 1000000 == 0:
-            logging.info(str(cnt_streaks_total/1000000) + " million streaks computed.")
+        if cnt_streaks_total % 1000 == 0:
+            logging.info(str(cnt_streaks_total/1000) + " thousand streaks computed.")
 
         if length >= minLength and start <= observed_end and end >= observed_start: # streak happend (partially) in observed time
             cnt_streaks_observed += 1
@@ -122,14 +141,14 @@ for userid in streakdata: # for each user
                         cur_row[str(single_date.strftime("%A").lower())] = 1
                         data = data.append(row, ignore_index=True)
 
-logging.info("Done. (2/4)")
+logging.info("Done. (3/5)")
 
 
 logging.info("Computing contribution data ...")
 # for all days where current_streak == 0
-for userid in contributiondata:
+for userid in user_sample:
     cnt_users += 1
-    if cnt_users % 10000 == 0:
+    if cnt_users % 100 == 0:
         logging.info(str(cnt_users) + " users computed.")
     for single_date in daterange(observed_start, observed_end):
         if str(single_date) not in contributiondata[userid]:
@@ -141,15 +160,17 @@ for userid in contributiondata:
             cur_row[str(single_date.strftime("%A").lower())] = 1
             data = data.append(row, ignore_index=True)
 
-logging.info("Done. (3/4)")
+logging.info("Done. (4/5)")
 
 
 logging.info("Saving csv ...")
 data.to_csv(path_results, encoding='utf-8', index=False)
-logging.info("Done. (4/4)")
+logging.info("Done. (5/5)")
+
 
 logging.info("Streaks total: " + str(cnt_streaks_total))
 logging.info("Streaks observed: " + str(cnt_streaks_observed))
+
 
 log_endtime = datetime.datetime.now()
 log_runtime = (log_endtime - log_starttime)
