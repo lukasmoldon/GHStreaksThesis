@@ -31,9 +31,10 @@ user_sample_size = 10000
 # ---------- INITIAL -----------
 logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
 changeDate = datetime.datetime.strptime("2016-05-19", datetimeFormat).date()
-data = pd.DataFrame(columns=["userday", "after_change", "current_streak", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"])
+data = pd.DataFrame(columns=["userday", "contribution_that_day", "after_change", "current_streak", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"])
 row = {
     "userday": "",
+    "contribution_that_day": 0,
     "after_change": 0,
     "current_streak": 0,
     "monday": 0,
@@ -109,6 +110,7 @@ for userid in user_sample: # for each user in sample
                     for single_date in daterange(start, end):
                         cur_row = dict(row)
                         cur_row["userday"] = str(userid) + "_" + str(single_date)
+                        cur_row["contribution_that_day"] = 1
                         if single_date >= changeDate:
                             cur_row["after_change"] = 1
                         cur_row["current_streak"] = ((single_date - start) + timedelta(days=1)).days
@@ -119,6 +121,7 @@ for userid in user_sample: # for each user in sample
                     for single_date in daterange(start, observed_end):
                         cur_row = dict(row)
                         cur_row["userday"] = str(userid) + "_" + str(single_date)
+                        cur_row["contribution_that_day"] = 1
                         if single_date >= changeDate:
                             cur_row["after_change"] = 1
                         cur_row["current_streak"] = ((single_date - start) + timedelta(days=1)).days
@@ -130,6 +133,7 @@ for userid in user_sample: # for each user in sample
                     for single_date in daterange(observed_start, end):
                         cur_row = dict(row)
                         cur_row["userday"] = str(userid) + "_" + str(single_date)
+                        cur_row["contribution_that_day"] = 1
                         if single_date >= changeDate:
                             cur_row["after_change"] = 1
                         cur_row["current_streak"] = ((single_date - start) + timedelta(days=1)).days
@@ -140,6 +144,7 @@ for userid in user_sample: # for each user in sample
                     for single_date in daterange(observed_start, observed_end):
                         cur_row = dict(row)
                         cur_row["userday"] = str(userid) + "_" + str(single_date)
+                        cur_row["contribution_that_day"] = 1
                         if single_date >= changeDate:
                             cur_row["after_change"] = 1
                         cur_row["current_streak"] = ((single_date - start) + timedelta(days=1)).days
@@ -160,6 +165,7 @@ for userid in user_sample:
         if str(single_date) not in contributiondata[userid]:
             cur_row = dict(row)
             cur_row["userday"] = str(userid) + "_" + str(single_date)
+            cur_row["contribution_that_day"] = 0
             if single_date >= changeDate:
                 cur_row["after_change"] = 1
             cur_row["current_streak"] = 0

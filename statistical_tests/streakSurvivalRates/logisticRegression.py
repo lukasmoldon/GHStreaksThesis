@@ -1,17 +1,19 @@
 # ---------- IMPORT ------------
 import logging
 import datetime
-import rdd # regression discontinuity designs
+import statsmodels.formula.api as smf
+import pandas as pd
+import numpy as np
 # ------------------------------
 
 
 # ---------- INPUT -------------
-path_source = ""
+path_source = "/home/lmoldon/results/regressionData.csv"
 # ------------------------------
 
 
 # ---------- OUTPUT ------------
-path_results = ""
+
 # ------------------------------
 
 
@@ -28,7 +30,14 @@ logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt=
 
 log_starttime = datetime.datetime.now()
 
-# CODE
+
+rawData = pd.read_csv(path_source)
+regressionData = rawData.drop(["userday", "sunday"], axis=1)
+
+logit = smf.logit("contribution_that_day ~ after_change +np.log(current_streak+.5) +after_change:np.log(current_streak+.5) +monday+tuesday+wednesday+thursday+friday+saturday", regressionData)
+result = logit.fit()
+result.summary()
+
 
 log_endtime = datetime.datetime.now()
 log_runtime = (log_endtime - log_starttime)
