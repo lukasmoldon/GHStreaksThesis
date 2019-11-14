@@ -49,6 +49,8 @@ cnt_streaks_observed = 0
 cnt_users = 0
 user_sample = {} # key = userID, value = 0 (ignore)
 userIDs = []
+global_index = 0
+csv_dict = {}
 # ------------------------------
 
 
@@ -96,8 +98,8 @@ for userid in user_sample: # for each user in sample
         length = int(streakdata[userid][streakid]["len"])
             
         cnt_streaks_total += 1
-        if cnt_streaks_total % 1000 == 0:
-            logging.info(str(cnt_streaks_total/1000) + " thousand streaks computed.")
+        if cnt_streaks_total % 100000 == 0:
+            logging.info(str(cnt_streaks_total) + " streaks computed.")
 
         if length >= minLength and start <= observed_end and end >= observed_start: # streak happend (partially) in observed time
             cnt_streaks_observed += 1
@@ -105,41 +107,45 @@ for userid in user_sample: # for each user in sample
             if start >= observed_start: # start in observed time
                 if end < observed_end: # start and end in observed time
                     for single_date in daterange(start, end):
-                        cur_row = row
+                        cur_row = dict(row)
                         cur_row["userday"] = str(userid) + "_" + str(single_date)
                         if single_date >= changeDate:
                             cur_row["after_change"] = 1
                         cur_row["current_streak"] = ((single_date - start) + timedelta(days=1)).days
                         cur_row[str(single_date.strftime("%A").lower())] = 1
-                        data = data.append(row, ignore_index=True)
+                        csv_dict[global_index] = cur_row
+                        global_index += 1
                 else: # start in observed time, end not in observed time
                     for single_date in daterange(start, observed_end):
-                        cur_row = row
+                        cur_row = dict(row)
                         cur_row["userday"] = str(userid) + "_" + str(single_date)
                         if single_date >= changeDate:
                             cur_row["after_change"] = 1
                         cur_row["current_streak"] = ((single_date - start) + timedelta(days=1)).days
                         cur_row[str(single_date.strftime("%A").lower())] = 1
-                        data = data.append(row, ignore_index=True)
+                        csv_dict[global_index] = cur_row
+                        global_index += 1
             else: # start not in observed time
                 if end < observed_end: # start not in observed time, but end in observed time
                     for single_date in daterange(observed_start, end):
-                        cur_row = row
+                        cur_row = dict(row)
                         cur_row["userday"] = str(userid) + "_" + str(single_date)
                         if single_date >= changeDate:
                             cur_row["after_change"] = 1
                         cur_row["current_streak"] = ((single_date - start) + timedelta(days=1)).days
                         cur_row[str(single_date.strftime("%A").lower())] = 1
-                        data = data.append(row, ignore_index=True)
+                        csv_dict[global_index] = cur_row
+                        global_index += 1
                 else: # start and end not in observed time
                     for single_date in daterange(observed_start, observed_end):
-                        cur_row = row
+                        cur_row = dict(row)
                         cur_row["userday"] = str(userid) + "_" + str(single_date)
                         if single_date >= changeDate:
                             cur_row["after_change"] = 1
                         cur_row["current_streak"] = ((single_date - start) + timedelta(days=1)).days
                         cur_row[str(single_date.strftime("%A").lower())] = 1
-                        data = data.append(row, ignore_index=True)
+                        csv_dict[global_index] = cur_row
+                        global_index += 1
 
 logging.info("Done. (3/5)")
 
@@ -148,27 +154,29 @@ logging.info("Computing contribution data ...")
 # for all days where current_streak == 0
 for userid in user_sample:
     cnt_users += 1
-    if cnt_users % 100 == 0:
+    if cnt_users % 1000 == 0:
         logging.info(str(cnt_users) + " users computed.")
     for single_date in daterange(observed_start, observed_end):
         if str(single_date) not in contributiondata[userid]:
-            cur_row = row
+            cur_row = dict(row)
             cur_row["userday"] = str(userid) + "_" + str(single_date)
             if single_date >= changeDate:
                 cur_row["after_change"] = 1
             cur_row["current_streak"] = 0
             cur_row[str(single_date.strftime("%A").lower())] = 1
-            data = data.append(row, ignore_index=True)
+            csv_dict[global_index] = cur_row
+            global_index += 1
 
 logging.info("Done. (4/5)")
 
 
-logging.info("Saving csv ...")
+logging.info("Saving csv ... (this may take a while)")
+data = pd.DataFrame.from_dict(csv_dict, "index")
 data.to_csv(path_results, encoding='utf-8', index=False)
 logging.info("Done. (5/5)")
 
 
-logging.info("Streaks total: " + str(cnt_streaks_total))
+logging.info("Streaks total of users in sample: " + str(cnt_streaks_total))
 logging.info("Streaks observed: " + str(cnt_streaks_observed))
 
 
