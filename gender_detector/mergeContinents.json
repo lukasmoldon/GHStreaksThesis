@@ -1,4 +1,5 @@
 {
+    "__DESCRIPTION__": "KEY: OSM country, VALUE: Continent",
     "__SOURCE__": "https://simple.wikipedia.org/wiki/List_of_countries_by_continents",
     "__COMMENT__": "If a country belongs to two regions or territory of another country -> United Nations definition",
     "Japan": "Asia",
