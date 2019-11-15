@@ -182,14 +182,14 @@ cnt_triesGH = 0
 done = False
 while(not done):
     try:
-        answer = session.get(link_userinfo + "TheLukester", auth=(username, token))
+        answer = session.get(link_userinfo + "lukasmoldon", auth=(username, token))
 
         status = answer.headers["Status"]
         if status != "200 OK":
             if int(answer.headers["X-RateLimit-Remaining"]) == 0:
                 logging.info("API counter at 0!")
                 sleep_epoch(answer.headers["X-RateLimit-Reset"])
-                answer = session.get(link_userinfo + "TheLukester", auth=(username, token))
+                answer = session.get(link_userinfo + "lukasmoldon", auth=(username, token))
 
         if status == "200 OK":
             done = True
@@ -217,6 +217,7 @@ logging.info("Done.")
 
 
 
+logging.info("Starting ...")
 for userid in userdata:
     cur_username = userdata[userid]["name"]
     cur_lat = float(userdata[userid]["lat"])
