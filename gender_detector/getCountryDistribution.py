@@ -14,7 +14,7 @@ path_source_mergeContinents = "/home/lmoldon/data/mergeContinents.json"
 
 # ---------- OUTPUT ------------
 path_results_country = "/home/lmoldon/results/countryDistribution.json"
-path_results_continent = "/home/lmoldon/results/countryDistribution.json"
+path_results_continent = "/home/lmoldon/results/continentDistribution.json"
 # ------------------------------
 
 
