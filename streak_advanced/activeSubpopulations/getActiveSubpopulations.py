@@ -49,6 +49,7 @@ logging.info("Done. (1/3)")
 
 
 logging.info("Starting ...")
+cnt = 0
 for userid in contributionamount:
     contr_2015 = 0
     contr_2016 = 0
@@ -68,6 +69,12 @@ for userid in contributionamount:
         active2015[userid] = contr_2015
     if contr_2016 >= minActivity:
         active2016[userid] = contr_2016
+    cnt += 1
+    if cnt % 1000 == 0: 
+        logging.info(str(cnt) + " thousand users computed.")
+
+logging.info("2015 active population size: " + str(len(active2015)))
+logging.info("2016 active population size: " + str(len(active2016)))
 
 logging.info("Done. (2/3)")
 
