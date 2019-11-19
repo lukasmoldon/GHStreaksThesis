@@ -28,7 +28,7 @@ datetimeFormat = "%Y-%m-%d"
 logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
 path_source_subpopulation = "/home/lmoldon/data/activeSubpopulation" + year + ".json"
 path_results_active = "/home/lmoldon/results/activeStreaks" + year + ".json"
-path_results_activeRecords = "/home/lmoldon/results/activeStreaks" + year + ".json"
+path_results_activeRecords = "/home/lmoldon/results/activeStreakRecords" + year + ".json"
 observed_start = datetime.datetime.strptime(year + "-01-01", datetimeFormat).date()
 observed_end = datetime.datetime.strptime(year + "-12-31", datetimeFormat).date()
 lastRecord = {} # before observed time
@@ -61,8 +61,8 @@ for single_date in daterange(observed_start, observed_end):
 logging.info("Done (1/3)")
 
 
-logging.info("Starting ...")
-
+logging.info("Starting A...")
+cnt_streaks_total = 0
 ## FIND MAX RECORD IN THE PAST BEFORE OBSEVRED TIME ##
 for userid in userids:  # for each user in subpopulation
 
@@ -81,12 +81,15 @@ for userid in userids:  # for each user in subpopulation
         if length >= lastRecord[userid] and end < observed_start: # streak could be last max streak before observed time
             lastRecord[userid] = length
         
-        
+
+logging.info("Starting B...")
+cnt_streaks_total = 0        
 ## FIND NEW RECORDS IN OBSERVED TIME ##
 for userid in userids:  # for each user in subpopulation
 
     records[userid] = {}
     records_order[userid] = {}
+    first_start = observed_start
 
     for streakid in streakdata[userid]:  # for each streak of that user
 
@@ -100,19 +103,23 @@ for userid in userids:  # for each user in subpopulation
 
         if length >= lastRecord[userid] and start <= observed_end and end >= observed_start: # streak happend (partially) in observed time
             records[userid][str(start)] = length
+            if start < first_start:
+                first_start = start
 
     lastmax = lastRecord[userid]
     pos = 1
-    for day in daterange(observed_start, observed_end):
-        if str(start) in records[userid]:
-            if records[userid][str(start)] > lastmax:
-                lastmax = records[userid][str(start)]
-                records_order[userid][str(start)] = pos
+    for day in daterange(first_start, observed_end):
+        if str(day) in records[userid]:
+            if records[userid][str(day)] > lastmax:
+                lastmax = records[userid][str(day)]
+                records_order[userid][str(day)] = pos
                 pos += 1
             else:
-                del records[userid][str(start)]
+                del records[userid][str(day)]
 
-            
+
+logging.info("Starting C...")
+cnt_streaks_total = 0            
 ## CALCULATE TOTAL VALUES (RECORD AND MINLENGTH) ##
 for userid in userids:  # for each user in subpopulation
 
@@ -145,21 +152,21 @@ for userid in userids:  # for each user in subpopulation
                     cur_end = observed_end
 
 
-        for single_date in daterange(cur_start, cur_end):
-            if ((single_date - start) + timedelta(days=1)).days >= minlen:
-                activeStreaks[str(single_date)] += 1
-        # new records
-        if str(start) in records[userid]:
-            if records_order[userid][str(start)] == 1: # first new record in observed time
-                for single_date in daterange(cur_start, cur_end):
-                    if ((single_date - start) + timedelta(days=1)).days >= lastRecord[userid]:
-                        activeStreakRecords += 1
-            else: # record before was also in observed time
-                for key in records_order[userid]:
-                    if records_order[userid][key] == records_order[userid][str(start)]-1: # record before found
-                        for single_date in daterange(cur_start, cur_end):
-                            if ((single_date - start) + timedelta(days=1)).days >= records[userid][key]:
-                                activeStreakRecords += 1
+            for single_date in daterange(cur_start, cur_end):
+                if ((single_date - start) + timedelta(days=1)).days >= minlen:
+                    activeStreaks[str(single_date)] += 1
+            # new records
+            if str(start) in records[userid]:
+                if records_order[userid][str(start)] == 1: # first new record in observed time
+                    for single_date in daterange(cur_start, cur_end):
+                        if ((single_date - start) + timedelta(days=1)).days >= lastRecord[userid]:
+                            activeStreakRecords[str(single_date)] += 1
+                else: # record before was also in observed time
+                    for key in records_order[userid]:
+                        if records_order[userid][key] == records_order[userid][str(start)]-1: # record before found
+                            for single_date in daterange(cur_start, cur_end):
+                                if ((single_date - start) + timedelta(days=1)).days >= records[userid][key]:
+                                    activeStreakRecords[str(single_date)] += 1
 
                                 
 
