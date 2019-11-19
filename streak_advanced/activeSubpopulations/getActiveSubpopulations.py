@@ -70,8 +70,8 @@ for userid in contributionamount:
     if contr_2016 >= minActivity:
         active2016[userid] = contr_2016
     cnt += 1
-    if cnt % 1000 == 0: 
-        logging.info(str(cnt) + " thousand users computed.")
+    if cnt % 10000 == 0: 
+        logging.info(str(int(cnt/1000)) + " thousand users computed.")
 
 logging.info("2015 active population size: " + str(len(active2015)))
 logging.info("2016 active population size: " + str(len(active2016)))
