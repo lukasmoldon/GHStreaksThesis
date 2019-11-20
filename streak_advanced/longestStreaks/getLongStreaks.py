@@ -20,6 +20,8 @@ path_results = ".."
 # ---------- CONFIG ------------
 year = "2015"
 minlen = 15
+# counting streaks from the day they pass the thrshold (True) or from the starting day (False)
+lookIntoFuture = False
 # ------------------------------
 
 
@@ -63,7 +65,7 @@ logging.info("Done (1/3)")
 
 logging.info("Starting A...")
 cnt_streaks_total = 0
-## FIND MAX RECORD IN THE PAST BEFORE OBSEVRED TIME ##
+## FIND MAX RECORD IN THE PAST BEFORE OBSERVED TIME ##
 for userid in userids:  # for each user in subpopulation
 
     lastRecord[userid] = minlen
@@ -79,12 +81,12 @@ for userid in userids:  # for each user in subpopulation
             logging.info(str(cnt_streaks_total/1000000) + " million streaks computed.")
 
         if length >= lastRecord[userid] and end < observed_start: # streak could be last max streak before observed time
-            lastRecord[userid] = length
+            lastRecord[userid] = length # get maximum streak length of the past
         
 
 logging.info("Starting B...")
 cnt_streaks_total = 0        
-## FIND NEW RECORDS IN OBSERVED TIME ##
+## FIND NEW RECORDS IN OBSERVED TIME INCULDING ORDERING##
 for userid in userids:  # for each user in subpopulation
 
     records[userid] = {}
@@ -133,7 +135,6 @@ for userid in userids:  # for each user in subpopulation
         if cnt_streaks_total % 1000000 == 0:
             logging.info(str(cnt_streaks_total/1000000) + " million streaks computed.")
 
-        # total values
         if length >= minlen and start <= observed_end and end >= observed_start: # streak happend (partially) in observed time
 
             if start >= observed_start:  # start in observed time
@@ -151,22 +152,29 @@ for userid in userids:  # for each user in subpopulation
                     cur_start = observed_start
                     cur_end = observed_end
 
-
+            # all streaks with min length
             for single_date in daterange(cur_start, cur_end):
-                if ((single_date - start) + timedelta(days=1)).days >= minlen:
+                if lookIntoFuture:
+                    if ((single_date - start) + timedelta(days=1)).days >= minlen:
+                        activeStreaks[str(single_date)] += 1
+                else:
                     activeStreaks[str(single_date)] += 1
-            # new records
-            if str(start) in records[userid]:
-                if records_order[userid][str(start)] == 1: # first new record in observed time
+            # all records
+            if str(start) in records[userid]: # this streak was a new record
+                if lookIntoFuture:
+                    if records_order[userid][str(start)] == 1: # first new record in observed time
+                        for single_date in daterange(cur_start, cur_end):
+                            if ((single_date - start) + timedelta(days=1)).days >= lastRecord[userid]:
+                                activeStreakRecords[str(single_date)] += 1
+                    else: # record before was also in observed time
+                        for key in records_order[userid]:
+                            if records_order[userid][key] == records_order[userid][str(start)]-1: # record before found
+                                for single_date in daterange(cur_start, cur_end):
+                                    if ((single_date - start) + timedelta(days=1)).days >= records[userid][key]:
+                                        activeStreakRecords[str(single_date)] += 1
+                else:
                     for single_date in daterange(cur_start, cur_end):
-                        if ((single_date - start) + timedelta(days=1)).days >= lastRecord[userid]:
-                            activeStreakRecords[str(single_date)] += 1
-                else: # record before was also in observed time
-                    for key in records_order[userid]:
-                        if records_order[userid][key] == records_order[userid][str(start)]-1: # record before found
-                            for single_date in daterange(cur_start, cur_end):
-                                if ((single_date - start) + timedelta(days=1)).days >= records[userid][key]:
-                                    activeStreakRecords[str(single_date)] += 1
+                        activeStreakRecords[str(single_date)] += 1
 
                                 
 
