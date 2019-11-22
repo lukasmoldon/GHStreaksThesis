@@ -26,7 +26,8 @@ year = "2015"
 # ---------- INITIAL -----------
 datetimeFormat = "%Y-%m-%d"
 logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
-path_source_subpopulation = "/home/lmoldon/data/last" + k + "Days" + year + ".json"
+path_source_subpopulation = "/home/lmoldon/data/activeSubpopulation" + year + ".json"
+path_results= "/home/lmoldon/results/last" + str(k) + "Days" + year + ".json"
 observed_start = datetime.datetime.strptime(year + "-01-01", datetimeFormat).date()
 observed_end = datetime.datetime.strptime(year + "-12-31", datetimeFormat).date()
 plotdata = {}
