@@ -91,13 +91,14 @@ for userid in userids:
         elif not US and cur_country == "USA":
             delids.add(userid)
     else:
+        delids.add(userid)
         cnt_fails += 1
 
 for userid in delids:
     del userids[userid]
 
 logging.info("Users in sample (applied country filter): " + str(len(userids)))
-logging.info("Could not find userIDs" + str(cnt_fails) + " times in country data.")
+logging.info("Could not find userIDs " + str(cnt_fails) + " times in country data.")
 
 logging.info("Done (1/3)")
 
