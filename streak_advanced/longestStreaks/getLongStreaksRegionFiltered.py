@@ -8,6 +8,8 @@ from datetime import timedelta, date
 
 # ---------- INPUT -------------
 path_source_streakdata = "/home/lmoldon/data/user_streaks.json"
+path_source_countries = "/home/lmoldon/data/users_gender.json"
+path_source_merge = "/home/lmoldon/data/merge.json"
 path_source_subpopulation = ".."
 # ------------------------------
 
@@ -19,6 +21,7 @@ path_results = ".."
 
 # ---------- CONFIG ------------
 year = "2015"
+US = False
 minlen = 15
 # counting streaks from the day they pass the threshold (False) or from the starting day (True)
 lookIntoFuture = False
@@ -29,8 +32,12 @@ lookIntoFuture = False
 datetimeFormat = "%Y-%m-%d"
 logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
 path_source_subpopulation = "/home/lmoldon/data/activeSubpopulation" + year + ".json"
-path_results_active = "/home/lmoldon/results/activeStreaks" + year + ".json"
-path_results_activeRecords = "/home/lmoldon/results/activeStreakRecords" + year + ".json"
+if US:
+    path_results_active = "/home/lmoldon/results/activeStreaks" + year + "US.json"
+    path_results_activeRecords = "/home/lmoldon/results/activeStreakRecords" + year + "US.json"
+else:
+    path_results_active = "/home/lmoldon/results/activeStreaks" + year + "NONUS.json"
+    path_results_activeRecords = "/home/lmoldon/results/activeStreakRecords" + year + "NONUS.json"
 observed_start = datetime.datetime.strptime(year + "-01-01", datetimeFormat).date()
 observed_end = datetime.datetime.strptime(year + "-12-31", datetimeFormat).date()
 lastRecord = {} # before observed time
@@ -57,9 +64,41 @@ with open(path_source_streakdata, "r") as fp:
 with open(path_source_subpopulation, "r") as fp:
     userids = json.load(fp)
 
+with open(path_source_countries, "r") as fp:
+    countrydata = json.load(fp)
+
+with open(path_source_merge, "r") as fp:
+    merge = json.load(fp)
+
 for single_date in daterange(observed_start, observed_end):
     activeStreaks[str(single_date)] = 0
     activeStreakRecords[str(single_date)] = 0
+
+logging.info("Users in sample: " + str(len(userids)))
+
+delids = set()
+cnt_fails = 0
+
+for userid in userids:
+    if userid in countrydata:
+        cur_country = countrydata[userid]["country"]
+
+        if cur_country in merge:
+            cur_country = merge[cur_country]
+
+        if US and cur_country != "USA":
+            delids.add(userid)
+        elif not US and cur_country == "USA":
+            delids.add(userid)
+    else:
+        cnt_fails += 1
+
+for userid in delids:
+    del userids[userid]
+
+logging.info("Users in sample (applied country filter): " + str(len(userids)))
+logging.info("Could not find userIDs" + str(cnt_fails) + " times in country data.")
+
 logging.info("Done (1/3)")
 
 
