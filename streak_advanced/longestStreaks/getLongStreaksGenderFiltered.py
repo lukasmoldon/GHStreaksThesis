@@ -9,7 +9,6 @@ from datetime import timedelta, date
 # ---------- INPUT -------------
 path_source_streakdata = "/home/lmoldon/data/user_streaks.json"
 path_source_gender = "/home/lmoldon/data/users_gender.json"
-path_source_merge = "/home/lmoldon/data/merge.json"
 path_source_subpopulation = ".."
 # ------------------------------
 
@@ -66,9 +65,6 @@ with open(path_source_subpopulation, "r") as fp:
 
 with open(path_source_gender, "r") as fp:
     genderdata = json.load(fp)
-
-with open(path_source_merge, "r") as fp:
-    merge = json.load(fp)
 
 for single_date in daterange(observed_start, observed_end):
     activeStreaks[str(single_date)] = 0
