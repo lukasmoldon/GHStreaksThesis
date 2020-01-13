@@ -18,10 +18,10 @@ path_results = ".."
 
 
 # ---------- CONFIG ------------
-before = True
+before = False
 minlen = 25
 maxdistance = 30 # distance between end of last record and start of second streak
-timerange = 11 # 2x timerange (for before after 0) + 1 (for 0) - 2 (for border) represents x-axis
+timerange = 22 # 2x timerange (for before after 0) + 1 (for 0) - 2 (for border) represents x-axis
 # ------------------------------
 
 
@@ -152,7 +152,7 @@ for userid in userids:  # for each user in subpopulation
             for recordstart in records[userid]:
                 distance = (start - datetime.datetime.strptime(recordstart, datetimeFormat).date()).days - int(records[userid][recordstart]) # - length for distance between end and new start
                 if distance > 0 and distance <= maxdistance: # within maxdistance days next streak after any record
-                    if abs(length - int(records[userid][recordstart])) <= timerange: # within the x-axis (pos or neg or 0 for exact same length)
+                    if (int(records[userid][recordstart] - length) >= (timerange * -1)): # within the x-axis 
                         total_observed += 1
                         i = timerange * -1
                         while i <= (length - int(records[userid][recordstart])) and i <= timerange:
@@ -161,7 +161,7 @@ for userid in userids:  # for each user in subpopulation
                         
 # Calculate prob for streak surviving
 i = timerange * -1
-while i < timerange:
+while i < (timerange - 1):
     survivalrates[str(i+1)] = survivalcounts[str(i+1)] / survivalcounts[str(i)]
     i += 1
 
@@ -172,7 +172,7 @@ logging.info("Done. (2/3)")
 
 logging.info("Saving results ...")
 with open(path_results, "w") as fp:
-    json.dump(survivalcounts, fp)
+    json.dump(survivalrates, fp)
 logging.info("Done. (3/3)")
 
 logging.info("Total number of observed streaks after records: " + str(total_observed))
