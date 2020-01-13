@@ -23,14 +23,8 @@ bins = [
     [20,29],
     [30,39],
     [40,49],
-    [50,59],
-    [60,69],
-    [70,79],
-    [80,89],
-    [90,99],
-    [100,199],
-    [200,299],
-    [300,5000],
+    [50,99],
+    [100,9999999]
 ]
 
 binvals_before = {
@@ -38,13 +32,7 @@ binvals_before = {
     30: 0,
     40: 0,
     50: 0,
-    60: 0,
-    70: 0,
-    80: 0,
-    90: 0,
-    100: 0,
-    200: 0,
-    300: 0,
+    100: 0
 }
 
 binvals_after = {
@@ -52,23 +40,16 @@ binvals_after = {
     30: 0,
     40: 0,
     50: 0,
-    60: 0,
-    70: 0,
-    80: 0,
-    90: 0,
-    100: 0,
-    200: 0,
-    300: 0,
+    100: 0
 }
-offset = 20 # on changedate for BEFORE case
-observed_start = date(2013, 1, 1)
-observed_end = date(2019, 4, 1)
 # ------------------------------
 
 
 # ---------- INITIAL -----------
 logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
+datetimeFormat = "%Y-%m-%d"
 changedate = date(2016, 5, 19)
+cnt_streaks_total = 0
 # ------------------------------
 
 
@@ -110,9 +91,9 @@ for userid in userids:  # for each user in subpopulation
         if length >= bins[0][0]:
             for binborder in bins:
                 if length >= binborder[0] and length <= binborder[1]:
-                    if start < changedate and end <= (changedate + timedelta(days=offset)):
+                    if start < changedate:
                         binvals_before[binborder[0]] += 1
-                    elif start > changedate:
+                    else:
                         binvals_after[binborder[0]] += 1
 
 

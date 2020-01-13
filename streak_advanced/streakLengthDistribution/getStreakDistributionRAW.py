@@ -28,9 +28,11 @@ observed_end = date(2019, 4, 1)
 
 # ---------- INITIAL -----------
 logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
+datetimeFormat = "%Y-%m-%d"
 changedate = date(2016, 5, 19)
 distribution_before = {}
 distribution_after = {}
+cnt_streaks_total = 0
 # ------------------------------
 
 
@@ -76,7 +78,7 @@ for userid in userids:  # for each user in subpopulation
                 else:
                     distribution_before[length] = 1
             elif start > changedate:
-                if length in distribution_before:
+                if length in distribution_after:
                     distribution_after[length] += 1
                 else:
                     distribution_after[length] = 1

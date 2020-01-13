@@ -18,7 +18,8 @@ import matplotlib.pyplot as plt
 
 
 # ---------- CONFIG ------------
-
+start = 70
+end = 130
 # ------------------------------
 
 
@@ -29,33 +30,43 @@ values = []
 # ------------------------------
 
 
+i = start
+while i <= end:
+    x.append(i)
+    i += 1
 
-with open("C:/Users/Lukas/Desktop/survivalAroundLastRecordMIN25DIST10BEFORE.json", "r") as fp:
+
+with open("C:/Users/Lukas/Desktop/streakLengthDistributionBEFORE.json", "r") as fp:
     plotdata = json.load(fp)
 
-del plotdata["__TOTAL__"]
 
-for entry in plotdata:
-    values.append(plotdata[entry])
-    x.append(entry)
-    
+i = start
+while i <= end:
+    if str(i) in plotdata:
+        values.append(plotdata[str(i)])
+    else: 
+        values.append(0)
+    i += 1
+        
 matplotlib.pyplot.plot(x, values, '-', label="Before")
-plt.xlabel("Streak days arround the last record")
-plt.ylabel("Survival rate of new streak within 30 days after last record")
+plt.xlabel("Streak length distibution")
+plt.ylabel("Total amount")
 
 
 values = []
-with open("C:/Users/Lukas/Desktop/survivalAroundLastRecordMIN25DIST10AFTER.json", "r") as fp:
+with open("C:/Users/Lukas/Desktop/streakLengthDistributionAFTER.json", "r") as fp:
     plotdata = json.load(fp)
 
-del plotdata["__TOTAL__"]
 
-for entry in plotdata:
-    values.append(plotdata[entry])
+i = start
+while i <= end:
+    if str(i) in plotdata:
+        values.append(plotdata[str(i)])
+    else: 
+        values.append(0)
+    i += 1
 
-matplotlib.pyplot.plot_date(x, values, '-', label="After")
+matplotlib.pyplot.plot(x, values, '-', label="After")
 
-
-plt.axvline(x="0", color='r', label="Last maximum streak")
 plt.legend()
 plt.show()
