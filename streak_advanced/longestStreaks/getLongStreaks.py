@@ -108,6 +108,7 @@ for userid in userids:  # for each user in subpopulation
             if start < first_start:
                 first_start = start
 
+    # Get ordering and delete wrong records
     lastmax = lastRecord[userid]
     pos = 1
     for day in daterange(first_start, observed_end):
@@ -117,6 +118,7 @@ for userid in userids:  # for each user in subpopulation
                 records_order[userid][str(day)] = pos
                 pos += 1
             else:
+                # Delete streaks longer than initial record (before) but not longer than record in between
                 del records[userid][str(day)]
 
 
