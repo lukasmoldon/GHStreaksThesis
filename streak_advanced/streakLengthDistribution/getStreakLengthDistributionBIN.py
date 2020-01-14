@@ -20,26 +20,23 @@ path_results_after = "/home/lmoldon/results/streakLengthBINDistributionAFTER.jso
 
 # ---------- CONFIG ------------
 bins = [
+    [10,19],
     [20,29],
-    [30,39],
-    [40,49],
-    [50,99],
+    [30,99],
     [100,9999999]
 ]
 
 binvals_before = {
+    10: 0,
     20: 0,
     30: 0,
-    40: 0,
-    50: 0,
     100: 0
 }
 
 binvals_after = {
+    10: 0,
     20: 0,
     30: 0,
-    40: 0,
-    50: 0,
     100: 0
 }
 # ------------------------------
@@ -91,9 +88,9 @@ for userid in userids:  # for each user in subpopulation
         if length >= bins[0][0]:
             for binborder in bins:
                 if length >= binborder[0] and length <= binborder[1]:
-                    if start < changedate:
+                    if start < changedate and start > date(2015, 5, 18):
                         binvals_before[binborder[0]] += 1
-                    else:
+                    elif start > changedate and start < date(2017, 5, 18):
                         binvals_after[binborder[0]] += 1
 
 
