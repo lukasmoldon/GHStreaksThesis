@@ -55,7 +55,7 @@ def createBootstrapSample(data):
 
 def getBootstrapSampleAvgs(survived, abandoned, amountSamples):
     sampleAvgs = []
-    base = [0] * survived + [1] * abandoned
+    base = [1] * survived + [0] * abandoned
     random.shuffle(base)
     i = 0
     while i < amountSamples:
@@ -134,7 +134,7 @@ logging.info("Calculating confidence intervals ...")
 i = 0
 for date in survivalRates:
     if survivalRates[date]["0"] > 0 and survivalRates[date]["1"] > 0:
-        sampleAvgs = getBootstrapSampleAvgs(survivalRates[date]["0"], survivalRates[date]["1"], amountSamples)
+        sampleAvgs = getBootstrapSampleAvgs(survivalRates[date]["1"], survivalRates[date]["0"], amountSamples)
         survivalRates[date]["a"] = np.percentile(sampleAvgs, lowerbound)
         survivalRates[date]["b"] = np.percentile(sampleAvgs, upperbound)
     elif survivalRates[date]["0"] == 0:
