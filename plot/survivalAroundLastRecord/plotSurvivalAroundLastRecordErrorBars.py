@@ -38,13 +38,13 @@ del plotdata["__TOTAL__"]
 
 for entry in plotdata:
     values.append(plotdata[entry]["r"])
-    lower_error.append(plotdata[entry]["a"])
-    upper_error.append(plotdata[entry]["b"])
+    lower_error.append(plotdata[entry]["r"] - plotdata[entry]["a"])
+    upper_error.append(plotdata[entry]["b"] - plotdata[entry]["r"])
     x.append(entry)
 
 asymmetric_error = [lower_error, upper_error]
 
-matplotlib.pyplot.errorbar(x, values, yerr=asymmetric_error, fmt='o', label="Before")
+#matplotlib.pyplot.errorbar(x, values, yerr=asymmetric_error, fmt='o', label="Before")
 plt.xlabel("Streak days arround the last record")
 plt.ylabel("Survival rate of new streak within 30 days after last record")
 
@@ -59,8 +59,8 @@ del plotdata["__TOTAL__"]
 
 for entry in plotdata:
     values.append(plotdata[entry]["r"])
-    lower_error.append(plotdata[entry]["a"])
-    upper_error.append(plotdata[entry]["b"])
+    lower_error.append(plotdata[entry]["r"] - plotdata[entry]["a"])
+    upper_error.append(plotdata[entry]["b"] - plotdata[entry]["r"])
 
 asymmetric_error = [lower_error, upper_error]
 
