@@ -116,9 +116,9 @@ logging.info("Done. (2/3)")
 
 logging.info("Saving results ...")
 with open(path_results_before, "w") as fp:
-    json.dump(binvals_before, fp)
+    json.dump(plotdata_before, fp)
 with open(path_results_after, "w") as fp:
-    json.dump(binvals_after, fp)
+    json.dump(plotdata_after, fp)
 logging.info("Done. (3/3)")
 
 log_endtime = datetime.datetime.now()

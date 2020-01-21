@@ -53,7 +53,7 @@ del plotdata["__TOTAL__"]
 for entry in plotdata:
     values.append(plotdata[entry])
 
-matplotlib.pyplot.plot_date(x, values, '-', label="After")
+matplotlib.pyplot.plot(x, values, '-', label="After")
 
 
 plt.axvline(x="0", color='r', label="Last maximum streak")

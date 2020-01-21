@@ -18,8 +18,8 @@ import matplotlib.pyplot as plt
 
 
 # ---------- CONFIG ------------
-minlen = 20
-maxlen = 100
+minlen = 180
+maxlen = 1000
 # ------------------------------
 
 
@@ -31,13 +31,13 @@ values = []
 
 
 
-with open("/home/lmoldon/results/lifetimeRecordsPlotBEFORE.json", "r") as fp:
+with open("C:/Users/Lukas/Desktop/lifetimeRecordsPlotBEFORE.json", "r") as fp:
     plotdata = json.load(fp)
 
 
 i = minlen
 while i <= maxlen:
-    x.append(str(i))
+    x.append(i)
     if str(i) in plotdata:
         values.append(plotdata[str(i)])
     else:
@@ -46,12 +46,12 @@ while i <= maxlen:
     
     
 matplotlib.pyplot.plot(x, values, '-', label="Before")
-plt.xlabel("Maximum streak length in users lifetime")
+plt.xlabel("Maximum achieved streak length in users lifetime (cumulative)")
 plt.ylabel("Users in %")
 
 
 values = []
-with open("/home/lmoldon/results/lifetimeRecordsPlotAFTER.json", "r") as fp:
+with open("C:/Users/Lukas/Desktop/lifetimeRecordsPlotAFTER.json", "r") as fp:
     plotdata = json.load(fp)
 
 
@@ -63,7 +63,7 @@ while i <= maxlen:
         values.append(0)
     i += 1
 
-matplotlib.pyplot.plot_date(x, values, '-', label="After")
+matplotlib.pyplot.plot(x, values, '-', label="After")
 
 plt.legend()
 plt.show()
