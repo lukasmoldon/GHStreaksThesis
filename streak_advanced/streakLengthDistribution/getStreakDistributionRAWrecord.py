@@ -160,8 +160,6 @@ with open(path_results_after, "w") as fp:
     json.dump(distribution_after, fp)
 logging.info("Done. (3/3)")
 
-logging.info("Total number of observed streaks after records: " + str(total_observed))
-
 log_endtime = datetime.datetime.now()
 log_runtime = (log_endtime - log_starttime)
 logging.info("Total runtime: " + str(log_runtime))
