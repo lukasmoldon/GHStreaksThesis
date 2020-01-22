@@ -138,12 +138,13 @@ cnt_streaks_total = 0
 ## CALCULATE VALUES ##
 for userid in userids:  # for each user in subpopulation
 
+    used = False
+
     for streakid in streakdata[userid]:  # for each streak of that user
 
         start = datetime.datetime.strptime(str(streakdata[userid][streakid]["start"]), datetimeFormat).date()
         end = datetime.datetime.strptime(str(streakdata[userid][streakid]["end"]), datetimeFormat).date()
         length = int(streakdata[userid][streakid]["len"])
-        used = False
 
         cnt_streaks_total += 1
         if cnt_streaks_total % 1000000 == 0:
