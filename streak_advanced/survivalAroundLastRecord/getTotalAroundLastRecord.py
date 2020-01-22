@@ -32,6 +32,7 @@ survivalcounts = {}
 lastRecord = {} # before observed time
 records = {} # while observed time
 total_observed = 0
+users_observed = 0
 if before:
     path_results = "/home/lmoldon/results/TotalAroundLastRecordMIN" + str(minlen) + "DIST" + str(maxdistance) + "BEFORE.json"
     observed_start = datetime.datetime.strptime("2013-01-01", datetimeFormat).date()
@@ -141,6 +142,7 @@ for userid in userids:  # for each user in subpopulation
         start = datetime.datetime.strptime(str(streakdata[userid][streakid]["start"]), datetimeFormat).date()
         end = datetime.datetime.strptime(str(streakdata[userid][streakid]["end"]), datetimeFormat).date()
         length = int(streakdata[userid][streakid]["len"])
+        used = False
 
         cnt_streaks_total += 1
         if cnt_streaks_total % 1000000 == 0:
@@ -153,13 +155,18 @@ for userid in userids:  # for each user in subpopulation
                 if distance > 0 and distance <= maxdistance: # within maxdistance days next streak after any record
                     if (int(records[userid][recordstart] - length) >= (timerange * -1)): # within the x-axis 
                         total_observed += 1
+                        used = True
                         i = timerange * -1
                         while i <= (length - int(records[userid][recordstart])) and i <= timerange:
                             survivalcounts[str(i)] += 1
                             i += 1
+
+    if used:
+        users_observed += 1
                         
 
 survivalcounts["__TOTAL__"] = total_observed
+survivalcounts["__USERS__"] = users_observed
 
 logging.info("Done. (2/3)")
 

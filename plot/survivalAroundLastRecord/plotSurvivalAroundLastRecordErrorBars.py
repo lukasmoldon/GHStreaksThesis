@@ -35,6 +35,7 @@ with open("C:/Users/Lukas/Desktop/survivalAroundLastRecordMIN25DIST30BEFORE_ERRO
     plotdata = json.load(fp)
 
 del plotdata["__TOTAL__"]
+del plotdata["__USERS__"]
 
 for entry in plotdata:
     values.append(plotdata[entry]["r"])
@@ -56,6 +57,7 @@ with open("C:/Users/Lukas/Desktop/survivalAroundLastRecordMIN25DIST30AFTER_ERROR
     plotdata = json.load(fp)
 
 del plotdata["__TOTAL__"]
+del plotdata["__USERS__"]
 
 for entry in plotdata:
     values.append(plotdata[entry]["r"])
