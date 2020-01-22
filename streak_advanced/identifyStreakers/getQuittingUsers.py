@@ -8,6 +8,7 @@ import json
 # ---------- INPUT -------------
 path_source_streakdata = "/home/lmoldon/data/user_streaks.json"
 path_source_userdata = "/home/lmoldon/data/users_reduced.json"
+path_source_genderdata = "/home/lmoldon/data/users_gender.json"
 # ------------------------------
 
 
@@ -26,6 +27,9 @@ before = False
 logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
 datetimeFormat = "%Y-%m-%d"
 quit_ids = {}
+cnt_female = 0
+cnt_male = 0
+cnt_unknown = 0
 
 if before:
     path_results = "/home/lmoldon/results/quittingUsersMIN" + str(minlen) + "BEFORE.json"
@@ -49,6 +53,8 @@ with open(path_source_streakdata, "r") as fp:
 with open(path_source_userdata, "r") as fp:
     userids = json.load(fp)
 
+with open(path_source_genderdata, "r") as fp:
+    genderdata = json.load(fp)
 logging.info("Done (1/3)")
 
 
@@ -69,6 +75,15 @@ for userid in streakdata:  # for each user
 
         if end >= observed_start and end <= observed_end and length >= minlen: # streak >= minlen ended in observed time
             quit_ids[userid] = length
+            if userid in genderdata:
+                if genderdata[userid]["gender"] == "male":
+                    cnt_male += 1
+                elif genderdata[userid]["gender"] == "female":
+                    cnt_female += 1
+                else:
+                    cnt_unknown += 1
+            else:
+                logging.warning("UserID " + userid + " not in gender data!")
 
 
 
@@ -81,6 +96,10 @@ with open(path_results, "w") as fp:
 logging.info("Done. (3/3)")
 
 logging.info("Total number of quitting users: " + str(len(quit_ids)))
+logging.info("Gender distribution:")
+print("male: " + str(cnt_male))
+print("female: " + str(cnt_female))
+print("unknown: " + str(cnt_unknown))
 
 log_endtime = datetime.datetime.now()
 log_runtime = (log_endtime - log_starttime)
