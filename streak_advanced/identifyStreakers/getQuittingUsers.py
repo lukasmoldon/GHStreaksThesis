@@ -83,7 +83,8 @@ for userid in streakdata:  # for each user
                 else:
                     cnt_unknown += 1
             else:
-                logging.warning("UserID " + userid + " not in gender data!")
+                logging.debug("UserID " + userid + " not in gender data.")
+                cnt_unknown += 1
 
 
 
