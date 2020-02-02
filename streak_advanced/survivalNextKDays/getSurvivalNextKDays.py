@@ -74,6 +74,7 @@ for userid in userids:
 for userid in deleteIDs:
     del userids[userid]
 
+logging.info["Starting ..."]
 
 for userid in userids:
     for streakid in streakdata[userid]:
@@ -95,6 +96,7 @@ for userid in userids:
                         else: # streak survived
                             plotdata[str(day)][binborder[0]]["s"] += 1
 
+logging.info("Done (2/3)")
 
 
 logging.info("Saving results ...")
