@@ -74,7 +74,7 @@ for userid in userids:
 for userid in deleteIDs:
     del userids[userid]
 
-logging.info["Starting ..."]
+logging.info("Starting ...")
 
 for userid in userids:
     for streakid in streakdata[userid]:

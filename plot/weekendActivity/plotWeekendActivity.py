@@ -3,11 +3,13 @@ import logging
 import datetime
 import json
 from datetime import date, timedelta
+import matplotlib
+import matplotlib.pyplot as plt
 # ------------------------------
 
 
 # ---------- INPUT -------------
-path_source = "/home/lmoldon/results/weekendActivity.json"
+path_source = "C:/Users/Lukas/Desktop/weekendActivity.json"
 # ------------------------------
 
 
@@ -36,7 +38,7 @@ with open(path_source, "r") as fp:
 
 
 for index in weekdata:
-    x.append(datetime.datetime.strptime(weekdata[index], datetimeFormat).date())
+    x.append(datetime.datetime.strptime(index, datetimeFormat).date())
     values.append(weekdata[index]["RW"])
 
 dates = matplotlib.dates.date2num(x)
