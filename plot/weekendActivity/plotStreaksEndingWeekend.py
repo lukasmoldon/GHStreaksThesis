@@ -5,6 +5,7 @@ import json
 from datetime import date, timedelta
 import matplotlib
 import matplotlib.pyplot as plt
+import numpy as np
 # ------------------------------
 
 
@@ -18,8 +19,9 @@ path_source = ""
 
 
 # ---------- CONFIG ------------
-minlen = 12
-changemarker = "2016-5-16"
+minlen = 32
+observed_start = date(2016,1,1)
+observed_end = date(2016,12,31)
 # ------------------------------
 
 
@@ -29,6 +31,9 @@ path_source = "C:/Users/Lukas/Desktop/weekendStreaksMIN" + str(minlen) + ".json"
 datetimeFormat = "%Y-%m-%d"
 x = []
 values = []
+changedate = date(2016,5,16)
+beforeavg = []
+afteravg = []
 # ------------------------------
 
 
@@ -41,15 +46,24 @@ with open(path_source, "r") as fp:
 
 
 for index in weekdata:
-    x.append(datetime.datetime.strptime(index, datetimeFormat).date())
-    values.append(weekdata[index]["RW"])
+    timestamp = datetime.datetime.strptime(index, datetimeFormat).date()
+    if timestamp >= observed_start and timestamp <= observed_end:
+        x.append(timestamp)
+        values.append(weekdata[index]["RW"])
+        if timestamp <= changedate:
+            beforeavg.append(weekdata[index]["RW"])
+        else:
+            afteravg.append(weekdata[index]["RW"])
+
 
 dates = matplotlib.dates.date2num(x)
 matplotlib.pyplot.plot_date(dates, values, '-')
 
 plt.xlabel("Weeks in 2016")
 plt.ylabel("Ratio of streaks >= " + str(minlen) + " ending on weekends")
-plt.axvline(x=datetime.datetime.strptime(changemarker, datetimeFormat).date(), color='r', label="Streaks removed")
+plt.axvline(x=changedate, color='r', label="Streaks removed")
+plt.hlines(y=np.mean(beforeavg), xmin=observed_start, xmax=changedate, color='b', label="Mean before = " + str(round(np.mean(beforeavg), 3)))
+plt.hlines(y=np.mean(afteravg), xmin=changedate, xmax=observed_end, color='b', label="Mean after = " + str(round(np.mean(afteravg), 3)))
 
 plt.legend()
 plt.show()

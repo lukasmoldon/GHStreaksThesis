@@ -6,6 +6,7 @@ from datetime import date, timedelta
 import matplotlib
 #import seaborn as sns
 import matplotlib.pyplot as plt
+import numpy as np
 # ------------------------------
 
 
@@ -55,6 +56,7 @@ plt.hist(before, bins=500, density=True, range=(-10,50))
 plt.xlabel("z score distribution year before the change")
 plt.ylabel("%")
 plt.axvline(x=2, color='r', label="x = 2")
+plt.axvline(x=np.mean(before), color='k', label="Mean = " + str(round(np.mean(before), 2)))
 plt.legend()
 plt.show()
 
@@ -62,6 +64,7 @@ plt.hist(after, bins=500, density=True, range=(-10,50))
 plt.xlabel("z score distribution year after the change")
 plt.ylabel("%")
 plt.axvline(x=2, color='r', label="x = 2")
+plt.axvline(x=np.mean(after), color='k', label="Mean = " + str(round(np.mean(after), 2)))
 plt.legend()
 plt.show()
 
