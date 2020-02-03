@@ -23,8 +23,8 @@ path_results_after = "/home/lmoldon/results/streakLengthsMondayAfter.json"
 # ---------- CONFIG ------------
 k = 12 # minlen
 observed_mondays = [date(2016, 1, 11), date(2016, 1, 18), date(2016, 1, 25), date(2016, 2, 1), date(
-    2016, 2, 8), date(2017, 1, 11), date(2017, 1, 18), date(2017, 1, 25), date(2017, 2, 1), date(
-    2017, 2, 8)]
+    2016, 2, 8), date(2017, 1, 9), date(2017, 1, 16), date(2017, 1, 23), date(2017, 1, 30), date(
+    2017, 2, 6)]
 # ------------------------------
 
 
