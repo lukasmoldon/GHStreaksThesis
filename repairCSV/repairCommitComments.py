@@ -9,12 +9,12 @@ import pandas as pd
 
 
 # ---------- INPUT -------------
-path_source = "C:/Users/Lukas/Desktop/commit_comments.csv"
+path_source = "/home/johannes/data/github/mysql-2019-06-01/commit_comments.csv"
 # ------------------------------
 
 
 # ---------- OUTPUT ------------
-path_results = "C:/Users/Lukas/Desktop/test.csv"
+path_results = "/home/lmoldon/data/commit_comments_repaired.csv"
 # ------------------------------
 
 

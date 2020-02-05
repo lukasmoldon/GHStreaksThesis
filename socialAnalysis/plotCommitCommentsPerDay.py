@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 
 
 # ---------- INPUT -------------
-path_source = "C:/Users/Lukas/Desktop/commitComments.json"
+path_source = "C:/Users/Lukas/Desktop/commitCommentsCount.json"
 # ------------------------------
 
 
@@ -62,7 +62,7 @@ dates = matplotlib.dates.date2num(list_of_datetimes)
 matplotlib.pyplot.plot_date(dates, values, '-')
 plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='r')
 plt.xlabel("Time")
-plt.ylabel("Number comments on commits")
+plt.ylabel("Number of comments on commits per day")
 plt.show()
 
 logging.info("Done (2/2)")

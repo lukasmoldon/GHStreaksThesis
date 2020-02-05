@@ -11,12 +11,12 @@ import time
 
 
 # ---------- INPUT -------------
-path_source = "C:/Users/Lukas/Desktop/test.csv"
+path_source = "/home/lmoldon/data/commit_comments_repaired.csv"
 # ------------------------------
 
 
 # ---------- OUTPUT ------------
-path_results = "C:/Users/Lukas/Desktop/commitComments.json"
+path_results = "/home/lmoldon/results/commitCommentsCount.json"
 # ------------------------------
 
 
