@@ -12,6 +12,7 @@ import time
 
 # ---------- INPUT -------------
 path_source = "/home/lmoldon/data/pull_request_comments_repaired.csv"
+path_source_userids = "/home/lmoldon/data/users_reduced_IDs.json"
 # ------------------------------
 
 
@@ -36,20 +37,24 @@ log_starttime = datetime.datetime.now()
 
 
 logging.info("Loading data ...")
+with open(path_source_userids, "r") as fp:
+    userids = json.load(fp)
+
 cnt = 0
 for chunk in pd.read_csv(path_source, chunksize=chunksize, header=None, delimiter=",", encoding='utf-8'):
     for row in list(chunk.values):
-        try:
-            timestamp = datetime.datetime.strptime(str(row[6]), datetimeFormat).date()
-            cnt += 1
-            if cnt % 1000000 == 0: logging.info(str(cnt/1000000) + " million comments computed")
-            if str(timestamp) in data:
-                data[str(timestamp)] += 1
-            else:
-                data[str(timestamp)] = 1
-        except:
-            logging.warning("Could not read following line:")
-            logging.warning(str(row))
+        if str(row[1]) in userids:
+            try:
+                timestamp = datetime.datetime.strptime(str(row[6]), datetimeFormat).date()
+                cnt += 1
+                if cnt % 1000000 == 0: logging.info(str(cnt/1000000) + " million comments computed")
+                if str(timestamp) in data:
+                    data[str(timestamp)] += 1
+                else:
+                    data[str(timestamp)] = 1
+            except:
+                logging.warning("Could not read following line:")
+                logging.warning(str(row))
 logging.info("Done (1/2)")
 
 
