@@ -12,6 +12,8 @@ import matplotlib.pyplot as plt
 
 # ---------- INPUT -------------
 path_source = "C:/Users/Lukas/Desktop/pullrequestCommentsCount.json"
+
+path_source_communitysize = "C:/Users/Lukas/Desktop/communitysize_per_day.json"
 # ------------------------------
 
 
@@ -21,8 +23,9 @@ path_source = "C:/Users/Lukas/Desktop/pullrequestCommentsCount.json"
 
 
 # ---------- CONFIG ------------
-observed_start = date(2008,1,1)
+observed_start = date(2011,1,1)
 observed_end = date(2019,1,1)
+total = False # total count or per user
 # ------------------------------
 
 
@@ -46,6 +49,8 @@ log_starttime = datetime.datetime.now()
 logging.info("Loading data ...")
 with open(path_source, "r") as fp:
     data = json.load(fp)
+with open(path_source_communitysize, "r") as fp:
+    community = json.load(fp)
 logging.info("Done (1/2)")
 
 
@@ -54,7 +59,7 @@ logging.info("Starting ...")
 for day in daterange(observed_start, observed_end):
     list_of_datetimes.append(day)
     if str(day) in data:
-        values.append(data[str(day)])
+        values.append(data[str(day)]/community[str(day)])
     else:
         values.append(0)
 

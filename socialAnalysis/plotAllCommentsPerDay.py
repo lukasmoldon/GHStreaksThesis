@@ -14,6 +14,8 @@ import matplotlib.pyplot as plt
 path_source_commits = "C:/Users/Lukas/Desktop/commitCommentsCount.json"
 path_source_pullrequests = "C:/Users/Lukas/Desktop/pullrequestCommentsCount.json"
 path_source_issues = "C:/Users/Lukas/Desktop/issueCommentsCount.json"
+
+path_source_communitysize = "C:/Users/Lukas/Desktop/communitysize_per_day.json"
 # ------------------------------
 
 
@@ -23,8 +25,9 @@ path_source_issues = "C:/Users/Lukas/Desktop/issueCommentsCount.json"
 
 
 # ---------- CONFIG ------------
-observed_start = date(2008,1,1)
+observed_start = date(2011,1,1)
 observed_end = date(2019,1,1)
+total = False # total count or per user
 # ------------------------------
 
 
@@ -51,6 +54,8 @@ with open(path_source_pullrequests, "r") as fp:
     data_pullrequests = json.load(fp)
 with open(path_source_issues, "r") as fp:
     data_issues = json.load(fp)
+with open(path_source_communitysize, "r") as fp:
+    community = json.load(fp)
 logging.info("Done (1/2)")
 
 
@@ -66,8 +71,8 @@ for day in daterange(observed_start, observed_end):
         cnt += data_pullrequests[str(day)]
     if str(day) in data_issues:
         cnt += data_issues[str(day)]
-        
-    values.append(cnt)
+
+    values.append(cnt/community[str(day)])
 
 dates = matplotlib.dates.date2num(list_of_datetimes)
 matplotlib.pyplot.plot_date(dates, values, '-')
