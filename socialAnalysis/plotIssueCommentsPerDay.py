@@ -23,7 +23,7 @@ path_source_communitysize = "C:/Users/Lukas/Desktop/communitysize_per_day.json"
 
 
 # ---------- CONFIG ------------
-observed_start = date(2011,1,1)
+observed_start = date(2012,1,1)
 observed_end = date(2019,1,1)
 total = False # total count or per user
 # ------------------------------
@@ -59,7 +59,10 @@ logging.info("Starting ...")
 for day in daterange(observed_start, observed_end):
     list_of_datetimes.append(day)
     if str(day) in data:
-        values.append(data[str(day)]/community[str(day)])
+        if total:
+            values.append(data[str(day)])
+        else:
+            values.append(data[str(day)]/community[str(day)])
     else:
         values.append(0)
 
@@ -67,7 +70,10 @@ dates = matplotlib.dates.date2num(list_of_datetimes)
 matplotlib.pyplot.plot_date(dates, values, '-')
 plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='r')
 plt.xlabel("Time")
-plt.ylabel("Number of comments on issues per day")
+if total:
+    plt.ylabel("Total number of comments on issues per day")
+else:
+    plt.ylabel("Number of comments on issues per user per day")
 plt.show()
 
 logging.info("Done (2/2)")

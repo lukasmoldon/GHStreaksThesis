@@ -25,7 +25,7 @@ path_source_communitysize = "C:/Users/Lukas/Desktop/communitysize_per_day.json"
 
 
 # ---------- CONFIG ------------
-observed_start = date(2011,1,1)
+observed_start = date(2012,1,1)
 observed_end = date(2019,1,1)
 total = False # total count or per user
 # ------------------------------
@@ -72,7 +72,11 @@ for day in daterange(observed_start, observed_end):
     if str(day) in data_issues:
         cnt += data_issues[str(day)]
 
-    values.append(cnt/community[str(day)])
+    if total:
+        values.append(cnt)
+    else:
+        values.append(cnt/community[str(day)])
+    
 
 dates = matplotlib.dates.date2num(list_of_datetimes)
 matplotlib.pyplot.plot_date(dates, values, '-')
