@@ -49,7 +49,10 @@ with open(path_source_after, "r") as fp:
 logging.info("Done (1/2)")
 
 
-tmp = [].append(observed_mondays[week-1]).append(observed_mondays[(len(observed_mondays)/2)-1+week])
+tmp = []
+tmp.append(observed_mondays[week-1])
+tmp.append(observed_mondays[int((len(observed_mondays)/2)-1+week)])
+observed_mondays = tmp
 observed_mondays = tmp
 logging.info("Selected the follwing Mondays:" + str(observed_mondays[0]) + "  and   " + str(observed_mondays[1]))
 
