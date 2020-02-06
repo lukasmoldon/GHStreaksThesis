@@ -82,7 +82,10 @@ dates = matplotlib.dates.date2num(list_of_datetimes)
 matplotlib.pyplot.plot_date(dates, values, '-')
 plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='r')
 plt.xlabel("Time")
-plt.ylabel("Number comments on commits/issues/pull requests per day")
+if total:
+    plt.ylabel("Total number comments on commits/issues/pull requests per day")
+else:
+    plt.ylabel("Number comments on commits/issues/pull requests per user per day")
 plt.show()
 
 logging.info("Done (2/2)")
