@@ -4,6 +4,7 @@ import json
 import datetime
 import numpy as np
 from scipy.stats import ks_2samp
+from datetime import timedelta, date
 # ------------------------------
 
 
@@ -19,7 +20,7 @@ path_source_after = "..."
 
 
 # ---------- CONFIG ------------
-week = 1 # [1,5] - calendar week in 2016/17
+week = 5 # [1,5] - calendar week in 2016/17
 observed_mondays = [date(2016, 1, 11), date(2016, 1, 18), date(2016, 1, 25), date(2016, 2, 1), date(
     2016, 2, 8), date(2017, 1, 9), date(2017, 1, 16), date(2017, 1, 23), date(2017, 1, 30), date(
     2017, 2, 6)]
@@ -57,22 +58,8 @@ observed_mondays = tmp
 logging.info("Selected the follwing Mondays:" + str(observed_mondays[0]) + "  and   " + str(observed_mondays[1]))
 
 
-logging.info("Starting ...")
-
-
-for length in distribution_before:
-    data_before += (distribution_before[length] * [int(length)])
-
-for length in distribution_after:
-    data_after += (distribution_after[length] * [int(length)])
-
-
-logging.info("Done. (2/2)")
-
-
-
 logging.info("Result:")
-print(ks_2samp(data_before,data_after))
+print(ks_2samp(distribution_before,distribution_after))
 
 
 
