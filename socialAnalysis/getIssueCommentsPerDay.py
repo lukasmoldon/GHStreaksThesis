@@ -45,6 +45,15 @@ with open(path_source_userids, "r") as fp:
 
 with open(path_source_gender, "r") as fp:
     genderdata = json.load(fp)
+
+if country_restricted:
+    delIDs = set()
+    for userid in userids:
+        if userid not in genderdata:
+            delIDs.add(userid)
+    for userid in delIDs:
+        del userids[userid]
+
 logging.info("Done (1/3)")
 
 
