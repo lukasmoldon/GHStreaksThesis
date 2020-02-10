@@ -12,13 +12,14 @@ path_source = "/home/lmoldon/data/contributions_per_user_per_day.json"
 
 
 # ---------- OUTPUT ------------
-path_results = "/home/lmoldon/results/weekendActivity.json"
+path_results = "..."
 # ------------------------------
 
 
 # ---------- CONFIG ------------
 observed_start = date(2016, 1, 4) # this must be a monday
 observed_end = date(2017, 1, 1) # this must be a sunday
+userlevel = True # True: datapoint represents single user per day, False: represents avg of all users per day
 # ------------------------------
 
 
@@ -27,6 +28,10 @@ logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt=
 datetimeFormat = "%Y-%m-%d"
 weekdata = {}
 cnt_users_total = 0
+if userlevel:
+    path_results = "/home/lmoldon/results/weekendActivity_userlevel.json"
+else:
+    path_results = "/home/lmoldon/results/weekendActivity.json"
 # ------------------------------
 
 
@@ -57,27 +62,56 @@ logging.info("Done (1/3)")
 
 logging.info("Starting ...")
 
-i = observed_start
-while i < observed_end:
-    weekdata[str(i)] = {"WD": 0, "WE": 0, "RW:": 0} # RW: ratio weekend activity
-    i += timedelta(days=7)
+if not userlevel:
+    i = observed_start
+    while i < observed_end:
+        weekdata[str(i)] = {"WD": 0, "WE": 0, "RW:": 0} # RW: ratio weekend activity
+        i += timedelta(days=7)
 
-for userID in contributiondata:
+    for userID in contributiondata:
 
-    cnt_users_total += 1
-    if cnt_users_total % 10000 == 0:
-        logging.info(str(cnt_users_total/1000) + "k users computed.")
+        cnt_users_total += 1
+        if cnt_users_total % 10000 == 0:
+            logging.info(str(cnt_users_total/1000) + "k users computed.")
 
-    for day in contributiondata[userID]:
-        monday = getWeekMonday(day)
-        if monday != -1:
-            if not isWeekend(day):
-                weekdata[str(monday)]["WD"] += 1
+        for day in contributiondata[userID]:
+            monday = getWeekMonday(day)
+            if monday != -1:
+                if not isWeekend(day):
+                    weekdata[str(monday)]["WD"] += 1
+                else:
+                    weekdata[str(monday)]["WE"] += 1
+
+    for index in weekdata:
+        weekdata[index]["RW"] = weekdata[index]["WE"] / (weekdata[index]["WD"] + weekdata[index]["WE"])
+else:
+    i = observed_start
+    while i < observed_end:
+        weekdata[str(i)] = {}
+        for userID in contributiondata:
+            weekdata[str(i)][userID] = {"WD": 0, "WE": 0, "RW:": 0} # RW: ratio weekend activity
+        i += timedelta(days=7)
+
+    for userID in contributiondata:
+
+        cnt_users_total += 1
+        if cnt_users_total % 10000 == 0:
+            logging.info(str(cnt_users_total/1000) + "k users computed.")
+
+        for day in contributiondata[userID]:
+            monday = getWeekMonday(day)
+            if monday != -1:
+                if not isWeekend(day):
+                    weekdata[str(monday)][userID]["WD"] += 1
+                else:
+                    weekdata[str(monday)][userID]["WE"] += 1
+
+    for index in weekdata:
+        for userID in contributiondata:
+            if (weekdata[index][userID]["WD"] + weekdata[index][userID]["WE"]) != 0:
+                weekdata[index][userID]["RW"] = weekdata[index][userID]["WE"] / (weekdata[index][userID]["WD"] + weekdata[index][userID]["WE"])
             else:
-                weekdata[str(monday)]["WE"] += 1
-
-for index in weekdata:
-    weekdata[index]["RW"] = weekdata[index]["WE"] / (weekdata[index]["WD"] + weekdata[index]["WE"])
+                del weekdata[index][userID]
 
 logging.info("Done (2/3)")
 
