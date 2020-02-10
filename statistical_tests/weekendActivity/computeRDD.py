@@ -10,7 +10,7 @@ from rdd import rdd
 
 
 # ---------- INPUT -------------
-path_source = "/home/lmoldon/results/weekendActivity.json"
+path_source = "..."
 # ------------------------------
 
 
@@ -22,6 +22,7 @@ path_source = "/home/lmoldon/results/weekendActivity.json"
 # ---------- CONFIG ------------
 observed_start = date(2016,1,1)
 observed_end = date(2016,12,31)
+userlevel = True # True: datapoint represents single user per day, False: represents avg of all users per day
 bandwidth = 52/2 # bandwidth +/- around cut (2x for bandwidth length) => maximum is 52/2
 # ------------------------------
 
@@ -32,6 +33,10 @@ datetimeFormat = "%Y-%m-%d"
 changedate = date(2016,5,16)
 x = []
 y = []
+if userlevel:
+    path_source = "/home/lmoldon/results/weekendActivity_userlevel.json"
+else:
+    path_source = "/home/lmoldon/results/weekendActivity.json"
 # ------------------------------
 
 
@@ -47,13 +52,23 @@ with open(path_source, "r") as fp:
 
 cnt = 1 # index of current week
 change_cnt = -1 # index of first week after the change = cut
-for day in daterange(observed_start, observed_end):
-    if str(day) in weekdata:
-        x.append(cnt)
-        y.append(weekdata[str(day)]["RW"])
-        if day > changedate and change_cnt == -1:
-            change_cnt = cnt
-        cnt += 1
+if not userlevel:
+    for day in daterange(observed_start, observed_end):
+        if str(day) in weekdata:
+            x.append(cnt)
+            y.append(weekdata[str(day)]["RW"])
+            if day > changedate and change_cnt == -1:
+                change_cnt = cnt
+            cnt += 1
+else:
+    for day in daterange(observed_start, observed_end):
+        if str(day) in weekdata:
+            for userID in weekdata[str(day)]:
+                x.append(cnt)
+                y.append(weekdata[str(day)][userID]["RW"])
+            if day > changedate and change_cnt == -1:
+                change_cnt = cnt
+            cnt += 1
 
 data = pd.DataFrame({'y': y, 'x': x})
 
