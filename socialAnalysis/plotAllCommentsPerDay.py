@@ -28,6 +28,7 @@ path_source_communitysize = "C:/Users/Lukas/Desktop/communitysize_per_day.json"
 observed_start = date(2012,1,1)
 observed_end = date(2019,1,1)
 total = False # total count or per user
+weekly = True # plot avg per week
 # ------------------------------
 
 
@@ -61,31 +62,65 @@ logging.info("Done (1/2)")
 
 logging.info("Starting ...")
 
-for day in daterange(observed_start, observed_end):
-    cnt = 0
-    list_of_datetimes.append(day)
+if not weekly:
+    for day in daterange(observed_start, observed_end):
+        cnt = 0
+        list_of_datetimes.append(day)
 
-    if str(day) in data_commits:
-        cnt += data_commits[str(day)]
-    if str(day) in data_pullrequests:
-        cnt += data_pullrequests[str(day)]
-    if str(day) in data_issues:
-        cnt += data_issues[str(day)]
+        if str(day) in data_commits:
+            cnt += data_commits[str(day)]
+        if str(day) in data_pullrequests:
+            cnt += data_pullrequests[str(day)]
+        if str(day) in data_issues:
+            cnt += data_issues[str(day)]
 
-    if total:
-        values.append(cnt)
-    else:
-        values.append(cnt/community[str(day)])
-    
+        if total:
+            values.append(cnt)
+        else:
+            values.append(cnt/community[str(day)])
+else:
+    cur_monday = observed_start
+    cur_amount = 0
+    for day in daterange(observed_start, observed_end):
+        if day.weekday() == 0:
+            list_of_datetimes.append(cur_monday)
+            if total:
+                values.append(cur_amount/7)
+            else:
+                values.append((cur_amount/7)/community[str(cur_monday)])
+            cur_monday = day
+            cur_amount = 0
+        
+        if str(day) in data_commits:
+            cur_amount += data_commits[str(day)]
+        if str(day) in data_pullrequests:
+            cur_amount += data_pullrequests[str(day)]
+        if str(day) in data_issues:
+            cur_amount += data_issues[str(day)]
 
 dates = matplotlib.dates.date2num(list_of_datetimes)
 matplotlib.pyplot.plot_date(dates, values, '-')
-plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='r')
+plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='r', label="Streaks removed")
+plt.axvline(x=datetime.datetime.strptime("2012-12-25", datetimeFormat).date(), color='g')
+plt.axvline(x=datetime.datetime.strptime("2013-12-25", datetimeFormat).date(), color='g')
+plt.axvline(x=datetime.datetime.strptime("2014-12-25", datetimeFormat).date(), color='g')
+plt.axvline(x=datetime.datetime.strptime("2015-12-25", datetimeFormat).date(), color='g')
+plt.axvline(x=datetime.datetime.strptime("2016-12-25", datetimeFormat).date(), color='g')
+plt.axvline(x=datetime.datetime.strptime("2017-12-25", datetimeFormat).date(), color='g')
+plt.axvline(x=datetime.datetime.strptime("2018-12-25", datetimeFormat).date(), color='g', label="Christmas")
 plt.xlabel("Time")
-if total:
-    plt.ylabel("Total number comments on commits/issues/pull requests per day")
+if not weekly:
+    if total:
+        plt.ylabel("Total number comments on commits/issues/pull requests per day")
+    else:
+        plt.ylabel("Number comments on commits/issues/pull requests per user per day")
 else:
-    plt.ylabel("Number comments on commits/issues/pull requests per user per day")
+    if total:
+        plt.ylabel("Avg total number comments on commits/issues/pull requests per day in week")
+    else:
+        plt.ylabel("Avg number comments on commits/issues/pull requests per user per day in week")
+
+plt.legend()
 plt.show()
 
 logging.info("Done (2/2)")
