@@ -15,6 +15,8 @@ path_source_commit_comments = "/home/johannes/data/github/mysql-2019-06-01/commi
 path_source_pull_request_comments = "/home/johannes/data/github/mysql-2019-06-01/pull_request_comments.csv"
 path_source_issue_comments = "/home/johannes/data/github/mysql-2019-06-01/issue_comments.csv"
 path_source_repo_labels = "/home/johannes/data/github/mysql-2019-06-01/repo_labels.csv"
+path_source_followers = "/home/johannes/data/github/mysql-2019-06-01/followers.csv"
+path_source_project_languages = "/home/johannes/data/github/mysql-2019-06-01/project_languages.csv"
 # ------------------------------
 
 
@@ -28,6 +30,8 @@ path_results_commit_comments = "/home/lmoldon/data/csv/commit_comments_partially
 path_results_pull_request_comments = "/home/lmoldon/data/csv/pull_request_comments_partially.csv"
 path_results_issue_comments = "/home/lmoldon/data/csv/issue_comments_partially.csv"
 path_results_repo_labels = "/home/lmoldon/data/csv/repo_labels_partially.csv"
+path_results_followers = "/home/lmoldon/data/csv/followers_partially.csv"
+path_results_project_languages = "/home/lmoldon/data/csv/project_languages_partially.csv"
 # ------------------------------
 
 
@@ -47,67 +51,77 @@ log_starttime = datetime.datetime.now()
 logging.info("Starting ...")
 
 # USERS
-data = pd.read_csv(path_source_users, nrows=amount, header=None, delimiter=",", names=["id","name","company","created_at","type","fake","deleted","long","lat","country_code","county","city","region"])
+data = pd.read_csv(path_source_users, nrows=amount, header=None, delimiter=",", names=["id", "name", "company", "created_at", "type", "fake", "deleted", "long", "lat", "country_code", "county", "city", "region"])
 data = data.set_index("id")
 # data = data.drop([-1], axis=0) # corrupted(?) entry with not natural number id = "-1"
-logging.info("Storing data ... (1/9)")
+logging.info("Storing data ... (1/11)")
 data.to_csv(path_results_users, encoding='utf-8', index="id")
 
 
 # PROJECTS
-data = pd.read_csv(path_source_projects, nrows=amount, header=None, delimiter=",", names=["id","url","owner_id","name","description","language","created_at","forked_from","deleted","updated_at","junk"])
+data = pd.read_csv(path_source_projects, nrows=amount, header=None, delimiter=",", names=["id", "url", "owner_id", "name", "description", "language", "created_at", "forked_from", "deleted", "updated_at", "junk"])
 data = data.set_index("id")
 # data = data.drop([-1], axis=0) # corrupted(?) entry with not natural number id = "-1"
 # data = data.drop(["junk"], axis=1) # not sure what this column is good for, not mentioned on GHTorrent
-logging.info("Storing data ... (2/9)")
+logging.info("Storing data ... (2/11)")
 data.to_csv(path_results_projects, encoding='utf-8', index="id")
 
 
 # COMMITS
-data = pd.read_csv(path_source_commits, nrows=amount, header=None, delimiter=",", names=["id","sha","author_id","committer_id","project_id","created_at"])
+data = pd.read_csv(path_source_commits, nrows=amount, header=None, delimiter=",", names=["id", "sha", "author_id", "committer_id", "project_id", "created_at"])
 data = data.set_index("id")
 # data = data.drop([1], axis=0) # corrupted(?) entry with not natural number id = "1.2"
-logging.info("Storing data ... (3/9)")
+logging.info("Storing data ... (3/11)")
 data.to_csv(path_results_commits, encoding='utf-8', index="id")
 
 
 # ISSUES
-data = pd.read_csv(path_source_issues, nrows=amount, header=None, delimiter=",", names=["id","repo_id","reporter_id","assignee_id","pull_request","pull_request_id","created_at","issue_id"])
+data = pd.read_csv(path_source_issues, nrows=amount, header=None, delimiter=",", names=["id", "repo_id", "reporter_id", "assignee_id", "pull_request", "pull_request_id", "created_at", "issue_id"])
 data = data.set_index("id")
-logging.info("Storing data ... (4/9)")
+logging.info("Storing data ... (4/11)")
 data.to_csv(path_results_issues, encoding='utf-8', index="id")
 
 
 # PROJECT_COMMITS
-data = pd.read_csv(path_source_project_commits, nrows=amount, header=None, delimiter=",", names=["project_id","commit_id"])
-logging.info("Storing data ... (5/9)")
+data = pd.read_csv(path_source_project_commits, nrows=amount, header=None, delimiter=",", names=["project_id", "commit_id"])
+logging.info("Storing data ... (5/11)")
 data.to_csv(path_results_project_commits, encoding='utf-8', index=False)
 
 
 # COMMIT COMMENTS
-data = pd.read_csv(path_source_commit_comments, nrows=amount, header=None, delimiter=",", names=["id","commit_id", "user_id", "body", "line", "position", "comment_id", "created_at"])
-logging.info("Storing data ... (6/9)")
+data = pd.read_csv(path_source_commit_comments, nrows=amount, header=None, delimiter=",", names=["id", "commit_id", "user_id", "body", "line", "position", "comment_id", "created_at"])
+logging.info("Storing data ... (6/11)")
 data.to_csv(path_results_commit_comments, encoding='utf-8', index=False)
 
 
 # PULL REQUEST COMMENTS
-data = pd.read_csv(path_source_pull_request_comments, nrows=amount, header=None, delimiter=",", names=["pull_request_id","user_id", "comment_id", "position", "body", "commit_id", "created_at"])
-logging.info("Storing data ... (7/9)")
+data = pd.read_csv(path_source_pull_request_comments, nrows=amount, header=None, delimiter=",", names=["pull_request_id", "user_id", "comment_id", "position", "body", "commit_id", "created_at"])
+logging.info("Storing data ... (7/11)")
 data.to_csv(path_results_pull_request_comments, encoding='utf-8', index=False)
 
 
 # ISSUE COMMENTS
-data = pd.read_csv(path_source_issue_comments, nrows=amount, header=None, delimiter=",", names=["issue_id","user_id", "comment_id", "created_at"])
-logging.info("Storing data ... (8/9)")
+data = pd.read_csv(path_source_issue_comments, nrows=amount, header=None, delimiter=",", names=["issue_id", "user_id", "comment_id", "created_at"])
+logging.info("Storing data ... (8/11)")
 data.to_csv(path_results_issue_comments, encoding='utf-8', index=False)
 
 
 # REPO LABELS
-data = pd.read_csv(path_source_repo_labels, nrows=amount, header=None, delimiter=",", names=["id","repo_id", "name"])
-logging.info("Storing data ... (9/9)")
+data = pd.read_csv(path_source_repo_labels, nrows=amount, header=None, delimiter=",", names=["id", "repo_id", "name"])
+logging.info("Storing data ... (9/11)")
 data.to_csv(path_results_repo_labels, encoding='utf-8', index=False)
 
 
+# FOLLOWERS
+data = pd.read_csv(path_source_project_languages, nrows=amount, header=None, delimiter=",", names=["user_id", "follower_id", "created_at"])
+logging.info("Storing data ... (10/11)")
+data.to_csv(path_results_followers, encoding='utf-8', index=False)
+
+
+# PROJECT LANGUAGES
+data = pd.read_csv(path_source_project_languages, nrows=amount, header=None, delimiter=",", names=["project_id", "language", "bytes", "created_at"])
+logging.info("Storing data ... (11/11)")
+data.to_csv(path_results_project_languages, encoding='utf-8', index=False)
 
 
 
