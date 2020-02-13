@@ -56,17 +56,13 @@ logging.info("Starting ...")
 
 for userid in userdata:
     cur_country = userdata[userid]["country"]
-
     if cur_country in merge:
-        if merge[cur_country] in countries:
-            countries[merge[cur_country]] += 1
-        else:
-            countries[merge[cur_country]] = 1
+        cur_country = merge[cur_country]
+
+    if cur_country in countries:
+        countries[cur_country] += 1
     else:
-        if cur_country in countries:
-            countries[cur_country] += 1
-        else:
-            countries[cur_country] = 1
+        countries[cur_country] = 1
     
     if cur_country in mergeContinents:
         if mergeContinents[cur_country] in continents:
@@ -79,7 +75,9 @@ for userid in userdata:
         else:
             continents["Unknown"] = 1
 
-    
+
+continents_final = dict({c: v for c, v in sorted(continents.items(), key=lambda item: item[1])})
+countries_final = dict({c: v for c, v in sorted(countries.items(), key=lambda item: item[1])})
 
 logging.info("Done. (2/3)")
 
@@ -87,10 +85,10 @@ logging.info("Done. (2/3)")
 logging.info("Saving data ...")
 
 with open(path_results_country, "w") as fp:
-    json.dump(countries, fp)
+    json.dump(countries_final, fp)
 
 with open(path_results_continent, "w") as fp:
-    json.dump(continents, fp)
+    json.dump(continents_final, fp)
 
 logging.info("Done. (3/3)")
 
