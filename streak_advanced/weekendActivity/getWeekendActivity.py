@@ -17,9 +17,11 @@ path_results = "..."
 
 
 # ---------- CONFIG ------------
-observed_start = date(2016, 1, 4) # this must be a monday
-observed_end = date(2017, 1, 1) # this must be a sunday
+observed_start = date(2016, 4, 18) # this must be a monday
+observed_end = date(2016, 6, 19) # this must be a sunday
 userlevel = True # True: datapoint represents single user per day, False: represents avg of all users per day
+minTotalActivity = 10 # minimum number of contributions in full observed time to be counted (ONLY FOR USERLEVEL = TRUE)
+minWeekActivity = 1 # minimum number of contributions in a specifc week to be counted in that week (ONLY FOR USERLEVEL = TRUE)
 # ------------------------------
 
 
@@ -106,12 +108,18 @@ else:
                 else:
                     weekdata[str(monday)][userID]["WE"] += 1
 
-    for index in weekdata:
-        for userID in contributiondata:
-            if (weekdata[index][userID]["WD"] + weekdata[index][userID]["WE"]) != 0:
+    for userID in contributiondata:
+        activity = 0
+        for index in weekdata:
+            if (weekdata[index][userID]["WD"] + weekdata[index][userID]["WE"]) >= minWeekActivity:
                 weekdata[index][userID]["RW"] = weekdata[index][userID]["WE"] / (weekdata[index][userID]["WD"] + weekdata[index][userID]["WE"])
+                activity += (weekdata[index][userID]["WD"] + weekdata[index][userID]["WE"])
             else:
                 del weekdata[index][userID]
+        if activity < minTotalActivity:
+            for index in weekdata:
+                if userID in weekdata[index]:
+                    del weekdata[index][userID]
 
 logging.info("Done (2/3)")
 
