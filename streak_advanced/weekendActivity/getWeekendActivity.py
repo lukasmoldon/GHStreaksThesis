@@ -20,7 +20,7 @@ path_results = "..."
 observed_start = date(2016, 4, 18) # this must be a monday
 observed_end = date(2016, 6, 19) # this must be a sunday
 userlevel = True # True: datapoint represents single user per day, False: represents avg of all users per day
-minTotalActivity = 10 # minimum number of contributions in full observed time to be counted (ONLY FOR USERLEVEL = TRUE)
+minTotalActivity = 30 # minimum number of contributions in full observed time to be counted (ONLY FOR USERLEVEL = TRUE)
 minWeekActivity = 1 # minimum number of contributions in a specifc week to be counted in that week (ONLY FOR USERLEVEL = TRUE)
 # ------------------------------
 
@@ -30,6 +30,7 @@ logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt=
 datetimeFormat = "%Y-%m-%d"
 weekdata = {}
 cnt_users_total = 0
+changedate = date(2016, 5, 19)
 if userlevel:
     path_results = "/home/lmoldon/results/weekendActivity_userlevel.json"
 else:
@@ -113,7 +114,8 @@ else:
         for index in weekdata:
             if (weekdata[index][userID]["WD"] + weekdata[index][userID]["WE"]) >= minWeekActivity:
                 weekdata[index][userID]["RW"] = weekdata[index][userID]["WE"] / (weekdata[index][userID]["WD"] + weekdata[index][userID]["WE"])
-                activity += (weekdata[index][userID]["WD"] + weekdata[index][userID]["WE"])
+                if datetime.datetime.strptime(index, datetimeFormat).date() < changedate:
+                    activity += (weekdata[index][userID]["WD"] + weekdata[index][userID]["WE"])
             else:
                 del weekdata[index][userID]
         if activity < minTotalActivity:

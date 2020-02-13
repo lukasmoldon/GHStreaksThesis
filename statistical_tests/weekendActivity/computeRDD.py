@@ -11,6 +11,8 @@ from rdd import rdd
 
 # ---------- INPUT -------------
 path_source = "..."
+path_source_genderdata = "/home/lmoldon/data/users_gender.json"
+path_source_merge = "/home/lmoldon/data/merge.json"
 # ------------------------------
 
 
@@ -20,10 +22,11 @@ path_source = "..."
 
 
 # ---------- CONFIG ------------
-observed_start = date(2016,1,1)
-observed_end = date(2016,12,31)
+observed_start = date(2016, 4, 18)
+observed_end = date(2016, 6, 19)
 userlevel = True # True: datapoint represents single user per day, False: represents avg of all users per day
-bandwidth = 52/2 # bandwidth +/- around cut (2x for bandwidth length) => maximum is 52/2
+bandwidth = 3 # bandwidth +/- around cut (2x for bandwidth length) => maximum is 52/2
+country = "" # restrict rdd on users from a specific country, if empty streak -  disable feature (ONLY FOR USERLEVEL = TRUE)
 # ------------------------------
 
 
@@ -50,6 +53,30 @@ log_starttime = datetime.datetime.now()
 with open(path_source, "r") as fp:
     weekdata = json.load(fp)
 
+with open(path_source_genderdata, "r") as fp:
+    genderdata = json.load(fp)
+
+with open(path_source_merge, "r") as fp:
+    merge = json.load(fp)
+
+if country != "":
+    for userID in genderdata:
+        if genderdata[userID]["country"] in merge:
+            genderdata[userID]["country"] = merge[genderdata[userID]["country"]]
+
+    delIDs = set()
+    for day in daterange(observed_start, observed_end):
+        if str(day) in weekdata:
+            for userID in weekdata[str(day)]:
+                if userID not in genderdata:
+                    delIDs.add(userID)
+
+    for userID in delIDs:
+        for day in daterange(observed_start, observed_end):
+            if str(day) in weekdata:
+                if userID in weekdata[str(day)]:
+                    del weekdata[str(day)][userID]
+
 cnt = 1 # index of current week
 change_cnt = -1 # index of first week after the change = cut
 if not userlevel:
@@ -64,8 +91,9 @@ else:
     for day in daterange(observed_start, observed_end):
         if str(day) in weekdata:
             for userID in weekdata[str(day)]:
-                x.append(cnt)
-                y.append(weekdata[str(day)][userID]["RW"])
+                if country == "" or genderdata[userID]["country"] == country:
+                    x.append(cnt)
+                    y.append(weekdata[str(day)][userID]["RW"])
             if day > changedate and change_cnt == -1:
                 change_cnt = cnt
             cnt += 1
