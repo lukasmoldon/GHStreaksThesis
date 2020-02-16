@@ -68,18 +68,21 @@ for userid in streakdata:  # for each user
         if cnt_streaks_total % 1000000 == 0:
             logging.info(str(cnt_streaks_total/1000000) + " million streaks computed.")
 
-        if end >= (changedate + timedelta(days=minSurvival)) and start <= (changedate + timedelta(days=offset)) and length >= minlen: # streak >= minlen ended in observed time
-            maintain_ids[userid] = length
-            if userid in genderdata:
-                if genderdata[userid]["gender"] == "male":
-                    cnt_male += 1
-                elif genderdata[userid]["gender"] == "female":
-                    cnt_female += 1
-                else:
-                    cnt_unknown += 1
+        if end >= (changedate + timedelta(days=minSurvival)) and start <= (changedate + timedelta(days=offset)) and length >= minlen:
+            if userid in maintain_ids:
+                maintain_ids[userid] = max(length, maintain_ids[userid])
             else:
-                logging.debug("UserID " + userid + " not in gender data.")
-                cnt_unknown += 1
+                maintain_ids[userid] = length
+                if userid in genderdata:
+                    if genderdata[userid]["gender"] == "male":
+                        cnt_male += 1
+                    elif genderdata[userid]["gender"] == "female":
+                        cnt_female += 1
+                    else:
+                        cnt_unknown += 1
+                else:
+                    logging.debug("UserID " + userid + " not in gender data.")
+                    cnt_unknown += 1
 
 
 
