@@ -57,17 +57,12 @@ with open(path_source, "r") as fp:
 logging.info("Done (1/2)")
 
 
-logging.info("Creating user sample ...")
+logging.info("Creating data sample ...")
 
 while len(sample_userids) < samplesize:
     userid = random.choice(list(userids.keys()))
     if userid not in sample_userids:
         sample_userids.append(userid)
-
-logging.info("Done (2/3)")
-
-
-logging.info("Computing regression ...")
 
 for rowindex in data_raw:
     if data_raw[rowindex]["user"] in sample_userids:
@@ -77,15 +72,19 @@ for rowindex in data_raw:
 
 data_pd = pd.DataFrame({"sentiment": sentiment, "user": user, "afterChange": afterChange})
 
-mod = smf.ols(formula="sentiment ~ user + afterChange", data=data_pd)
+logging.info("Done (2/3)")
+
+
+
+logging.info("Computing regression ...")
+
+mod = smf.ols(formula="sentiment ~ C(user) + afterChange", data=data_pd)
 res = mod.fit()
 
 logging.info("Results:")
 print(res.summary())
 
 logging.info("Done (3/3)")
-
-
 
 
 log_endtime = datetime.datetime.now()
