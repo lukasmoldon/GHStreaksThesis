@@ -19,7 +19,7 @@ path_source_gender = "/home/lmoldon/data/users_gender.json"
 
 
 # ---------- OUTPUT ------------
-path_results = "/home/lmoldon/results/commentSentiment.csv"
+path_results = "/home/lmoldon/results/commentSentiment.json"
 # ------------------------------
 
 

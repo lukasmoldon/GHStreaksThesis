@@ -113,7 +113,7 @@ data.to_csv(path_results_repo_labels, encoding='utf-8', index=False)
 
 
 # FOLLOWERS
-data = pd.read_csv(path_source_project_languages, nrows=amount, header=None, delimiter=",", names=["user_id", "follower_id", "created_at"])
+data = pd.read_csv(path_source_followers, nrows=amount, header=None, delimiter=",", names=["user_id", "follower_id", "created_at"])
 logging.info("Storing data ... (10/11)")
 data.to_csv(path_results_followers, encoding='utf-8', index=False)
 
