@@ -25,8 +25,8 @@ path_source_communitysize = "C:/Users/Lukas/Desktop/communitysize_per_day.json"
 # ---------- CONFIG ------------
 observed_start = date(2012,1,1)
 observed_end = date(2019,1,1)
-total = False # total count or per user
-weekly = True # plot avg per week
+total = True # total count or per user
+weekly = False # plot avg per week
 # ------------------------------
 
 

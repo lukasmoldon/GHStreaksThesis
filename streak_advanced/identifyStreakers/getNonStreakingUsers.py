@@ -18,7 +18,7 @@ path_results = "..."
 
 
 # ---------- CONFIG ------------
-maxlen = 15 # users maximum streak record in observed time to be counted
+maxlen = 7 # users maximum streak record in observed time to be counted
 observed_start = datetime.date(2016, 1, 1)
 observed_end = datetime.date(2017, 1, 1)
 # ------------------------------
@@ -95,7 +95,7 @@ with open(path_results, "w") as fp:
     json.dump(nonstreaker_ids, fp)
 logging.info("Done. (3/3)")
 
-logging.info("Total number of quitting users: " + str(len(nonstreaker_ids)))
+logging.info("Total number of non streaking users: " + str(len(nonstreaker_ids)))
 logging.info("Gender distribution:")
 print("male: " + str(cnt_male))
 print("female: " + str(cnt_female))

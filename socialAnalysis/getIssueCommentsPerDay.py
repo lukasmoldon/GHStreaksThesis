@@ -24,6 +24,8 @@ path_results = "/home/lmoldon/results/issueCommentsCount.json"
 
 # ---------- CONFIG ------------
 chunksize = 1000000
+country_restricted = False # True == only count users from country_restrictions
+country_restrictions = ["United Kingdom"]
 # ------------------------------
 
 
@@ -31,8 +33,6 @@ chunksize = 1000000
 logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
 datetimeFormat = "%Y-%m-%d %H:%M:%S"
 data = {}
-country_restricted = False # True == only count users from country_restrictions
-country_restrictions = ["United Kingdom"]
 # ------------------------------
 
 
