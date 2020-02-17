@@ -33,7 +33,7 @@ maintain_ids = {}
 cnt_female = 0
 cnt_male = 0
 cnt_unknown = 0
-path_results = "/home/lmoldon/results/maintainingUsersMIN" + str(minlen) + "BEFORE.json"
+path_results = "/home/lmoldon/results/maintainingUsersMIN" + str(minlen) + ".json"
 # ------------------------------
 
 

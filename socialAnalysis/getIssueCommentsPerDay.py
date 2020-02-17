@@ -26,6 +26,8 @@ path_results = "/home/lmoldon/results/issueCommentsCount.json"
 chunksize = 1000000
 country_restricted = False # True == only count users from country_restrictions
 country_restrictions = ["United Kingdom"]
+usertype_restricted = False # True == only count users from usertype_restriction
+usertype_restriction = "/home/lmoldon/results/nonStreakingUsersMAX5.json"
 # ------------------------------
 
 
@@ -50,6 +52,16 @@ if country_restricted:
     delIDs = set()
     for userid in userids:
         if userid not in genderdata:
+            delIDs.add(userid)
+    for userid in delIDs:
+        del userids[userid]
+
+if usertype_restricted:
+    with open(usertype_restriction, "r") as fp:
+        usertypeids = json.load(fp)
+    delIDs = set()
+    for userid in userids:
+        if userid not in usertypeids:
             delIDs.add(userid)
     for userid in delIDs:
         del userids[userid]

@@ -31,7 +31,7 @@ nonstreaker_ids = {}
 cnt_female = 0
 cnt_male = 0
 cnt_unknown = 0
-path_results = "/home/lmoldon/results/nonStreakingUsersMAX" + str(maxlen) + "BEFORE.json"
+path_results = "/home/lmoldon/results/nonStreakingUsersMAX" + str(maxlen) + ".json"
     
 # ------------------------------
 
