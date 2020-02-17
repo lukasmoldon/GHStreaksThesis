@@ -24,6 +24,7 @@ path_results = "/home/lmoldon/results/commentSentiment.csv"
 
 
 # ---------- CONFIG ------------
+minCommentAmount = 15 # min amount of comments of a specific user
 chunksize = 1000000
 country_restricted = False # True == only count users from country_restrictions
 country_restrictions = ["United Kingdom"]
@@ -39,6 +40,7 @@ changedate = date(2016, 5, 19)
 data = {}
 globalindex = 0
 analyzer = SentimentIntensityAnalyzer()
+commentCounter = {}
 # ------------------------------
 
 
@@ -70,7 +72,38 @@ if usertype_restricted:
             delIDs.add(userid)
     for userid in delIDs:
         del userids[userid]
-logging.info("Done (1/4)")
+
+logging.info("Done (1/5)")
+
+
+logging.info("Computing user set ...")
+
+for userid in userids:
+    commentCounter[userid] = 0
+
+cnt = 0
+for chunk in pd.read_csv(path_source_commit, chunksize=chunksize, header=None, delimiter=",", encoding='utf-8'):
+    for row in list(chunk.values):
+        if str(row[2]) in userids:
+            if not country_restricted or str(genderdata[str(row[2])]["country"]) in country_restrictions:
+                commentCounter[str(row[2])] += 1
+                cnt += 1
+                if cnt % 1000000 == 0: logging.info(str(cnt/1000000) + " million commit comments computed")
+
+cnt = 0
+for chunk in pd.read_csv(path_source_pullrequest, chunksize=chunksize, header=None, delimiter=",", encoding='utf-8'):
+    for row in list(chunk.values):
+        if str(row[1]) in userids:
+            if not country_restricted or str(genderdata[str(row[1])]["country"]) in country_restrictions:
+                commentCounter[str(row[1])] += 1
+                cnt += 1
+                if cnt % 1000000 == 0: logging.info(str(cnt/1000000) + " million pull request comments computed")
+
+for userid in commentCounter:
+    if commentCounter[userid] < minCommentAmount:
+        del userids[userid]
+
+logging.info("Done (2/5)")
 
 
 logging.info("Processing commit data ...")
@@ -90,7 +123,7 @@ for chunk in pd.read_csv(path_source_commit, chunksize=chunksize, header=None, d
                     logging.warning("Could not read following line:")
                     logging.warning(str(row))
 
-logging.info("Done (2/4)")
+logging.info("Done (3/5)")
 
 
 logging.info("Processing pull request data ...")
@@ -110,14 +143,16 @@ for chunk in pd.read_csv(path_source_pullrequest, chunksize=chunksize, header=No
                     logging.warning("Could not read following line:")
                     logging.warning(str(row))
 
-logging.info("Done (3/4)")
+logging.info("Done (4/5)")
 
 
 logging.info("Saving ...")
 with open(path_results, "w") as fp:
     json.dump(data, fp)
-logging.info("Done (4/4)")
+logging.info("Done (5/5)")
 
+logging.info("Total number of observed users: " + str(len(userids)))
+logging.info("Total number of observations: " + str(len(data)))
 
 log_endtime = datetime.datetime.now()
 log_runtime = (log_endtime - log_starttime)
