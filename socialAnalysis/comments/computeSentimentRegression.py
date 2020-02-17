@@ -54,26 +54,35 @@ with open(path_source_gender, "r") as fp:
 
 with open(path_source, "r") as fp:
     data_raw = json.load(fp)
-logging.info("Done (1/2)")
+logging.info("Done (1/4)")
 
 
-logging.info("Creating data sample ...")
+logging.info("Creating user sample ...")
 
 while len(sample_userids) < samplesize:
     userid = random.choice(list(userids.keys()))
     if userid not in sample_userids:
         sample_userids.append(userid)
 
+logging.info("Done (2/4)")
+
+
+logging.info("Creating data sample ...")
+
+cnt = 0
+cnt_observations = 0
 for rowindex in data_raw:
+    cnt += 1
+    if (cnt%100000 == 0): logging.info(str(cnt/1000) + "k observations computed")
     if data_raw[rowindex]["user"] in sample_userids:
+        cnt_observations += 1
         sentiment.append(data_raw[rowindex]["sentiment"])
         user.append(data_raw[rowindex]["user"])
         afterChange.append(data_raw[rowindex]["afterChange"])
 
 data_pd = pd.DataFrame({"sentiment": sentiment, "user": user, "afterChange": afterChange})
 
-logging.info("Done (2/3)")
-
+logging.info("Done (3/4)")
 
 
 logging.info("Computing regression ...")
@@ -84,8 +93,9 @@ res = mod.fit()
 logging.info("Results:")
 print(res.summary())
 
-logging.info("Done (3/3)")
+logging.info("Done (3/4)")
 
+logging.info("Observation coverage: " + str(round((cnt_observations/cnt)*100, 2)) + "%")
 
 log_endtime = datetime.datetime.now()
 log_runtime = (log_endtime - log_starttime)
