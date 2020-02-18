@@ -27,6 +27,8 @@ path_source_gender = "/home/lmoldon/data/users_gender.json"
 
 # ---------- CONFIG ------------
 samplesize = 10000 # number of users randomly selected for the sample
+observed_start = date(2016,4,19)
+observed_end = date(2016,6,19)
 # ------------------------------
 
 
@@ -75,11 +77,13 @@ for rowindex in data_raw:
     cnt += 1
     if (cnt%1000000 == 0): logging.info(str(cnt/1000000) + " million observations computed")
     if data_raw[rowindex]["user"] in sample_userids:
-        if data_raw[rowindex]["sentiment"] > 0.1 or data_raw[rowindex]["sentiment"] < -0.1:
-            cnt_observations += 1
-            sentiment.append(data_raw[rowindex]["sentiment"])
-            user.append(data_raw[rowindex]["user"])
-            afterChange.append(data_raw[rowindex]["afterChange"])
+        timestamp = datetime.datetime.strptime(data_raw[rowindex]["timestamp"], datetimeFormat).date()
+        if timestamp >= observed_start and timestamp <= observed_end:
+            if data_raw[rowindex]["sentiment"] > 0.1 or data_raw[rowindex]["sentiment"] < -0.1:
+                cnt_observations += 1
+                sentiment.append(data_raw[rowindex]["sentiment"])
+                user.append(data_raw[rowindex]["user"])
+                afterChange.append(data_raw[rowindex]["afterChange"])
 
 data_pd = pd.DataFrame({"sentiment": sentiment, "user": user, "afterChange": afterChange})
 
@@ -94,7 +98,7 @@ res = mod.fit()
 logging.info("Results:")
 print(res.summary())
 
-logging.info("Done (3/4)")
+logging.info("Done (4/4)")
 
 logging.info("Observation coverage: " + str(round((cnt_observations/cnt)*100, 2)) + "%")
 
