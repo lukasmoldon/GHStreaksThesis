@@ -37,7 +37,7 @@ sentiment = []
 user = []
 afterChange = []
 
-sample_userids = []
+sample_userids = {}
 # ------------------------------
 
 
@@ -62,7 +62,7 @@ logging.info("Creating user sample ...")
 while len(sample_userids) < samplesize:
     userid = random.choice(list(userids.keys()))
     if userid not in sample_userids:
-        sample_userids.append(userid)
+        sample_userids[userid] = 0
 
 logging.info("Done (2/4)")
 
@@ -73,7 +73,7 @@ cnt = 0
 cnt_observations = 0
 for rowindex in data_raw:
     cnt += 1
-    if (cnt%100000 == 0): logging.info(str(cnt/1000) + "k observations computed")
+    if (cnt%1000000 == 0): logging.info(str(cnt/1000000) + " million observations computed")
     if data_raw[rowindex]["user"] in sample_userids:
         cnt_observations += 1
         sentiment.append(data_raw[rowindex]["sentiment"])

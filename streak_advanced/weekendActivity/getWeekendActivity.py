@@ -81,9 +81,9 @@ if not userlevel:
             monday = getWeekMonday(day)
             if monday != -1:
                 if not isWeekend(day):
-                    weekdata[str(monday)]["WD"] += 1
+                    weekdata[str(monday)]["WD"] += contributiondata[userID][day]
                 else:
-                    weekdata[str(monday)]["WE"] += 1
+                    weekdata[str(monday)]["WE"] += contributiondata[userID][day]
 
     for index in weekdata:
         weekdata[index]["RW"] = weekdata[index]["WE"] / (weekdata[index]["WD"] + weekdata[index]["WE"])
@@ -105,9 +105,9 @@ else:
             monday = getWeekMonday(day)
             if monday != -1:
                 if not isWeekend(day):
-                    weekdata[str(monday)][userID]["WD"] += 1
+                    weekdata[str(monday)][userID]["WD"] += contributiondata[userID][day]
                 else:
-                    weekdata[str(monday)][userID]["WE"] += 1
+                    weekdata[str(monday)][userID]["WE"] += contributiondata[userID][day]
 
     for userID in contributiondata:
         activity = 0

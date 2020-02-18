@@ -117,7 +117,7 @@ for chunk in pd.read_csv(path_source_commit, chunksize=chunksize, header=None, d
                     cnt += 1
                     if cnt % 100000 == 0: logging.info(str(cnt/1000) + "k commit comments computed")
                     cur_sentiment = analyzer.polarity_scores(str(row[3]))["compound"]
-                    data[str(globalindex)] = {"user": str(row[2]), "afterChange": int(timestamp >= changedate), "sentiment": int(cur_sentiment)}
+                    data[str(globalindex)] = {"user": str(row[2]), "afterChange": int(timestamp >= changedate), "sentiment": float(cur_sentiment)}
                     globalindex += 1
                 except:
                     logging.warning("Could not read following line:")
@@ -137,7 +137,7 @@ for chunk in pd.read_csv(path_source_pullrequest, chunksize=chunksize, header=No
                     cnt += 1
                     if cnt % 100000 == 0: logging.info(str(cnt/1000) + "k pull request comments computed")
                     cur_sentiment = analyzer.polarity_scores(str(row[4]))["compound"]
-                    data[str(globalindex)] = {"user": str(row[1]), "afterChange": int(timestamp >= changedate), "sentiment": int(cur_sentiment)}
+                    data[str(globalindex)] = {"user": str(row[1]), "afterChange": int(timestamp >= changedate), "sentiment": float(cur_sentiment)}
                     globalindex += 1
                 except:
                     logging.warning("Could not read following line:")
