@@ -75,10 +75,11 @@ for rowindex in data_raw:
     cnt += 1
     if (cnt%1000000 == 0): logging.info(str(cnt/1000000) + " million observations computed")
     if data_raw[rowindex]["user"] in sample_userids:
-        cnt_observations += 1
-        sentiment.append(data_raw[rowindex]["sentiment"])
-        user.append(data_raw[rowindex]["user"])
-        afterChange.append(data_raw[rowindex]["afterChange"])
+        if data_raw[rowindex]["sentiment"] > 0.1 or data_raw[rowindex]["sentiment"] < -0.1:
+            cnt_observations += 1
+            sentiment.append(data_raw[rowindex]["sentiment"])
+            user.append(data_raw[rowindex]["user"])
+            afterChange.append(data_raw[rowindex]["afterChange"])
 
 data_pd = pd.DataFrame({"sentiment": sentiment, "user": user, "afterChange": afterChange})
 

@@ -23,7 +23,7 @@ path_source_merge = "C:/Users/Lukas/Desktop/merge.json"
 
 
 # ---------- CONFIG ------------
-observed_start = date(2016, 4, 18)
+observed_start = date(2016, 4, 25)
 observed_end = date(2016, 6, 19)
 userlevel = True # True: datapoint represents single user per day, False: represents avg of all users per day
 bandwidth = 3 # bandwidth +/- around cut (2x for bandwidth length) => maximum is 52/2
@@ -100,11 +100,21 @@ else:
             cnt += 1
 
 
+rdd_before_x = list(range(1, change_cnt))
+rdd_before_y = [0.196+0.0007*el for el in rdd_before_x]
+rdd_before_x[-1] += 0.5
+rdd_after_x = list(range(change_cnt-1, cnt))
+rdd_after_y = [0.196+0.0007*el-0.0193 for el in rdd_after_x]
+rdd_after_x[0] += 0.5
     
-plt.scatter(x,y)
+plt.scatter(x,y, s=0.0001)
+plt.plot(rdd_before_x, rdd_before_y, '-g', label='RDD')
+plt.plot(rdd_after_x, rdd_after_y, '-g')
+plt.xlabel("Week")
+plt.ylabel("ratio of weekend activity per user")
+plt.axvline(x=change_cnt-0.5, color="r", label="Changedate")
+plt.legend()
 plt.show()
-
-
 
 log_endtime = datetime.datetime.now()
 log_runtime = (log_endtime - log_starttime)

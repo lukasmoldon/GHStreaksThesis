@@ -93,7 +93,7 @@ else:
         if str(day) in weekdata:
             for userID in weekdata[str(day)]:
                 if country == "" or genderdata[userID]["country"] == country:
-                    if gender == "" or gender[userID]["gender"] == gender:
+                    if gender == "" or genderdata[userID]["gender"] == gender:
                         x.append(cnt)
                         y.append(weekdata[str(day)][userID]["RW"])
             if day > changedate and change_cnt == -1:
