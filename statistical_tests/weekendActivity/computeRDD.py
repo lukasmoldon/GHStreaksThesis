@@ -26,7 +26,8 @@ observed_start = date(2016, 4, 18)
 observed_end = date(2016, 6, 19)
 userlevel = True # True: datapoint represents single user per day, False: represents avg of all users per day
 bandwidth = 3 # bandwidth +/- around cut (2x for bandwidth length) => maximum is 52/2
-country = "" # restrict rdd on users from a specific country, if empty streak -  disable feature (ONLY FOR USERLEVEL = TRUE)
+country = "" # restrict rdd on users from a specific country, if empty - disable feature (ONLY FOR USERLEVEL = TRUE)
+gender = "" # restrict rdd on female/male users, if empty streak - feature (ONLY FOR USERLEVEL = TRUE)
 # ------------------------------
 
 
@@ -59,7 +60,7 @@ with open(path_source_genderdata, "r") as fp:
 with open(path_source_merge, "r") as fp:
     merge = json.load(fp)
 
-if country != "":
+if country != "" or gender != "":
     for userID in genderdata:
         if genderdata[userID]["country"] in merge:
             genderdata[userID]["country"] = merge[genderdata[userID]["country"]]
@@ -92,8 +93,9 @@ else:
         if str(day) in weekdata:
             for userID in weekdata[str(day)]:
                 if country == "" or genderdata[userID]["country"] == country:
-                    x.append(cnt)
-                    y.append(weekdata[str(day)][userID]["RW"])
+                    if gender == "" or gender[userID]["gender"] == gender:
+                        x.append(cnt)
+                        y.append(weekdata[str(day)][userID]["RW"])
             if day > changedate and change_cnt == -1:
                 change_cnt = cnt
             cnt += 1
