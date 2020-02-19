@@ -10,6 +10,7 @@ from datetime import timedelta, date
 
 
 # ---------- INPUT -------------
+path_source_userdata = "/home/lmoldon/data/users_reduced.json"
 path_source_streakdata = "/home/lmoldon/data/user_streaks.json"
 path_source_usergroupsize = "/home/lmoldon/data/usergroupsize.json"
 path_source_genderdata = "/home/lmoldon/data/users_gender.json"
@@ -76,6 +77,9 @@ for single_date in daterange(observedtime_start, observedtime_end):
 logging.info("Loading data ...")
 with open(path_source_streakdata, "r") as fp:
     streakdata = json.load(fp)
+if path_user_restriction != "" or gender_restriction != "":
+    with open(path_source_userdata, "r") as fp:
+        userdata = json.load(fp)
 if path_user_restriction != "":
     with open(path_user_restriction, "r") as fp:
         userids_restricted = json.load(fp)
@@ -83,20 +87,6 @@ if gender_restriction != "":
     with open(path_source_genderdata, "r") as fp:
         genderdata = json.load(fp)
 logging.info("Done (1/5)")
-
-
-logging.info("Accessing usergroupsize data ...")
-with open(path_source_usergroupsize, "r") as fp:
-    usergroupsize = json.load(fp)
-
-for entry in usergroupsize:
-    thisday = datetime.datetime.strptime(str(entry), datetimeFormat).date()
-    if thisday > maxday_usergroupsize:
-        maxday_usergroupsize = thisday
-    if thisday < minday_usergroupsize:
-        minday_usergroupsize = thisday
-
-logging.info("Done. (2/5)")
 
 
 logging.info("Comuting user set ...")
@@ -117,6 +107,37 @@ if gender_restriction != "":
 
 for userid in delIDs:
     del streakdata[userid]
+
+logging.info("Done. (2/5)")
+
+
+logging.info("Computing usergroupsize data ...")
+
+if path_user_restriction == "" and gender_restriction == "":
+    with open(path_source_usergroupsize, "r") as fp:
+        usergroupsize = json.load(fp)
+else:
+    usergroupsize = {}
+
+    for day in daterange(observedtime_start, observedtime_end):
+        usergroupsize[str(day)] = 0
+
+    for userid in streakdata:
+        if userid in userdata:
+            created = datetime.datetime.strptime(str(userdata[userid]["created_at"]), datetimeFormat).date()
+            if created >= observedtime_start and created <= observedtime_end:
+                for day in daterange(created, observedtime_end):
+                    usergroupsize[str(day)] += 1
+            elif created < observedtime_start:
+                for day in daterange(observedtime_start, observedtime_end):
+                    usergroupsize[str(day)] += 1
+
+for entry in usergroupsize:
+    thisday = datetime.datetime.strptime(str(entry), datetimeFormat).date()
+    if thisday > maxday_usergroupsize:
+        maxday_usergroupsize = thisday
+    if thisday < minday_usergroupsize:
+        minday_usergroupsize = thisday
 
 logging.info("Done. (3/5)")
 
