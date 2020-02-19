@@ -11,8 +11,9 @@ from datetime import timedelta, date
 
 # ---------- INPUT -------------
 path_source_streakdata = "/home/lmoldon/data/user_streaks.json"
-path_source_groupdata = "/home/lmoldon/data/user_groups.json"
 path_source_usergroupsize = "/home/lmoldon/data/usergroupsize.json"
+path_source_genderdata = "/home/lmoldon/data/users_gender.json"
+path_user_restriction = ""
 # ------------------------------
 
 
@@ -23,6 +24,12 @@ path_results = "/home/lmoldon/results/streakValues.json"
 
 # ---------- CONFIG ------------
 threshold = 50  # minimum streak length to get plotted
+
+# if != "" only compute data for userIDs in user_restriction file (path)
+path_user_restriction = ""
+
+# "male" or "female" or "",  if == "" all users
+gender_restriction = ""
 
 # ~~~~~~~~~~~~ MODE ~~~~~~~~~~~~
 # mode for plot avg streak length 0 OR 1:
@@ -40,8 +47,7 @@ observedtime_end = date(2018, 1, 1)
 
 
 # ---------- INITIAL -----------
-logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s',
-                    datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
+logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
 datetimeFormat = "%Y-%m-%d"
 plotdata = {}  # key = day in observedtime, value = value of selected mode
 start = date(1970, 1, 1)
@@ -70,6 +76,12 @@ for single_date in daterange(observedtime_start, observedtime_end):
 logging.info("Loading data ...")
 with open(path_source_streakdata, "r") as fp:
     streakdata = json.load(fp)
+if path_user_restriction != "":
+    with open(path_user_restriction, "r") as fp:
+        userids_restricted = json.load(fp)
+if gender_restriction != "":
+    with open(path_source_genderdata, "r") as fp:
+        genderdata = json.load(fp)
 logging.info("Done (1/5)")
 
 
@@ -87,9 +99,24 @@ for entry in usergroupsize:
 logging.info("Done. (2/5)")
 
 
-logging.info("Accessing usergroup data ...")
-with open(path_source_groupdata, "r") as fp:
-    groupdata = json.load(fp)
+logging.info("Comuting user set ...")
+
+delIDs = set()
+
+if path_user_restriction != "":
+    for userid in streakdata:
+        if userid not in userids_restricted:
+            delIDs.add(userid)
+
+if gender_restriction != "":
+    for userid in streakdata:
+        if userid not in genderdata:
+            delIDs.add(userid)
+        elif genderdata[userid]["gender"] != gender_restriction:
+            delIDs.add(userid)
+
+for userid in delIDs:
+    del streakdata[userid]
 
 logging.info("Done. (3/5)")
 
