@@ -41,8 +41,6 @@ for entry in plotdata:
     
 dates = matplotlib.dates.date2num(list_of_datetimes)
 matplotlib.pyplot.plot_date(dates, values, '-', label="x=50")
-plt.xlabel("Time")
-plt.ylabel("Avg. streak length")
 
 
 values = []
@@ -64,54 +62,11 @@ for entry in plotdata:
 
 matplotlib.pyplot.plot_date(dates, values, '-', label="x=350")
 
-plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='r', label="Streaks removed")
-plt.axvline(x=datetime.datetime.strptime("2016-12-25", datetimeFormat).date(), color='b', label="Christmas 2016")
-plt.axvline(x=datetime.datetime.strptime("2017-12-25", datetimeFormat).date(), color='b', label="Christmas 2017")
-plt.legend()
-plt.show()
-
-
-list_of_datetimes = []
-values = []
-
-
-
-
-# ------------- 6 years -------------
-with open("C:/Users/Lukas/Desktop/avgStreakLength/6_years/streakValuesY6X50.json", "r") as fp:
-    plotdata = json.load(fp)
-
-for entry in plotdata:
-    values.append(plotdata[entry])
-    list_of_datetimes.append(datetime.datetime.strptime(entry, datetimeFormat).date())
-    
-dates = matplotlib.dates.date2num(list_of_datetimes)
-matplotlib.pyplot.plot_date(dates, values, '-', label="x=50")
 plt.xlabel("Time")
 plt.ylabel("Avg. streak length")
-
-
-values = []
-with open("C:/Users/Lukas/Desktop/avgStreakLength/6_years/streakValuesY6X150.json", "r") as fp:
-    plotdata = json.load(fp)
-
-for entry in plotdata:
-    values.append(plotdata[entry])
-
-matplotlib.pyplot.plot_date(dates, values, '-', label="x=150")
-
-
-values = []
-with open("C:/Users/Lukas/Desktop/avgStreakLength/6_years/streakValuesY6X350.json", "r") as fp:
-    plotdata = json.load(fp)
-
-for entry in plotdata:
-    values.append(plotdata[entry])
-
-matplotlib.pyplot.plot_date(dates, values, '-', label="x=350")
-
 plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='r', label="Streaks removed")
-plt.axvline(x=datetime.datetime.strptime("2016-12-25", datetimeFormat).date(), color='b', label="Christmas 2016")
-plt.axvline(x=datetime.datetime.strptime("2017-12-25", datetimeFormat).date(), color='b', label="Christmas 2017")
+plt.axvline(x=datetime.datetime.strptime("2015-05-19", datetimeFormat).date(), color='g', label="sss")
+plt.axvline(x=datetime.datetime.strptime("2016-12-25", datetimeFormat).date(), color='b', label="Christmas")
+plt.axvline(x=datetime.datetime.strptime("2017-12-25", datetimeFormat).date(), color='b')
 plt.legend()
 plt.show()

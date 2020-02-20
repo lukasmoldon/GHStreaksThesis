@@ -124,7 +124,7 @@ else:
 
     for userid in streakdata:
         if userid in userdata:
-            created = datetime.datetime.strptime(str(userdata[userid]["created_at"]), datetimeFormat).date()
+            created = datetime.datetime.strptime(str(userdata[userid]["created_at"]), "%Y-%m-%d %H:%M:%S").date()
             if created >= observedtime_start and created <= observedtime_end:
                 for day in daterange(created, observedtime_end):
                     usergroupsize[str(day)] += 1

@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 
 # ---------- INPUT -------------
-path_source = "C:/Users/Lukas/Desktop/streakValues.json"
+path_source = "C:/Users/Lukas/Desktop/results/streakValuesY3MIN50GOAL.json"
 # ------------------------------
 
 
@@ -18,8 +18,6 @@ path_source = "C:/Users/Lukas/Desktop/streakValues.json"
 
 
 # ---------- CONFIG ------------
-years = 3 # 3 or 7 years for x axis
-threshold = 100 # threshold of minimum streak length for plot
 # ------------------------------
 
 
@@ -28,7 +26,6 @@ logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt=
 datetimeFormat = "%Y-%m-%d"
 list_of_datetimes = []
 values = []
-path_source = path_source + str(years) + "_years/streakValues" + str(threshold) + ".json"
 # ------------------------------
 
 

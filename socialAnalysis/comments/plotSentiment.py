@@ -25,7 +25,7 @@ path_source = "C:/Users/Lukas/Desktop/commentSentiment.json"
 observed_start = date(2016,1,1)
 observed_end = date(2017,1,1)
 
-mode = "avg" # "avg" = average sent, "neg" = negative sentiment
+mode = "neg" # "avg" = average sent, "neg" = negative sentiment
 # ------------------------------
 
 
@@ -97,7 +97,7 @@ elif mode == "neg":
     for rowindex in data_raw:
         cnt += 1
         if (cnt%1000000 == 0): logging.info(str(cnt/1000000) + " million observations computed")
-        if data_raw[rowindex]["sentiment"] < -0.1:
+        if data_raw[rowindex]["sentiment"] < -0.8:
             if data_raw[rowindex]["timestamp"] in data:
                 data[data_raw[rowindex]["timestamp"]]["cnt"] += 1
             else:
