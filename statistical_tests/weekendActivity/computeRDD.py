@@ -22,19 +22,21 @@ path_source_merge = "/home/lmoldon/data/merge.json"
 
 
 # ---------- CONFIG ------------
-observed_start = date(2016, 4, 18)
-observed_end = date(2016, 6, 19)
+observed_start = date(2016, 4, 18) # this must be a monday and the same input of getWeekendActivity.py
+observed_end = date(2016, 6, 19) # this must be a sunday and the same input of getWeekendActivity.py
 userlevel = True # True: datapoint represents single user per day, False: represents avg of all users per day
 bandwidth = 3 # bandwidth +/- around cut (2x for bandwidth length) => maximum is 52/2
 country = "" # restrict rdd on users from a specific country, if empty - disable feature (ONLY FOR USERLEVEL = TRUE)
 gender = "" # restrict rdd on female/male users, if empty streak - feature (ONLY FOR USERLEVEL = TRUE)
+
+# real changedate MONDAY is date(2016,5,16) - change this MONDAY date for placebo test!
+changedate = date(2016,5,16)
 # ------------------------------
 
 
 # ---------- INITIAL -----------
 logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
 datetimeFormat = "%Y-%m-%d"
-changedate = date(2016,5,16)
 x = []
 y = []
 if userlevel:
