@@ -17,7 +17,9 @@ path_results = "/home/lmoldon/data/maximumStreak.json"
 
 
 # ---------- CONFIG ------------
-
+# Change this to get maximum streaks until later than real changedate
+changedate = date(2016, 5, 19) # real changedate is date(2016, 5, 19)
+mindate = date(1970, 1, 1) # default is date(1970, 1, 1) for before or date(2016, 5, 20) for afterwards
 # ------------------------------
 
 
@@ -25,7 +27,6 @@ path_results = "/home/lmoldon/data/maximumStreak.json"
 logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
 datetimeFormat = "%Y-%m-%d"
 maximumStreaks = {}
-changedate = date(2016, 5, 19)
 # ------------------------------
 
 
@@ -57,7 +58,7 @@ for userid in streakdata:
         if cnt_streaks_total % 1000000 == 0:
             logging.info(str(cnt_streaks_total/1000000) + " million streaks computed.")
 
-        if length > maxStreak and start < changedate:
+        if length > maxStreak and start < changedate and start > mindate:
             maxStreak = length
 
     if maxStreak > 1:
