@@ -20,6 +20,8 @@ path_results = "/home/lmoldon/data/mutualFriends.json"
 
 # ---------- CONFIG ------------
 chunksize = 10000000
+# Change this to get follower connections until later than real changedate
+changedate = date(2016, 5, 19) # real changedate is date(2016, 5, 19)
 # ------------------------------
 
 
@@ -28,7 +30,6 @@ logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt=
 datetimeFormat = "%Y-%m-%d %H:%M:%S"
 single_edges = {}
 data = {}
-changedate = date(2016, 5, 19)
 # ------------------------------
 
 

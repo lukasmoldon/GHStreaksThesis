@@ -19,6 +19,7 @@ path_source_attributes ="/home/lmoldon/data/maximumStreak.json"
 
 
 # ---------- CONFIG ------------
+# corresponds to "t-1" in thesis (record > t-1 => streaker) 
 streakerThreshold = 7
 # ------------------------------
 
