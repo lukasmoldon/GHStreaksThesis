@@ -4,14 +4,15 @@ import matplotlib
 import matplotlib.pyplot as plt
 import datetime
 import json
+import numpy as np
 #import ijson
 #from datetime import timedelta, date
 # ------------------------------
 
 
 # ---------- INPUT -------------
-path_source_before = "C:/Users/Lukas/Desktop/oneCommitPerDayBehav/streakOneContributionDaysShareMIN60BIN10.json"
-path_source_after = "C:/Users/Lukas/Desktop/oneCommitPerDayBehav/streakOneContributionDaysShareMIN60BIN10.json"
+path_source_before = "C:/Users/Lukas/Desktop/oneCommitPerDayBehav/streakOneContributionDaysShareMIN60BIN10BEFORE.json"
+path_source_after = "C:/Users/Lukas/Desktop/oneCommitPerDayBehav/streakOneContributionDaysShareMIN60BIN10AFTER.json"
 # ------------------------------
 
 
@@ -56,7 +57,9 @@ while i < len(plotdata_before):
 
 p1 = ax.bar(indices, values, width, align='center')
 
-
+beforeavg = []
+for el in values:
+    beforeavg.append(el)
 
 
 values = []
@@ -71,14 +74,20 @@ while i < len(plotdata_after):
 
 p2 = ax.bar(indices, values, width, align='center')
 
+afteravg = []
+for el in values:
+    afteravg.append(el)
+
 axes = plt.gca()
-axes.set_ylim([0.076,0.135])
+axes.set_ylim([0.25,0.45])
 ax.set_xticks([0,1,2,3,4,5,6,7,8,9])
 ax.set_xticklabels(["0%-10%", "10%-20%", "20%-30%", "30%-40%", "40%-50%", "50%-60%", "60%-70%", "70%-80%", "80%-90%", "90%-100%"])
 plt.axhline(y=0.1, c="r")
 ax.legend((p1[0], p2[0]), ("Year before the change", "Year after the change"))
-plt.ylabel("Share of 1 contribution days over all streaks with length > 30")
+plt.ylabel("Share of 1 contribution days over all streaks with length > 60")
 plt.xlabel("Streaks lifetime")
+#plt.hlines(y=np.mean(beforeavg), xmin=-width, xmax=10-2*width, color='b', label="Mean before = " + str(round(np.mean(beforeavg), 3)))
+#plt.hlines(y=np.mean(afteravg), xmin=-width, xmax=10-2*width, color='orange', label="Mean after = " + str(round(np.mean(afteravg), 3)))
 #plt.annotate("TEXT", xy=(3.1,0.07), xytext=(2.6,0.2), arrowprops=dict(facecolor='black', shrink=0.03))
 plt.show()
 

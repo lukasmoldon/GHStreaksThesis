@@ -10,8 +10,8 @@ import json
 
 
 # ---------- INPUT -------------
-path_source_before = "C:/Users/Lukas/Desktop/oneCommitPerDayBehav/streakOneContributionDaysShareMIN60BIN4.json"
-path_source_after = "C:/Users/Lukas/Desktop/oneCommitPerDayBehav/streakOneContributionDaysShareMIN60BIN4.json"
+path_source_before = "C:/Users/Lukas/Desktop/oneCommitPerDayBehav/streakOneContributionDaysShareMIN60BIN4BEFORE.json"
+path_source_after = "C:/Users/Lukas/Desktop/oneCommitPerDayBehav/streakOneContributionDaysShareMIN60BIN4AFTER.json"
 # ------------------------------
 
 
@@ -72,7 +72,7 @@ while i < len(plotdata_after):
 p2 = ax.bar(indices, values, width, align='center')
 
 axes = plt.gca()
-axes.set_ylim([0.19,0.285])
+axes.set_ylim([0.25,0.45])
 ax.set_xticks([0,1,2,3])
 ax.set_xticklabels(["0%-25%", "25%-50%", "50%-75%", "75%-100%"])
 plt.axhline(y=0.25, c="r")
