@@ -50,15 +50,14 @@ for day in plotdata:
     list_of_datetimes.append(datetime.datetime.strptime(day, datetimeFormat).date())
     values.append(plotdata[day])
 
-    dates = matplotlib.dates.date2num(list_of_datetimes)
-    matplotlib.pyplot.plot_date(dates, values, '-')
+dates = matplotlib.dates.date2num(list_of_datetimes)
+matplotlib.pyplot.plot_date(dates, values, '-', color="#08415C")
 
 
-plt.axvline(x=datetime.datetime.strptime(
-    "2016-05-19", datetimeFormat).date(), color='r')
-plt.xlabel("Time")
-plt.ylabel("GitHub community size")
-
+plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='#FC5524', label="Design change")
+plt.xlabel("Time", fontsize=11)
+plt.ylabel("GitHub accounts (x 10⁷) ", fontsize=11)
+plt.legend()
 plt.show()
 
 

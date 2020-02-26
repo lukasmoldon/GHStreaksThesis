@@ -1,0 +1,5 @@
+, color="#252323"   black
+, color="#08415C"   blue
+, color="#FC5524"   red (orange)
+, color="#29BF12"   green
+, color="#F3B700"   yellow
