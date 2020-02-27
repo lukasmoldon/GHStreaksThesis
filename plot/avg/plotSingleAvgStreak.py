@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 
 # ---------- INPUT -------------
-path_source = "C:/Users/Lukas/Desktop/userAbsenceMIN31.json"
+path_source = "C:/Users/Lukas/Desktop/streakValuesY3X50.json"
 # ------------------------------
 
 

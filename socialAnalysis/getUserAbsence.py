@@ -21,8 +21,8 @@ path_results = "..."
 # ---------- CONFIG ------------
 observed_start = date(2011, 1, 1)
 observed_end = date(2019, 4, 1)
-minDaysOffline = 1
-restriction = True
+minDaysOffline = 1 # how many offline days in a row to be counted?
+restriction = False
 usertype_restriction = "/home/lmoldon/results/identifyStreakers/nonStreakingUsersMAX5.json"
 # ------------------------------
 
@@ -31,7 +31,7 @@ usertype_restriction = "/home/lmoldon/results/identifyStreakers/nonStreakingUser
 logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
 datetimeFormat = "%Y-%m-%d"
 resultdata = {}
-path_results = "/home/lmoldon/results/userAbsenceMIN" + str(minDaysOffline) + "TOTAL.json"
+path_results = "/home/lmoldon/results/userAbsenceMIN" + str(minDaysOffline) + ".json"
 # ------------------------------
 
 
@@ -58,6 +58,7 @@ logging.info("Starting ...")
 if restriction:
     with open(usertype_restriction, "r") as fp:
         restrictionIDs = json.load(fp)
+
     delIDs = set()
     for userID in contributiondata:
         if userID not in restrictionIDs:
@@ -69,11 +70,17 @@ if restriction:
     for day in daterange(observed_start, observed_end):
         groupsize[str(day)] = 0
 
-    created = datetime.datetime.strptime(userdata[userID]["created_at"], "%Y-%m-%d %H:%M:%S").date()
+    for userID in restrictionIDs:
 
-    for userID in restriction:
-        for day in daterange(created, observed_end):
-            groupsize[str(day)] += 1
+        created = datetime.datetime.strptime(userdata[userID]["created_at"], "%Y-%m-%d %H:%M:%S").date()
+        if created < observed_end:
+            if observed_start < created:
+                start = created
+            else:
+                start = observed_start
+
+            for day in daterange(start, observed_end):
+                groupsize[str(day)] += 1
 
 
 for day in daterange(observed_start, observed_end):
