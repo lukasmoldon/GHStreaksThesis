@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 
 # ---------- INPUT -------------
-path_source = "C:/Users/Lukas/Desktop/results/streakValuesY3MIN50GOAL.json"
+path_source = "C:/Users/Lukas/Desktop/userAbsenceMIN31.json"
 # ------------------------------
 
 
@@ -45,9 +45,10 @@ logging.info("Creating plot ...")
 
 dates = matplotlib.dates.date2num(list_of_datetimes)
 matplotlib.pyplot.plot_date(dates, values, '-')
-plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='r')
+plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='r', label="Design change")
 plt.xlabel("Time")
 plt.ylabel("Avg. streak length")
+plt.legend()
 plt.show()
 
 

@@ -65,4 +65,8 @@ removaldate = "2016-05-19 12:00:00"
 x = datetime.datetime.strptime(removaldate, datetimeFormat)
 print(x.date())
 
+
+def daterange(observedtime_start, observedtime_end):
+        for n in range(int((observedtime_end - observedtime_start).days + 1)):
+                yield observedtime_start + timedelta(n)
 '''

@@ -19,8 +19,8 @@ path_results = "..."
 
 
 # ---------- CONFIG ------------
-observed_start = date(2015, 1, 1)
-observed_end = date(2018, 1, 1)
+observed_start = date(2011, 1, 1)
+observed_end = date(2019, 4, 1)
 minDaysOffline = 1
 # ------------------------------
 
@@ -92,6 +92,9 @@ for userID in contributiondata:
                 cur_OfflineLength = 0
                 cur_OfflineStart = None
             
+    if cur_OfflineLength >= minDaysOffline:
+        for offlineDay in daterange(cur_OfflineStart, day - timedelta(days=1)):
+            resultdata[str(offlineDay)] += 1
 
 
 for day in daterange(observed_start, observed_end):
