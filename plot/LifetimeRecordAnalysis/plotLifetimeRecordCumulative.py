@@ -18,8 +18,8 @@ import matplotlib.pyplot as plt
 
 
 # ---------- CONFIG ------------
-minlen = 180
-maxlen = 1000
+minlen = 20
+maxlen = 120
 # ------------------------------
 
 
@@ -46,8 +46,8 @@ while i <= maxlen:
     
     
 matplotlib.pyplot.plot(x, values, '-', label="Before")
-plt.xlabel("Maximum achieved streak length in users lifetime (cumulative)")
-plt.ylabel("Users in %")
+plt.xlabel("Maximum achieved streak length in users lifetime (cumulative)", fontsize=12)
+plt.ylabel("Users in %", fontsize=12)
 
 
 values = []

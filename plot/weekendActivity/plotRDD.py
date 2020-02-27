@@ -108,8 +108,8 @@ rdd_after_y = [0.196+0.0007*el-0.0193 for el in rdd_after_x]
 rdd_after_x[0] += 0.5
     
 plt.scatter(x,y, s=0.0001)
-plt.plot(rdd_before_x, rdd_before_y, '-g', label='RDD')
-plt.plot(rdd_after_x, rdd_after_y, '-g')
+plt.plot(rdd_before_x, rdd_before_y, "#1F77B4", label='RDD')
+plt.plot(rdd_after_x, rdd_after_y, "#1F77B4")
 plt.xlabel("Week")
 plt.ylabel("ratio of weekend activity per user")
 plt.axvline(x=change_cnt-0.5, color="r", label="Changedate")

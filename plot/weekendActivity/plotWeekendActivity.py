@@ -19,8 +19,8 @@ path_source = "C:/Users/Lukas/Desktop/weekendActivity.json"
 
 
 # ---------- CONFIG ------------
-observed_start = date(2016,1,1)
-observed_end = date(2016,12,31)
+observed_start = date(2016,2,1)
+observed_end = date(2016,10,1)
 # ------------------------------
 
 
@@ -58,6 +58,8 @@ matplotlib.pyplot.plot_date(dates, values, '-')
 plt.xlabel("Weeks in 2016")
 plt.ylabel("Ratio of activity on weekends")
 plt.axvline(x=changedate, color='r', label="Streaks removed")
+plt.axvline(x=date(2016,7,4), color='g', label="Independence Day")
+#plt.axvline(x=date(2016,12,25), color='g', label="Christmas")
 plt.hlines(y=np.mean(beforeavg), xmin=observed_start, xmax=changedate, color='b', label="Mean before = " + str(round(np.mean(beforeavg), 3)))
 plt.hlines(y=np.mean(afteravg), xmin=changedate, xmax=observed_end, color='b', label="Mean after = " + str(round(np.mean(afteravg), 3)))
 
