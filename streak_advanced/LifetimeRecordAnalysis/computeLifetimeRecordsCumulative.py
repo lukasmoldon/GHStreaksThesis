@@ -21,7 +21,7 @@ path_results_after = "/home/lmoldon/results/lifetimeRecordsPlotAFTER.json"
 
 # ---------- CONFIG ------------
 minlen = 20
-gender = "female" # "" for no gender restriction
+gender = "" # "" for no gender restriction
 country = "" # "" for no country restriction
 # ------------------------------
 
@@ -58,10 +58,16 @@ deleteIDs = set()
 for userid in userids:
     if userid not in streakdata:
         deleteIDs.add(userid)
-    elif gender and userid not in genderdata:
-        deleteIDs.add(userid)
-    elif country and userid not in genderdata:
-        deleteIDs.add(userid)
+    if gender:
+        if userid not in genderdata:
+            deleteIDs.add(userid)
+        elif genderdata[userid]["gender"] != gender:
+            deleteIDs.add(userid)
+    if country:
+        if userid not in genderdata:
+            deleteIDs.add(userid)
+        elif genderdata[userid]["country"] != country:
+            deleteIDs.add(userid)
 
 for userid in deleteIDs:
     del userids[userid]
