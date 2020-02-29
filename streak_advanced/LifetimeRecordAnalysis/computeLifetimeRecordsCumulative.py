@@ -9,6 +9,7 @@ from datetime import timedelta, date
 # ---------- INPUT -------------
 path_source_streakdata = "/home/lmoldon/data/user_streaks.json"
 path_source_userdata = "/home/lmoldon/data/users_reduced.json"
+path_source_genderdata = "/home/lmoldon/data/users_gender.json"
 # ------------------------------
 
 
@@ -20,6 +21,8 @@ path_results_after = "/home/lmoldon/results/lifetimeRecordsPlotAFTER.json"
 
 # ---------- CONFIG ------------
 minlen = 20
+gender = "female" # "" for no gender restriction
+country = "" # "" for no country restriction
 # ------------------------------
 
 
@@ -45,12 +48,19 @@ with open(path_source_streakdata, "r") as fp:
 with open(path_source_userdata, "r") as fp:
     userids = json.load(fp)
 
+if gender != "":
+    with open(path_source_genderdata, "r") as fp:
+        genderdata = json.load(fp)
 logging.info("Done (1/3)")
 
 
 deleteIDs = set()
 for userid in userids:
     if userid not in streakdata:
+        deleteIDs.add(userid)
+    elif gender and userid not in genderdata:
+        deleteIDs.add(userid)
+    elif country and userid not in genderdata:
         deleteIDs.add(userid)
 
 for userid in deleteIDs:
