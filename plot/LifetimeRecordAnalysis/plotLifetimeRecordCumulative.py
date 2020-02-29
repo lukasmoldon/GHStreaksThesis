@@ -18,8 +18,8 @@ import matplotlib.pyplot as plt
 
 
 # ---------- CONFIG ------------
-minlen = 20
-maxlen = 120
+minlen = 30
+maxlen = 110
 # ------------------------------
 
 
@@ -31,7 +31,7 @@ values = []
 
 
 
-with open("C:/Users/Lukas/Desktop/lifetimeRecordsPlotBEFORE.json", "r") as fp:
+with open("C:/Users/Lukas/Desktop/lifetimeRecordsPlotBEFORE_MALE.json", "r") as fp:
     plotdata = json.load(fp)
 
 
@@ -45,13 +45,14 @@ while i <= maxlen:
     i += 1
     
     
-matplotlib.pyplot.plot(x, values, '-', label="Before")
+matplotlib.pyplot.plot(x, values, '-', label="Male before")
 plt.xlabel("Maximum achieved streak length in users lifetime (cumulative)", fontsize=12)
 plt.ylabel("Users in %", fontsize=12)
 
 
+
 values = []
-with open("C:/Users/Lukas/Desktop/lifetimeRecordsPlotAFTER.json", "r") as fp:
+with open("C:/Users/Lukas/Desktop/lifetimeRecordsPlotBEFORE_FEMALE.json", "r") as fp:
     plotdata = json.load(fp)
 
 
@@ -63,7 +64,40 @@ while i <= maxlen:
         values.append(0)
     i += 1
 
-matplotlib.pyplot.plot(x, values, '-', label="After")
+matplotlib.pyplot.plot(x, values, '-', label="Female before")
+
+
+
+values = []
+with open("C:/Users/Lukas/Desktop/lifetimeRecordsPlotAFTER_MALE.json", "r") as fp:
+    plotdata = json.load(fp)
+
+
+i = minlen
+while i <= maxlen:
+    if str(i) in plotdata:
+        values.append(plotdata[str(i)])
+    else:
+        values.append(0)
+    i += 1
+
+matplotlib.pyplot.plot(x, values, '-', label="Male after")
+
+
+
+values = []
+with open("C:/Users/Lukas/Desktop/lifetimeRecordsPlotAFTER_FEMALE.json", "r") as fp:
+    plotdata = json.load(fp)
+
+i = minlen
+while i <= maxlen:
+    if str(i) in plotdata:
+        values.append(plotdata[str(i)])
+    else:
+        values.append(0)
+    i += 1
+
+matplotlib.pyplot.plot(x, values, '-', label="Female after")
 
 plt.legend()
 plt.show()
