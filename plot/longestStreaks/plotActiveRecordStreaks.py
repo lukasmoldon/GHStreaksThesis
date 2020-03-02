@@ -39,7 +39,7 @@ with open("C:/Users/Lukas/Desktop/activeStreakRecords2016NLIF.json", "r") as fp:
 i = 1
 for entry in plotdata:
     if i != 60: # Feb 29
-        values.append(plotdata[entry])
+        values.append(plotdata[entry]/size[str(entry)])
         list_of_datetimes.append(datetime.datetime.strptime(entry, datetimeFormat).date())
         i += 1
     else:
@@ -54,12 +54,12 @@ with open("C:/Users/Lukas/Desktop/activeStreakRecords2015NLIF.json", "r") as fp:
     plotdata = json.load(fp)
 
 for entry in plotdata:
-    values.append(plotdata[entry])
+    values.append(plotdata[entry]/size[str(entry)])
 
 matplotlib.pyplot.plot_date(dates, values, '-', label="2015")
 
 plt.xlabel("Time", fontsize=12)
-plt.ylabel("Number of new personal record streaks", fontsize=12)
+plt.ylabel("Probability of having a new personal record streak", fontsize=12)
 #plt.axvline(x=datetime.datetime.strptime("2016-02-15", datetimeFormat).date(), color='c', label="President's day")
 plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='r', label="Streaks removed (2016 only)")
 plt.axvline(x=datetime.datetime.strptime("2016-05-30", datetimeFormat).date(), color='y', label="Memorial Day")
