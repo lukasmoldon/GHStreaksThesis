@@ -20,6 +20,7 @@ path_results = ".."
 # ---------- CONFIG ------------
 year = "2015"
 minlen = 15
+useSubpopulation = False # refers to ActiveSubpopulation file
 # counting streaks from the day they pass the threshold (False) or from the starting day (True)
 lookIntoFuture = False
 # ------------------------------
@@ -54,8 +55,16 @@ logging.info("Loading data ...")
 with open(path_source_streakdata, "r") as fp:
     streakdata = json.load(fp)
 
-with open(path_source_subpopulation, "r") as fp:
-    userids = json.load(fp)
+if useSubpopulation:
+    with open(path_source_subpopulation, "r") as fp:
+        userids = json.load(fp)
+
+    delIDs= set()
+    for userid in streakdata:
+        if userid not in userids:
+            delIDs.add(userid)
+    for userid in delIDs:
+        del streakdata[userid]
 
 for single_date in daterange(observed_start, observed_end):
     activeStreaks[str(single_date)] = 0
@@ -66,7 +75,7 @@ logging.info("Done (1/3)")
 logging.info("Starting A...")
 cnt_streaks_total = 0
 ## FIND MAX RECORD IN THE PAST BEFORE OBSERVED TIME ##
-for userid in userids:  # for each user in subpopulation
+for userid in streakdata:  # for each user in subpopulation
 
     lastRecord[userid] = minlen
 
@@ -87,7 +96,7 @@ for userid in userids:  # for each user in subpopulation
 logging.info("Starting B...")
 cnt_streaks_total = 0        
 ## FIND NEW RECORDS IN OBSERVED TIME INCULDING ORDERING##
-for userid in userids:  # for each user in subpopulation
+for userid in streakdata:  # for each user in subpopulation
 
     records[userid] = {}
     records_order[userid] = {}
@@ -125,7 +134,7 @@ for userid in userids:  # for each user in subpopulation
 logging.info("Starting C...")
 cnt_streaks_total = 0            
 ## CALCULATE TOTAL VALUES (RECORD AND MINLENGTH) ##
-for userid in userids:  # for each user in subpopulation
+for userid in streakdata:  # for each user in subpopulation
 
     for streakid in streakdata[userid]:  # for each streak of that user
 

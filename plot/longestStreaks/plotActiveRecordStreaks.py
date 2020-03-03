@@ -39,7 +39,7 @@ with open("C:/Users/Lukas/Desktop/activeStreakRecords2016NLIF.json", "r") as fp:
 i = 1
 for entry in plotdata:
     if i != 60: # Feb 29
-        values.append(plotdata[entry]/size[str(entry)])
+        values.append(plotdata[entry])
         list_of_datetimes.append(datetime.datetime.strptime(entry, datetimeFormat).date())
         i += 1
     else:
@@ -49,14 +49,28 @@ dates = matplotlib.dates.date2num(list_of_datetimes)
 matplotlib.pyplot.plot_date(dates, values, '-', label="2016")
 
 
+
 values = []
 with open("C:/Users/Lukas/Desktop/activeStreakRecords2015NLIF.json", "r") as fp:
     plotdata = json.load(fp)
 
 for entry in plotdata:
-    values.append(plotdata[entry]/size[str(entry)])
+    values.append(plotdata[entry])
 
 matplotlib.pyplot.plot_date(dates, values, '-', label="2015")
+
+
+
+values = []
+with open("C:/Users/Lukas/Desktop/activeStreakRecords2017NLIF.json", "r") as fp:
+    plotdata = json.load(fp)
+
+for entry in plotdata:
+    values.append(plotdata[entry])
+
+matplotlib.pyplot.plot_date(dates, values, '-', label="2017")
+
+
 
 plt.xlabel("Time", fontsize=12)
 plt.ylabel("Probability of having a new personal record streak", fontsize=12)
