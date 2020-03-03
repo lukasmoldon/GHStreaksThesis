@@ -24,7 +24,7 @@ path_results = "..."
 username = "XXXXXXXXXXXXXXXXXXXXX"
 token = "XXXXXXXXXXXXXXXXXXXXX"
 email = "XXXXXXXXXXXXXXXXXXXXX"
-useragent = "Research for bachelor thesis on GitHub streaks" 
+useragent = "Research for bachelor thesis on GitHub streaks"
 
 chunksize = 1000000
 
@@ -89,6 +89,7 @@ done = False
 while(not done):
     try:
         answer = session.get(link_userinfo + "lukasmoldon", auth=(username, token))
+        time.sleep(0.72)
 
         status = answer.headers["Status"]
         if status != "200 OK":
@@ -96,6 +97,7 @@ while(not done):
                 logging.info("API counter at 0!")
                 sleep_epoch(answer.headers["X-RateLimit-Reset"])
                 answer = session.get(link_userinfo + "lukasmoldon", auth=(username, token))
+                time.sleep(0.72)
 
         if status == "200 OK":
             done = True
@@ -111,8 +113,9 @@ while(not done):
                 print(answer.headers)
                 print(answer.text)
                 sys.exit()
-    except:
+    except Exception as e:
         logging.warning("Could not send GET request to api.github.com")
+        print(e)
         time.sleep(0.72)
         cnt_triesGH += 1
         if cnt_triesGH > 50:
@@ -123,16 +126,19 @@ logging.info("Done.")
 
 
 
-logging.info("Starting ...")
+logging.info("Collecting ...")
 
 
 answer = ["_"]
 repo_page = 0
 while(len(answer) > 0):
     repo_page += 1
+    done = False
+    skip = False
     while(not done):
         try:
             answer = session.get(link_userrepo + str(repo_page), auth=(username, token))
+            time.sleep(0.72)
 
             status = answer.headers["Status"]
             if status == "404 Not Found" or status == "403 Forbidden":
@@ -143,6 +149,7 @@ while(len(answer) > 0):
                     logging.info("API counter at 0!")
                     sleep_epoch(answer.headers["X-RateLimit-Reset"])
                     answer = session.get(link_userrepo + str(repo_page), auth=(username, token))
+                    time.sleep(0.72)
 
             if not skip:
                 if status == "200 OK":
@@ -160,8 +167,9 @@ while(len(answer) > 0):
                         print(answer.headers)
                         print(answer.text)
                         sys.exit()
-        except:
+        except Exception as e:
             logging.warning("Could not send GET request to api.github.com")
+            print(e)
             time.sleep(0.72)
             cnt_triesGH += 1
             if cnt_triesGH > 50:
@@ -175,20 +183,22 @@ while(len(answer) > 0):
         if int(answer.headers["X-RateLimit-Remaining"]) % 1000 == 0:
             logging.info("GitHub requests remaining: " + str(answer.headers["X-RateLimit-Remaining"]))
     except:
-        logging.warning("Unexpected Error occurred while accessing remaining request number at api.github.com:")
-        print(answer.headers)
-        print(answer.text)
+        pass
             
     if not skip:
         try:
             for repo in answer.json():
                 repo_collection.add(repo["url"])
-                answer = answer.json()
-        except:
+        except Exception as e:
             logging.debug("Could not compute repo entries for: " + str(cur_username))
+            print(e)
     else:
         logging.debug("Username not found: " + str(cur_username))
 
+    try:        
+        answer = answer.json()
+    except:
+        answer = ["_"]
 
 for link_repo in repo_collection:
     commit_page = 0
@@ -200,6 +210,7 @@ for link_repo in repo_collection:
         while(not done):
             try:
                 answer = session.get(link_repo + str(commit_page), auth=(username, token))
+                time.sleep(0.72)
 
                 status = answer.headers["Status"]
                 if status == "404 Not Found" or status == "403 Forbidden":
@@ -210,6 +221,7 @@ for link_repo in repo_collection:
                         logging.info("API counter at 0!")
                         sleep_epoch(answer.headers["X-RateLimit-Reset"])
                         answer = session.get(link_repo + str(commit_page), auth=(username, token))
+                        time.sleep(0.72)
 
                 if not skip:
                     if status == "200 OK":
@@ -227,8 +239,9 @@ for link_repo in repo_collection:
                             print(answer.headers)
                             print(answer.text)
                             sys.exit()
-            except:
+            except Exception as e:
                 logging.warning("Could not send GET request to api.github.com")
+                print(e)
                 time.sleep(0.72)
                 cnt_triesGH += 1
                 if cnt_triesGH > 50:
@@ -242,9 +255,7 @@ for link_repo in repo_collection:
             if int(answer.headers["X-RateLimit-Remaining"]) % 1000 == 0:
                 logging.info("GitHub requests remaining: " + str(answer.headers["X-RateLimit-Remaining"]))
         except:
-            logging.warning("Unexpected Error occurred while accessing remaining request number at api.github.com:")
-            print(answer.headers)
-            print(answer.text)
+            pass
                 
         if not skip:
             try:
@@ -253,10 +264,14 @@ for link_repo in repo_collection:
                     # (repos can be share by several users)
                     if contribution["author"]["login"] == cur_username:
                         queryresult[contribution["commit"]["date"]] = 0
-            except:
+            except Exception as e:
                 logging.debug("Could not compute repo entries for: " + str(cur_username))
         else:
             logging.debug("Username not found: " + str(cur_username))
+    try:        
+        answer = answer.json()
+    except:
+        answer = ["_"]
 
 
 logging.info("Storing data ...")
