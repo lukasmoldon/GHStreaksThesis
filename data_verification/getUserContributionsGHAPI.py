@@ -35,7 +35,11 @@ debugmode = False # Enable debug messages in console
 # ---------- INITIAL -----------
 logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
 userdata = {} # from reduced_users
-userid = sys.argv[1]
+try:
+    userid = sys.argv[1]
+except:
+    logging.critical("Wrong usage: No valid userID provided as first argument!")
+    sys.exit()
 path_results = "/home/lmoldon/results/verification/contributions_" + userid + ".json"
 
 if debugmode:
