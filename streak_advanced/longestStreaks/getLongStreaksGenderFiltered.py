@@ -9,7 +9,6 @@ from datetime import timedelta, date
 # ---------- INPUT -------------
 path_source_streakdata = "/home/lmoldon/data/user_streaks.json"
 path_source_gender = "/home/lmoldon/data/users_gender.json"
-path_source_subpopulation = ".."
 # ------------------------------
 
 
@@ -19,26 +18,24 @@ path_results = ".."
 
 
 # ---------- CONFIG ------------
-year = "2015"
+datetimeFormat = "%Y-%m-%d"
+observed_start = datetime.datetime.strptime("2015-01-01", datetimeFormat).date()
+observed_end = datetime.datetime.strptime("2017-12-31", datetimeFormat).date()
 female = False
-minlen = 15
+minlen = 32
 # counting streaks from the day they pass the threshold (False) or from the starting day (True)
 lookIntoFuture = False
 # ------------------------------
 
 
 # ---------- INITIAL -----------
-datetimeFormat = "%Y-%m-%d"
 logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
-path_source_subpopulation = "/home/lmoldon/data/activeSubpopulation" + year + ".json"
 if female:
-    path_results_active = "/home/lmoldon/results/activeStreaks" + year + "FEMALE.json"
-    path_results_activeRecords = "/home/lmoldon/results/activeStreakRecords" + year + "FEMALE.json"
+    path_results_active = "/home/lmoldon/results/activeStreaksFEMALE.json"
+    path_results_activeRecords = "/home/lmoldon/results/activeStreakRecordsFEMALE.json"
 else:
-    path_results_active = "/home/lmoldon/results/activeStreaks" + year + "MALE.json"
-    path_results_activeRecords = "/home/lmoldon/results/activeStreakRecords" + year + "MALE.json"
-observed_start = datetime.datetime.strptime(year + "-01-01", datetimeFormat).date()
-observed_end = datetime.datetime.strptime(year + "-12-31", datetimeFormat).date()
+    path_results_active = "/home/lmoldon/results/activeStreaksMALE.json"
+    path_results_activeRecords = "/home/lmoldon/results/activeStreakRecordsMALE.json"
 lastRecord = {} # before observed time
 records = {} # while observed time
 records_order = {}
@@ -60,9 +57,6 @@ logging.info("Loading data ...")
 with open(path_source_streakdata, "r") as fp:
     streakdata = json.load(fp)
 
-with open(path_source_subpopulation, "r") as fp:
-    userids = json.load(fp)
-
 with open(path_source_gender, "r") as fp:
     genderdata = json.load(fp)
 
@@ -70,12 +64,10 @@ for single_date in daterange(observed_start, observed_end):
     activeStreaks[str(single_date)] = 0
     activeStreakRecords[str(single_date)] = 0
 
-logging.info("Users in sample: " + str(len(userids)))
-
 delids = set()
 cnt_fails = 0
 
-for userid in userids:
+for userid in streakdata:
     if userid in genderdata:
         cur_gender = genderdata[userid]["gender"]
 
@@ -88,9 +80,9 @@ for userid in userids:
         cnt_fails += 1
 
 for userid in delids:
-    del userids[userid]
+    del streakdata[userid]
 
-logging.info("Users in sample (applied gender filter): " + str(len(userids)))
+logging.info("Users in sample (applied gender filter): " + str(len(streakdata)))
 logging.info("Could not find userIDs " + str(cnt_fails) + " times in gender data.")
 
 logging.info("Done (1/3)")
@@ -99,7 +91,7 @@ logging.info("Done (1/3)")
 logging.info("Starting A...")
 cnt_streaks_total = 0
 ## FIND MAX RECORD IN THE PAST BEFORE OBSERVED TIME ##
-for userid in userids:  # for each user in subpopulation
+for userid in streakdata:  # for each user in subpopulation
 
     lastRecord[userid] = minlen
 
@@ -120,7 +112,7 @@ for userid in userids:  # for each user in subpopulation
 logging.info("Starting B...")
 cnt_streaks_total = 0        
 ## FIND NEW RECORDS IN OBSERVED TIME INCULDING ORDERING##
-for userid in userids:  # for each user in subpopulation
+for userid in streakdata:  # for each user in subpopulation
 
     records[userid] = {}
     records_order[userid] = {}
@@ -156,7 +148,7 @@ for userid in userids:  # for each user in subpopulation
 logging.info("Starting C...")
 cnt_streaks_total = 0            
 ## CALCULATE TOTAL VALUES (RECORD AND MINLENGTH) ##
-for userid in userids:  # for each user in subpopulation
+for userid in streakdata:  # for each user in subpopulation
 
     for streakid in streakdata[userid]:  # for each streak of that user
 
