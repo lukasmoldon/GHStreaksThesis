@@ -33,13 +33,13 @@ with open("C:/Users/Lukas/Desktop/communitysize_per_day.json", "r") as fp:
     size = json.load(fp)
 
 
-with open("C:/Users/Lukas/Desktop/activeStreakRecords2016NLIF.json", "r") as fp:
+with open("C:/Users/Lukas/Desktop/activeStreakRecords2016MIN15.json", "r") as fp:
     plotdata = json.load(fp)
 
 i = 1
 for entry in plotdata:
     if i != 60: # Feb 29
-        values.append(plotdata[entry])
+        values.append(plotdata[entry]/size[str(entry)])
         list_of_datetimes.append(datetime.datetime.strptime(entry, datetimeFormat).date())
         i += 1
     else:
@@ -51,22 +51,22 @@ matplotlib.pyplot.plot_date(dates, values, '-', label="2016")
 
 
 values = []
-with open("C:/Users/Lukas/Desktop/activeStreakRecords2015NLIF.json", "r") as fp:
+with open("C:/Users/Lukas/Desktop/activeStreakRecords2015MIN15.json", "r") as fp:
     plotdata = json.load(fp)
 
 for entry in plotdata:
-    values.append(plotdata[entry])
+    values.append(plotdata[entry]/size[str(entry)])
 
 matplotlib.pyplot.plot_date(dates, values, '-', label="2015")
 
 
 
 values = []
-with open("C:/Users/Lukas/Desktop/activeStreakRecords2017NLIF.json", "r") as fp:
+with open("C:/Users/Lukas/Desktop/activeStreakRecords2017MIN15.json", "r") as fp:
     plotdata = json.load(fp)
 
 for entry in plotdata:
-    values.append(plotdata[entry])
+    values.append(plotdata[entry]/size[str(entry)])
 
 matplotlib.pyplot.plot_date(dates, values, '-', label="2017")
 
