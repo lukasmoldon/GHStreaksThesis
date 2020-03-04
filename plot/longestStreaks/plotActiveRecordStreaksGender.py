@@ -29,15 +29,18 @@ list_of_datetimes = []
 values = []
 # ------------------------------
 
-with open("C:/Users/Lukas/Desktop/usergroupsize.json", "r") as fp:
-    size = json.load(fp)
+with open("C:/Users/Lukas/Desktop/usergroupsizeMALE.json", "r") as fp:
+    sizemale = json.load(fp)
+
+with open("C:/Users/Lukas/Desktop/usergroupsizeFEMALE.json", "r") as fp:
+    sizefemale = json.load(fp)
 
 
 with open("C:/Users/Lukas/Desktop/activeStreakRecordsMALE.json", "r") as fp:
     plotdata = json.load(fp)
 
 for entry in plotdata:
-    values.append(plotdata[entry]/1) # TODO
+    values.append(plotdata[entry]/sizemale[str(entry)])
     list_of_datetimes.append(datetime.datetime.strptime(entry, datetimeFormat).date())
 
 dates = matplotlib.dates.date2num(list_of_datetimes)
@@ -51,7 +54,7 @@ with open("C:/Users/Lukas/Desktop/activeStreakRecordsFEMALE.json", "r") as fp:
     plotdata = json.load(fp)
 
 for entry in plotdata:
-    values.append(plotdata[entry]/1) # TODO
+    values.append(plotdata[entry]/sizefemale[str(entry)])
 
 
 
