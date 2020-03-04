@@ -25,7 +25,8 @@ path_results = "/home/lmoldon/results/streakShareValues.json"
 
 
 # ---------- CONFIG ------------
-thresholds = [50, 150, 350]  # minimum streak length to get plotted
+thresholds = [20, 50, 90, 150, 350]  # minimum streak length to get plotted
+totalvalues = False
 
 # if != "" only compute data for userIDs in user_restriction file (path)
 path_user_restriction = ""
@@ -174,9 +175,10 @@ logging.info("Done. (4/5)")
 
 logging.info("Creating plot data ...")
 
-for threshold in thresholds:
-    for day in daterange(observedtime_start, observedtime_end):
-        plotdata[str(threshold)][str(day)] /= usergroupsize[str(day)]
+if not totalvalues:
+    for threshold in thresholds:
+        for day in daterange(observedtime_start, observedtime_end):
+            plotdata[str(threshold)][str(day)] /= usergroupsize[str(day)]
 
 with open(path_results, "w") as fp:
     json.dump(plotdata, fp)

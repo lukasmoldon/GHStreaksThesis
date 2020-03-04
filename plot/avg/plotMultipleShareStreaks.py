@@ -25,8 +25,6 @@ path_source = "C:/Users/Lukas/Desktop/streakShareValues.json"
 # ---------- INITIAL -----------
 logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
 datetimeFormat = "%Y-%m-%d"
-list_of_datetimes = []
-values = []
 # ------------------------------
 
 
@@ -38,6 +36,7 @@ with open(path_source, "r") as fp:
 
 for t in plotdata:
     values = []
+    list_of_datetimes = []
     for entry in plotdata[t]:
         values.append(plotdata[t][entry])
         list_of_datetimes.append(datetime.datetime.strptime(entry, datetimeFormat).date())
