@@ -55,7 +55,7 @@ while i < len(plotdata_before):
     values.append(plotdata_before[str(i)])
     i += 1
 
-p1 = ax.bar(indices, values, width, align='center', label="Year after the change")
+p1 = ax.bar(indices, values, width, align='center', label="Year after the change", color="#E5C35E")
 
 beforeavg = []
 for el in values:
@@ -72,7 +72,7 @@ while i < len(plotdata_after):
     i += 1
 
 
-p2 = ax.bar(indices, values, width, align='center', label="Year after the change")
+p2 = ax.bar(indices, values, width, align='center', label="Year after the change", color="#17719B")
 
 afteravg = []
 for el in values:
