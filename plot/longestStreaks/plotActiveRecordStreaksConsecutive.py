@@ -29,44 +29,19 @@ list_of_datetimes = []
 values = []
 # ------------------------------
 
-with open("C:/Users/Lukas/Desktop/communitysize_per_day.json", "r") as fp:
+
+with open("C:/Users/Lukas/Desktop/usergroupsize.json", "r") as fp:
     size = json.load(fp)
 
-
-
-with open("C:/Users/Lukas/Desktop/activeStreakRecords2015MIN15.json", "r") as fp:
+with open("C:/Users/Lukas/Desktop/activeStreakRecords.json", "r") as fp:
     plotdata = json.load(fp)
 
 for entry in plotdata:
     values.append(plotdata[entry]/size[str(entry)])
     list_of_datetimes.append(datetime.datetime.strptime(entry, datetimeFormat).date())
-
-
-
-with open("C:/Users/Lukas/Desktop/activeStreakRecords2016MIN15.json", "r") as fp:
-    plotdata = json.load(fp)
-
-i = 1
-for entry in plotdata:
-    if i != 60: # Feb 29
-        values.append(plotdata[entry]/size[str(entry)])
-        list_of_datetimes.append(datetime.datetime.strptime(entry, datetimeFormat).date())
-        i += 1
-    else:
-        i += 1
-
-
-
-with open("C:/Users/Lukas/Desktop/activeStreakRecords2017MIN15.json", "r") as fp:
-    plotdata = json.load(fp)
-
-for entry in plotdata:
-    values.append(plotdata[entry]/size[str(entry)])
-    list_of_datetimes.append(datetime.datetime.strptime(entry, datetimeFormat).date())
-
 
 dates = matplotlib.dates.date2num(list_of_datetimes)
-matplotlib.pyplot.plot_date(dates, values, '-', label="2017")
+matplotlib.pyplot.plot_date(dates, values, '-')
 
 
 

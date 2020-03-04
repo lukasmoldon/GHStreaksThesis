@@ -29,7 +29,7 @@ list_of_datetimes = []
 values = []
 # ------------------------------
 
-with open("C:/Users/Lukas/Desktop/communitysize_per_day.json", "r") as fp:
+with open("C:/Users/Lukas/Desktop/usergroupsize.json", "r") as fp:
     size = json.load(fp)
 
 
