@@ -163,7 +163,7 @@ for userid in streakdata:
                 # streak happend (partially) in observed time
                 if start <= observedtime_end and end >= observedtime_start:
 
-                    a = max(start, observedtime_start)
+                    a = max((start+timedelta(days=threshold-1)), observedtime_start)
                     b = min(end, observedtime_end)
 
                     for day in daterange(a, b):
@@ -178,7 +178,7 @@ logging.info("Creating plot data ...")
 if not totalvalues:
     for threshold in thresholds:
         for day in daterange(observedtime_start, observedtime_end):
-            plotdata[str(threshold)][str(day)] /= usergroupsize[str(day)]
+            plotdata[str(threshold)][str(day)] /= usergroupsize[str(day-timedelta(days=threshold-1))]
 
 with open(path_results, "w") as fp:
     json.dump(plotdata, fp)

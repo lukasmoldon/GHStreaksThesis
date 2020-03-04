@@ -1,8 +1,8 @@
-, color="#252323"   black
-, color='#4C4C4C'   grey
-, color="#17719B"   blue
-, color="#D3685D"   red
-, color="#32A875"   green
+, color='#8C8C8C'   grey
 , color="#E5C35E"   yellow
+, color="#32A875"   green
+, color="#D3685D"   red
+, color="#17719B"   blue
+, color="#252323"   black
 
-(https://coolors.co/e5c35e-32a875-d3685d-17719b-4c4c4c)
+(https://coolors.co/8C8C8C-e5c35e-32a875-d3685d-17719b)

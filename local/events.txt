@@ -1,11 +1,14 @@
 # outages
-plt.axvline(x=datetime.datetime.strptime("2016-12-06", datetimeFormat).date(), color='#4C4C4C', ls="--", label="GitHub Service Outage") # GitHub Major Service Outage
-plt.axvline(x=datetime.datetime.strptime("2015-03-26", datetimeFormat).date(), color='#4C4C4C', ls="--") # GitHub Server DDoS Attack
-plt.axvline(x=datetime.datetime.strptime("2017-05-23", datetimeFormat).date(), color='#4C4C4C', ls="--") # GitHub Minor Service Outage
+plt.axvline(x=datetime.datetime.strptime("2015-03-26", datetimeFormat).date(), color='#8C8C8C', ls="--", label="GitHub Server DDoS-Attack (2015)")
+plt.axvline(x=datetime.datetime.strptime("2016-12-06", datetimeFormat).date(), color='#8C8C8C', ls="--", label="GitHub Major Service Outage (2016)")
 
 # design change
-plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='r', label="Design change")
+plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='#D3685D', label="Design change")
 
 # holidays (yearly)
-plt.axvline(x=datetime.datetime.strptime("2016-07-04", datetimeFormat).date(), color="#252323", ls=":", label="Independence Day")
-plt.axvline(x=datetime.datetime.strptime("2016-12-25", datetimeFormat).date(), color='#4C4C4C', ls=":", label="Christmas")
+plt.axvline(x=datetime.datetime.strptime("2016-12-25", datetimeFormat).date(), color='#8C8C8C', ls=":", label="Christmas")
+plt.axvline(x=datetime.datetime.strptime("2017-12-25", datetimeFormat).date(), color='#8C8C8C', ls=":")
+plt.axvline(x=datetime.datetime.strptime("2015-12-25", datetimeFormat).date(), color='#8C8C8C', ls=":")
+plt.axvline(x=datetime.datetime.strptime("2016-07-04", datetimeFormat).date(), color="#8C8C8C", ls=":", label="Independence Day")
+plt.axvline(x=datetime.datetime.strptime("2017-07-04", datetimeFormat).date(), color="#8C8C8C", ls=":")
+plt.axvline(x=datetime.datetime.strptime("2015-07-04", datetimeFormat).date(), color="#8C8C8C", ls=":")
