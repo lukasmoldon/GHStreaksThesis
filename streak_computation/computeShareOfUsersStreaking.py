@@ -25,7 +25,7 @@ path_results = "/home/lmoldon/results/streakShareValues.json"
 
 
 # ---------- CONFIG ------------
-thresholds = [20, 50, 90, 150, 350]  # minimum streak length to get plotted
+thresholds = [20, 60, 200]  # minimum streak length to get plotted
 totalvalues = False
 
 # if != "" only compute data for userIDs in user_restriction file (path)

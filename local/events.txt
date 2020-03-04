@@ -1,14 +1,11 @@
-#2015
-plt.axvline(x=datetime.datetime.strptime("2015-03-26", datetimeFormat).date(), color='k', label="GitHub Server DDoS Attack")
-plt.axvline(x=datetime.datetime.strptime("2015-07-04", datetimeFormat).date(), color='g', label="Independence Day 2015")
-plt.axvline(x=datetime.datetime.strptime("2015-12-25", datetimeFormat).date(), color='b', label="Christmas 2015")
+# outages
+plt.axvline(x=datetime.datetime.strptime("2016-12-06", datetimeFormat).date(), color='#4C4C4C', ls="--", label="GitHub Service Outage") # GitHub Major Service Outage
+plt.axvline(x=datetime.datetime.strptime("2015-03-26", datetimeFormat).date(), color='#4C4C4C', ls="--") # GitHub Server DDoS Attack
+plt.axvline(x=datetime.datetime.strptime("2017-05-23", datetimeFormat).date(), color='#4C4C4C', ls="--") # GitHub Minor Service Outage
 
-#2016
-plt.axvline(x=datetime.datetime.strptime("2016-02-15", datetimeFormat).date(), color='c', label="President's day 2016")
-plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='r', label="Streaks removed")
-plt.axvline(x=datetime.datetime.strptime("2016-05-30", datetimeFormat).date(), color='y', label="Memorial Day 2016")
-plt.axvline(x=datetime.datetime.strptime("2016-07-04", datetimeFormat).date(), color='g', label="Independence Day 2016")
-plt.axvline(x=datetime.datetime.strptime("2016-09-05", datetimeFormat).date(), color='m', label="Labor Day 2016")
-plt.axvline(x=datetime.datetime.strptime("2016-11-11", datetimeFormat).date(), color='y', label="Veteran's Day 2016")
-plt.axvline(x=datetime.datetime.strptime("2016-12-06", datetimeFormat).date(), color='k', label="GitHub Major Service Outage")
-plt.axvline(x=datetime.datetime.strptime("2016-12-25", datetimeFormat).date(), color='b', label="Christmas 2016")
+# design change
+plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='r', label="Design change")
+
+# holidays (yearly)
+plt.axvline(x=datetime.datetime.strptime("2016-07-04", datetimeFormat).date(), color="#252323", ls=":", label="Independence Day")
+plt.axvline(x=datetime.datetime.strptime("2016-12-25", datetimeFormat).date(), color='#4C4C4C', ls=":", label="Christmas")
