@@ -34,8 +34,18 @@ values = []
 indices = []
 avg = 0
 cnt_streaks = 0
-observed_mondays = [date(2016, 4, 11), date(2016, 4, 18), date(2016, 4, 25), date(2016, 5, 2), date(2016, 5, 9), date(
-    2016, 5, 16), date(2016, 5, 23), date(2016, 5, 30), date(2016, 6, 6), date(2016, 6, 13), date(2016, 6, 20), date(2016, 6, 27)]
+observed_mondays = [
+    date(2016, 1, 4), 
+    date(2016, 1, 11),
+    date(2016, 1, 18), 
+    date(2016, 1, 25), 
+    date(2016, 2, 1), 
+    date(2016, 2, 8), 
+    date(2016, 2, 15), 
+    date(2016, 2, 22), 
+    date(2016, 2, 29), 
+    date(2016, 3, 7)
+    ]
 # ------------------------------
 
 
@@ -47,39 +57,53 @@ logging.info("Accessing plotdata ...")
 with open(path_source, "r") as fp:
     plotdata = json.load(fp)
 
+averaged = {}
+for monday in observed_mondays:
+    for length in plotdata[str(monday)]:
+        averaged[length] = 0
+
+cnt = 0
+for monday in observed_mondays:
+    for length in plotdata[str(monday)]:
+        averaged[length] += plotdata[str(monday)][length]
+        if int(length) >= observed_start and int(length) <= observed_end:
+            cnt += plotdata[str(monday)][length]
+
+for length in averaged:
+    averaged[length] /= cnt
+
 
 logging.info("Creating plot ...")
-del plotdata["0"]
-for monday_index in plotdata:
-    values = []
-    indices = []
-    avg = 0
-    cnt_streaks = 0
 
-    for length in plotdata[monday_index]:
-        if int(length) >= observed_start and int(length) <= observed_end:
-            cnt_streaks += plotdata[monday_index][str(length)]
-            avg += (plotdata[monday_index][str(length)] * int(length))
+values = []
+indices = []
+avg = 0
+cnt_streaks = 0
+
+for length in averaged:
+    if int(length) >= observed_start and int(length) <= observed_end:
+        cnt_streaks += averaged[length]
+        avg += (averaged[length] * int(length))
         
-    avg = (avg / cnt_streaks)
+avg = (avg / cnt_streaks)
 
-    length = observed_start
-    while length <= observed_end:
-        indices.append(length)
-        if str(length) in plotdata[monday_index]:
-            values.append(plotdata[monday_index][str(length)] / cnt_streaks)
-        else:
-            values.append(0)
-        length += 1
+length = observed_start
+while length <= observed_end:
+    indices.append(length)
+    if str(length) in averaged:
+        values.append(averaged[str(length)])
+    else:
+        values.append(0)
+    length += 1
 
 
-    matplotlib.pyplot.bar(indices, values)
-    plt.xlabel("Exact streak length starting from " + str(observed_mondays[int(monday_index)]) + "     (Avg streak length: " + str(round(avg, 2)) + ")")
-    plt.xticks(range(observed_start, observed_end + 1), labels=["Mon\n(8)", "Tue\n(9)", "Wed\n(10)", "Thu\n(11)", "Fri\n(12)", "Sat\n(13)", "Sun\n(14)", "Mon\n(15)", "Tue\n(16)", "Wed\n(17)", "Thu\n(18)", "Fri\n(19)", "Sat\n(20)", "Sun\n(21)"])
-    plt.ylabel("Distribution of streaklengths starting on " + str(observed_mondays[int(monday_index)]))
-    plt.annotate("Friday peak", xy=(11.5,0.21), xytext=(7.3,0.18), arrowprops=dict(facecolor='black', shrink=0.03))
-    plt.annotate("Friday peak", xy=(19,0.04), xytext=(15,0.07), arrowprops=dict(facecolor='black', shrink=0.03))
-    plt.show()
+matplotlib.pyplot.bar(indices, values, color="#17719B")
+plt.xlabel("Streak length in days" + "     (Avg streak length: " + str(round(avg, 2)) + ")", fontsize=12)
+plt.xticks(range(observed_start, observed_end + 1), labels=["Mon\n(8)", "Tue\n(9)", "Wed\n(10)", "Thu\n(11)", "Fri\n(12)", "Sat\n(13)", "Sun\n(14)", "Mon\n(15)", "Tue\n(16)", "Wed\n(17)", "Thu\n(18)", "Fri\n(19)", "Sat\n(20)", "Sun\n(21)"])
+plt.ylabel("Share of streaklengths > 7", fontsize=12)
+plt.annotate("Friday peak", xy=(12.5,0.19), xytext=(14.5,0.16), arrowprops=dict(facecolor='black', shrink=0.03))
+plt.annotate("Friday peak", xy=(18.7,0.04), xytext=(14.7,0.07), arrowprops=dict(facecolor='black', shrink=0.03))
+plt.show()
     
 
 
