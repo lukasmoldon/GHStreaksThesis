@@ -34,8 +34,33 @@ indices = []
 maxlen = 1
 avg = 0
 overThreshold = 0
-observed_mondays = [date(2016, 4, 18), date(2016, 4, 25), date(2016, 5, 2), date(2016, 5, 9), date(
-    2016, 5, 16), date(2016, 5, 23), date(2016, 5, 30), date(2016, 6, 6), date(2016, 6, 13), date(2016, 6, 20)]
+observed_mondays = [
+    date(2016, 1, 4), 
+    date(2016, 1, 11),
+    date(2016, 1, 18), 
+    date(2016, 1, 25), 
+    date(2016, 2, 1), 
+    date(2016, 2, 8), 
+    date(2016, 2, 15), 
+    date(2016, 2, 22), 
+    date(2016, 2, 29), 
+    date(2016, 3, 7),
+    date(2017, 1, 2), 
+    date(2017, 1, 9),
+    date(2017, 1, 16), 
+    date(2017, 1, 23), 
+    date(2017, 1, 30), 
+    date(2017, 2, 6), 
+    date(2017, 2, 13), 
+    date(2017, 2, 20), 
+    date(2017, 2, 27), 
+    date(2017, 3, 6)
+    ]
+
+avg_before = 0
+avg_after = 0
+longer_before = 0
+longer_after = 0
 # ------------------------------
 
 
@@ -45,6 +70,54 @@ log_starttime = datetime.datetime.now()
 logging.info("Accessing plotdata ...")
 with open(path_source, "r") as fp:
     plotdata = json.load(fp)
+
+
+
+averaged_before = {}
+for monday in observed_mondays:
+    if monday < date(2016,5,19):
+        for length in plotdata[str(monday)]:
+            averaged_before[length] = 0
+
+over = 0
+cnt = 0
+for monday in observed_mondays:
+    if monday < date(2016,5,19):
+        for length in plotdata[str(monday)]:
+            averaged_before[length] += plotdata[str(monday)][length]
+            if int(length) <= threshold:
+                cnt += plotdata[str(monday)][length]
+            else:
+                over += plotdata[str(monday)][length]
+
+for length in averaged_before:
+    avg_before += averaged_before[length]*int(length)
+    averaged_before[length] /= cnt
+avg_before /= cnt
+longer_before = 100*over/(cnt+over)
+
+averaged_after = {}
+for monday in observed_mondays:
+    if monday > date(2016,5,19):
+        for length in plotdata[str(monday)]:
+            averaged_after[length] = 0
+
+over = 0
+cnt = 0
+for monday in observed_mondays:
+    if monday > date(2016,5,19):
+        for length in plotdata[str(monday)]:
+            averaged_after[length] += plotdata[str(monday)][length]
+            if int(length) <= threshold:
+                cnt += plotdata[str(monday)][length]
+            else:
+                over += plotdata[str(monday)][length]
+
+for length in averaged_after:
+    avg_after += averaged_after[length]*int(length)
+    averaged_after[length] /= cnt
+avg_after /= cnt
+longer_after = 100*over/(cnt+over)
 
 
 logging.info("Creating plot ...")
@@ -58,10 +131,10 @@ indices = []
 length = 1
 while length <= threshold:
     indices.append(length - width/2)
-    values.append(plotdata["0"][str(length)])
+    values.append(averaged_before[str(length)])
     length += 1
 
-p1 = ax.bar(indices, values, width, align='center')
+p1 = ax.bar(indices, values, width, align='center', color="#17719B")
 
 
 
@@ -71,17 +144,18 @@ indices = []
 length = 1
 while length <= threshold:
     indices.append(length + width/2)
-    values.append(plotdata["8"][str(length)])
+    values.append(averaged_after[str(length)])
     length += 1
 
-p2 = ax.bar(indices, values, width, align='center')
+p2 = ax.bar(indices, values, width, align='center', color="#32A875")
 
 
 ax.set_xticks(range(1, threshold + 1))
 ax.set_xticklabels(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"])
-ax.legend((p1[0], p2[0]), (str(observed_mondays[0]), str(observed_mondays[8])))
-plt.ylabel("Distribution of streaklengths starting on both Mondays")
-plt.xlabel("\n2016-04-18: Avg streak length: 2.38    Streaks longer than 14: 0.52%\n2016-06-13: Avg streak length: 2.24    Streaks longer than 14: 0.27%")
+ax.legend((p1[0], p2[0]), ("Before (avg)", "After (avg)"))
+plt.ylabel("Share of streaks")
+plt.xlabel("Before: Avg streak length: " + str(round(avg_before, 2)) + "    Streaks longer than 14:  " + str(round(longer_before, 2))+ "%" + 
+            "\nAfter: Avg streak length:  " + str(round(avg_after, 2)) + "    Streaks longer than 14:  " + str(round(longer_after, 2)) + "%")
 plt.annotate("Friday peak", xy=(5.1,0.1), xytext=(6,0.15), arrowprops=dict(facecolor='black', shrink=0.03))
 plt.annotate("Friday peak", xy=(11.7,0.014), xytext=(8,0.06), arrowprops=dict(facecolor='black', shrink=0.03))
 plt.show()
