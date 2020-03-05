@@ -41,16 +41,24 @@ for entry in plotdata:
     list_of_datetimes.append(datetime.datetime.strptime(entry, datetimeFormat).date())
 
 dates = matplotlib.dates.date2num(list_of_datetimes)
-matplotlib.pyplot.plot_date(dates, values, '-')
+matplotlib.pyplot.plot_date(dates, values, '-', color='#17719B')
 
 
 
-plt.xlabel("Time", fontsize=12)
-plt.ylabel("Probability of having a new personal record streak", fontsize=12)
-plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='r', label="Streaks removed")
-plt.axvline(x=datetime.datetime.strptime("2016-07-04", datetimeFormat).date(), color='g', label="Independence Day")
-plt.axvline(x=datetime.datetime.strptime("2016-12-06", datetimeFormat).date(), color='k', label="GitHub Major Service Outage")
-plt.legend()
+plt.xlabel("Time", fontsize=13)
+plt.ylabel("Probability of having a new personal record streak", fontsize=13)
+plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='#D3685D', label="Design change")
+
+plt.axvline(x=datetime.datetime.strptime("2015-03-26", datetimeFormat).date(), color='#8C8C8C', ls="--", label="GitHub Server DDoS-Attack (2015)")
+plt.axvline(x=datetime.datetime.strptime("2016-12-06", datetimeFormat).date(), color='#8C8C8C', ls="--", label="GitHub Major Service Outage (2016)")
+
+plt.axvline(x=datetime.datetime.strptime("2016-12-25", datetimeFormat).date(), color='#8C8C8C', ls=":", label="Christmas")
+plt.axvline(x=datetime.datetime.strptime("2017-12-25", datetimeFormat).date(), color='#8C8C8C', ls=":")
+plt.axvline(x=datetime.datetime.strptime("2015-12-25", datetimeFormat).date(), color='#8C8C8C', ls=":")
+plt.axvline(x=datetime.datetime.strptime("2016-07-04", datetimeFormat).date(), color="#8C8C8C", ls=":", label="Independence Day")
+plt.axvline(x=datetime.datetime.strptime("2017-07-04", datetimeFormat).date(), color="#8C8C8C", ls=":")
+plt.axvline(x=datetime.datetime.strptime("2015-07-04", datetimeFormat).date(), color="#8C8C8C", ls=":")
+plt.legend(fontsize=11)
 plt.show()
 
 
