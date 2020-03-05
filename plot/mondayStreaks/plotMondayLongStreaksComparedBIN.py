@@ -34,9 +34,12 @@ values = []
 indices = []
 bins = [(15, 34), (35, 54), (55, 74), (75, 100)]
 binval = [0, 0, 0, 0]
-avg = 0
-observed_mondays = [date(2016, 4, 6), date(2016, 4, 18), date(2016, 4, 25), date(2016, 5, 2), date(2016, 5, 9), date(
-    2016, 5, 16), date(2016, 5, 23), date(2016, 5, 30), date(2016, 6, 6), date(2016, 6, 13), date(2016, 6, 20), date(2016, 6, 27)]
+observed_mondays = [date(2016, 1, 18), date(2016, 2, 1), date(2016, 2, 15), date(2017, 1, 16), date(2017, 1, 30), date(2017, 2, 13)]
+
+avg_before = 0
+avg_after = 0
+longer_before = 0
+longer_after = 0
 # ------------------------------
 
 
@@ -48,33 +51,79 @@ with open(path_source, "r") as fp:
     plotdata = json.load(fp)
 
 
+averaged_before = {}
+for monday in observed_mondays:
+    if monday < date(2016,5,19):
+        for length in plotdata[str(monday)]:
+            averaged_before[length] = 0
+
+over = 0
+cnt = 0
+for monday in observed_mondays:
+    if monday < date(2016,5,19):
+        for length in plotdata[str(monday)]:
+            averaged_before[length] += plotdata[str(monday)][length]
+            if int(length) >= observed_start:
+                if int(length) <= observed_end:
+                    cnt += plotdata[str(monday)][length]
+                else:
+                    over += plotdata[str(monday)][length]
+
+for length in averaged_before:
+    if int(length) >= observed_start and int(length) <= observed_end:
+        avg_before += averaged_before[length]*int(length)
+avg_before /= cnt
+longer_before = 100*over/(cnt+over)
+
+
+
+
+averaged_after = {}
+for monday in observed_mondays:
+    if monday > date(2016,5,19):
+        for length in plotdata[str(monday)]:
+            averaged_after[length] = 0
+
+over = 0
+cnt = 0
+for monday in observed_mondays:
+    if monday > date(2016,5,19):
+        for length in plotdata[str(monday)]:
+            averaged_after[length] += plotdata[str(monday)][length]
+            if int(length) >= observed_start:
+                if int(length) <= observed_end:
+                    cnt += plotdata[str(monday)][length]
+                else:
+                    over += plotdata[str(monday)][length]
+
+for length in averaged_after:
+    if int(length) >= observed_start and int(length) <= observed_end:
+        avg_after += averaged_after[length]*int(length)
+avg_after /= cnt
+longer_after = 100*over/(cnt+over)
+
 logging.info("Creating plot ...")
 
 fig, ax = plt.subplots()
 width = 0.35
 
 
+
 values = []
 indices = []
-avg = 0
 cnt_streaks = 0
 
-for length in plotdata["1"]:
+for length in averaged_before:
     if int(length) >= observed_start and int(length) <= observed_end:
-        cnt_streaks += plotdata["1"][str(length)]
-        avg += (plotdata["1"][str(length)] * int(length))
-
-    
-avg = (avg / cnt_streaks)
-
+        cnt_streaks += averaged_before[length]
 
 
 i = observed_start
 while i <= observed_end:
-    if str(i) in plotdata["1"]:
+    if str(i) in averaged_before:
         for el in bins:
             if i >= el[0] and i <= el[1]:
-                binval[bins.index(el)] += plotdata["1"][str(i)]
+                binval[bins.index(el)] += averaged_before[str(i)]
     i += 1
 
 i = 1
@@ -82,52 +131,43 @@ while i <= len(bins):
     indices.append(i - width/2)
     values.append(binval[i-1]/cnt_streaks)
     i += 1
-
-p1 = ax.bar(indices, values, width, align='center')
-
+p1 = ax.bar(indices, values, width, align='center', color="#17719B")
 
 
 
+binval = [0, 0, 0, 0]
 values = []
 indices = []
-avgI = 0
 cnt_streaks = 0
-binval = [0, 0, 0, 0]
 
-for length in plotdata["9"]:
+for length in averaged_after:
     if int(length) >= observed_start and int(length) <= observed_end:
-        cnt_streaks += plotdata["9"][str(length)]
-        avgI += (plotdata["9"][str(length)] * int(length))
+        cnt_streaks += averaged_after[length]
 
-
-avgI = (avgI / cnt_streaks)
 
 i = observed_start
 while i <= observed_end:
-    if str(i) in plotdata["9"]:
+    if str(i) in averaged_after:
         for el in bins:
             if i >= el[0] and i <= el[1]:
-                binval[bins.index(el)] += plotdata["9"][str(i)]
+                binval[bins.index(el)] += averaged_after[str(i)]
     i += 1
-
-
 
 i = 1
 while i <= len(bins):
     indices.append(i + width/2)
     values.append(binval[i-1]/cnt_streaks)
     i += 1
-
-
-p2 = ax.bar(indices, values, width, align='center')
+p2 = ax.bar(indices, values, width, align='center', color="#32A875")
 
 
 ax.set_xticks([1,2,3,4])
 ax.set_xticklabels(["15 - 34", "35 - 54", "55 - 74", "75 - 100"])
-ax.legend((p1[0], p2[0]), (str(observed_mondays[1]), str(observed_mondays[9])))
-plt.ylabel("Distribution of streaklengths starting on both Mondays")
-plt.xlabel("\n" + str(observed_mondays[1]) + ": Avg streak length: " + str(round(avg, 2)) + "\n" + str(observed_mondays[9]) + ": Avg streak length: " + str(round(avgI, 2)))
-plt.annotate("No streaks with length >54\nafter the design change", xy=(3.1,0.07), xytext=(2.6,0.2), arrowprops=dict(facecolor='black', shrink=0.03))
+ax.legend((p1[0], p2[0]), ("Before (avg)", "After (avg)"))
+plt.ylabel("Share of streaks with length > 14", fontsize=12)
+plt.xlabel("Streak length in days\nBefore: Avg streak length: " + str(round(avg_before, 2)) + "    Streaks longer than 100:  " + str(round(longer_before, 2))+ "%" + 
+            "\nAfter: Avg streak length:  " + str(round(avg_after, 2)) + "    Streaks longer than 100:  " + str(round(longer_after, 2)) + "%")
+plt.annotate("Nearly no streaks with length >54 \nafter the design change", xy=(3.2,0.07), xytext=(2.4,0.25), arrowprops=dict(facecolor='black', shrink=0.03))
 plt.show()
 
 

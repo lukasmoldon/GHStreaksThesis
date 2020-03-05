@@ -98,9 +98,9 @@ while length <= observed_end:
 
 
 matplotlib.pyplot.bar(indices, values, color="#17719B")
-plt.xlabel("Streak length in days" + "     (Avg streak length: " + str(round(avg, 2)) + ")", fontsize=12)
-plt.xticks(range(observed_start, observed_end + 1), labels=["Mon\n(8)", "Tue\n(9)", "Wed\n(10)", "Thu\n(11)", "Fri\n(12)", "Sat\n(13)", "Sun\n(14)", "Mon\n(15)", "Tue\n(16)", "Wed\n(17)", "Thu\n(18)", "Fri\n(19)", "Sat\n(20)", "Sun\n(21)"])
-plt.ylabel("Share of streaks with length > 7", fontsize=12)
+plt.xlabel("Streak length in days (endpoint)" + "     (Avg streak length: " + str(round(avg, 2)) + ")", fontsize=12)
+plt.xticks(range(observed_start, observed_end + 1), labels=["8 \n(Mon)", "9 \n(Tue)", "10 \n(Wed)", "11 \n(Thu)", "12 \n(Fri)", "13 \n(Sat)", "14 \n(Sun)", "15 \n(Mon)", "16 \n(Tue)", "17 \n(Wed)", "18 \n(Thu)", "19 \n(Fri)", "20 \n(Sat)", "21 \n(Sun)"])
+plt.ylabel("Share of streaks with length > 7", fontsize=13)
 plt.annotate("Friday peak", xy=(12.5,0.19), xytext=(14.5,0.16), arrowprops=dict(facecolor='black', shrink=0.03))
 plt.annotate("Friday peak", xy=(18.7,0.04), xytext=(14.7,0.07), arrowprops=dict(facecolor='black', shrink=0.03))
 plt.show()

@@ -102,10 +102,10 @@ while length <= threshold:
 
 
 matplotlib.pyplot.bar(indices, values, color="#17719B")
-plt.xlabel("Streak length in days \n" + "     (Avg streak length: " + str(round(avg, 2)) + ")     (Streaks longer than " + str(threshold) + " : " + str(round(overThreshold*100, 2)) + "%)", fontsize=12)
-plt.xticks(range(1, threshold + 1), labels=["Mon (1)", "Tue (2)", "Wed (3)", "Thu (4)", "Fri (5)", "Sat (6)", "Sun (7)", "Mon (8)", "Tue (9)", "Wed (10)", "Thu (11)", "Fri (12)", "Sat (13)", "Sun (14)"])
-plt.ylabel("Share of streaks", fontsize=12)
-plt.annotate("Friday peak", xy=(5.1,0.115), xytext=(6,0.2), arrowprops=dict(facecolor='black', shrink=0.03), fontsize=12)
+plt.xlabel("Streak length in days (endpoint)\n" + "     (Avg streak length: " + str(round(avg, 2)) + ")     (Streaks longer than " + str(threshold) + " : " + str(round(overThreshold*100, 2)) + "%)", fontsize=11)
+plt.xticks(range(1, threshold + 1), labels=["1 (Mon)", "2 (Tue)", "3 (Wed)", "4 (Thu)", "5 (Fri)", "6 (Sat)", "7 (Sun)"])
+plt.ylabel("Share of streaks", fontsize=13)
+plt.annotate("Friday peak", xy=(5.1,0.115), xytext=(6,0.2), arrowprops=dict(facecolor='black', shrink=0.03), fontsize=13)
 plt.show()
     
 

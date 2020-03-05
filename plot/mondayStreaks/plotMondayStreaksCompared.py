@@ -151,10 +151,10 @@ p2 = ax.bar(indices, values, width, align='center', color="#32A875")
 
 
 ax.set_xticks(range(1, threshold + 1))
-ax.set_xticklabels(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"])
+ax.set_xticklabels(["1 \n(Mon)", "2 \n(Tue)", "3 \n(Wed)", "4 \n(Thu)", "5 \n(Fri)", "6 \n(Sat)", "7 \n(Sun)", "8 \n(Mon)", "9 \n(Tue)", "10 \n(Wed)", "11 \n(Thu)", "12 \n(Fri)", "13 \n(Sat)", "14 \n(Sun)"])
 ax.legend((p1[0], p2[0]), ("Before (avg)", "After (avg)"))
-plt.ylabel("Share of streaks")
-plt.xlabel("Before: Avg streak length: " + str(round(avg_before, 2)) + "    Streaks longer than 14:  " + str(round(longer_before, 2))+ "%" + 
+plt.ylabel("Share of streaks", fontsize=12)
+plt.xlabel("Streak length in days (endpoint)\nBefore: Avg streak length: " + str(round(avg_before, 2)) + "    Streaks longer than 14:  " + str(round(longer_before, 2))+ "%" + 
             "\nAfter: Avg streak length:  " + str(round(avg_after, 2)) + "    Streaks longer than 14:  " + str(round(longer_after, 2)) + "%")
 plt.annotate("Friday peak", xy=(5.1,0.1), xytext=(6,0.15), arrowprops=dict(facecolor='black', shrink=0.03))
 plt.annotate("Friday peak", xy=(11.7,0.014), xytext=(8,0.06), arrowprops=dict(facecolor='black', shrink=0.03))
