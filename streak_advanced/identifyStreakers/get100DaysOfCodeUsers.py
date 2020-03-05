@@ -25,6 +25,8 @@ username = "XXXXXXXXXXXXXXXXXXXXX"
 token = "XXXXXXXXXXXXXXXXXXXXX"
 email = "XXXXXXXXXXXXXXXXXXXXX"
 useragent = "Research for bachelor thesis on GitHub streaks"
+
+link_repo = "https://api.github.com/repos/kallaway/100-days-of-code"
 # ------------------------------
 
 
@@ -34,7 +36,10 @@ datetimeFormat = "%Y-%m-%d"
 data = {}
 userdata = {}
 link_userinfo = "https://api.github.com/users/"
-link_repo = "https://api.github.com/repos/kallaway/100-days-of-code/forks?per_page=100&page="
+
+link_repo_tail = "/forks?per_page=100&page="
+link_repo += link_repo_tail
+
 useragent = useragent + "  Contact: " + email
 session = requests_html.HTMLSession()
 
