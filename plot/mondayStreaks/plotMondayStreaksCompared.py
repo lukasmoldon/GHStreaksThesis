@@ -34,29 +34,7 @@ indices = []
 maxlen = 1
 avg = 0
 overThreshold = 0
-observed_mondays = [
-    date(2016, 1, 4), 
-    date(2016, 1, 11),
-    date(2016, 1, 18), 
-    date(2016, 1, 25), 
-    date(2016, 2, 1), 
-    date(2016, 2, 8), 
-    date(2016, 2, 15), 
-    date(2016, 2, 22), 
-    date(2016, 2, 29), 
-    date(2016, 3, 7),
-    date(2017, 1, 2), 
-    date(2017, 1, 9),
-    date(2017, 1, 16), 
-    date(2017, 1, 23), 
-    date(2017, 1, 30), 
-    date(2017, 2, 6), 
-    date(2017, 2, 13), 
-    date(2017, 2, 20), 
-    date(2017, 2, 27), 
-    date(2017, 3, 6)
-    ]
-
+observed_mondays = [date(2016, 1, 18), date(2016, 2, 1), date(2016, 2, 15), date(2017, 1, 16), date(2017, 1, 30), date(2017, 2, 13)]
 avg_before = 0
 avg_after = 0
 longer_before = 0

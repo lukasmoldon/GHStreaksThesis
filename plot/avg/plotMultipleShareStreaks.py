@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 
 # ---------- INPUT -------------
-path_source = "C:/Users/Lukas/Desktop/streakShareValues.json"
+path_source = "C:/Users/Lukas/Desktop/goalAchiever.json"
 # ------------------------------
 
 
@@ -18,7 +18,7 @@ path_source = "C:/Users/Lukas/Desktop/streakShareValues.json"
 
 
 # ---------- CONFIG ------------
-c = ["#17719B", "#32A875", "#E5C35E"]
+c = ["#17719B", "#32A875", "#E5C35E", "#8C8C8C"]
 # ------------------------------
 
 
