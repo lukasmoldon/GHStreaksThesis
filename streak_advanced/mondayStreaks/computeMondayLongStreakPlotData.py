@@ -29,18 +29,37 @@ observed_startday = 7 # where to start counting lengths? (e.g. 7 = Sunday same w
 logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s',
                     datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
 datetimeFormat = "%Y-%m-%d"
-plotdata = {"0": {}, "1": {}, "2": {}, "3": {}, "4": {}, "5": {}, "6": {}, "7": {
-}, "8": {}, "9": {}, "10": {}, "11": {}}  # key = monday type, value = {key = streaklength, value = value}
-start = date(1970, 1, 1)
-end = date(1970, 1, 1)
+plotdata = {}
 cnt_streaks = 0
-observed_mondays = [date(2016, 4, 11), date(2016, 4, 18), date(2016, 4, 25), date(2016, 5, 2), date(2016, 5, 9), date(
-    2016, 5, 16), date(2016, 5, 23), date(2016, 5, 30), date(2016, 6, 6), date(2016, 6, 13), date(2016, 6, 20), date(2016, 6, 27)]
+observed_mondays = [
+    date(2016, 1, 4), 
+    date(2016, 1, 11),
+    date(2016, 1, 18), 
+    date(2016, 1, 25), 
+    date(2016, 2, 1), 
+    date(2016, 2, 8), 
+    date(2016, 2, 15), 
+    date(2016, 2, 22), 
+    date(2016, 2, 29), 
+    date(2016, 3, 7),
+    date(2017, 1, 2), 
+    date(2017, 1, 9),
+    date(2017, 1, 16), 
+    date(2017, 1, 23), 
+    date(2017, 1, 30), 
+    date(2017, 2, 6), 
+    date(2017, 2, 13), 
+    date(2017, 2, 20), 
+    date(2017, 2, 27), 
+    date(2017, 3, 6)
+    ]
 # ------------------------------
 
 
 log_starttime = datetime.datetime.now()
 
+for monday in observed_mondays:
+    plotdata[str(monday)] = {}
 
 logging.info("Starting ...")
 
@@ -50,18 +69,16 @@ for prefix, event, value in streakdata:
         start = datetime.datetime.strptime(str(value), datetimeFormat).date()
         cnt_streaks += 1
         if cnt_streaks % 1000000 == 0:
-            logging.info(str(cnt_streaks/1000000) +
-                         " million streaks computed.")
+            logging.info(str(cnt_streaks/1000000) + " million streaks computed.")
     elif ".end" in prefix:
         end = datetime.datetime.strptime(str(value), datetimeFormat).date()
     elif ".len" in prefix:
         if int(value) >= observed_startday:
             if start in observed_mondays:
-                monday_index = str(observed_mondays.index(start))
-                if str(value) in plotdata[monday_index]:
-                    plotdata[monday_index][str(value)] += 1
+                if str(value) in plotdata[str(start)]:
+                    plotdata[str(start)][str(value)] += 1
                 else:
-                    plotdata[monday_index][str(value)] = 1
+                    plotdata[str(start)][str(value)] = 1
 
 logging.info("Done. (1/2)")
 
