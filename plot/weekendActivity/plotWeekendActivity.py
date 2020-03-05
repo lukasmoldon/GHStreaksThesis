@@ -29,7 +29,7 @@ logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt=
 datetimeFormat = "%Y-%m-%d"
 x = []
 values = []
-changedate = date(2016,5,16)
+changedate = date(2016,5,16) # 16th may for monday before the change
 beforeavg = []
 afteravg = []
 # ------------------------------
@@ -53,17 +53,17 @@ for index in weekdata:
             afteravg.append(weekdata[index]["RW"])
 
 dates = matplotlib.dates.date2num(x)
-matplotlib.pyplot.plot_date(dates, values, '-')
+matplotlib.pyplot.plot_date(dates, values, '-', color='#17719B')
 
-plt.xlabel("Weeks in 2016")
-plt.ylabel("Ratio of activity on weekends")
-plt.axvline(x=changedate, color='r', label="Streaks removed")
-plt.axvline(x=date(2016,7,4), color='g', label="Independence Day")
+plt.xlabel("Weeks in 2016", fontsize=13)
+plt.ylabel("Ratio of activity on weekends", fontsize=13)
+plt.axvline(x=datetime.datetime.strptime("2016-05-16", datetimeFormat).date(), color='#D3685D', label="Design change") # 16th may for monday before the change
+plt.axvline(x=datetime.datetime.strptime("2016-07-04", datetimeFormat).date(), color="#8C8C8C", ls=":", label="Independence Day")
 #plt.axvline(x=date(2016,12,25), color='g', label="Christmas")
-plt.hlines(y=np.mean(beforeavg), xmin=observed_start, xmax=changedate, color='b', label="Mean before = " + str(round(np.mean(beforeavg), 3)))
-plt.hlines(y=np.mean(afteravg), xmin=changedate, xmax=observed_end, color='b', label="Mean after = " + str(round(np.mean(afteravg), 3)))
+plt.hlines(y=np.mean(beforeavg), xmin=observed_start, xmax=changedate, color='#17719B', label="Mean before = " + str(round(np.mean(beforeavg), 3)))
+plt.hlines(y=np.mean(afteravg), xmin=changedate, xmax=observed_end, color='#17719B', label="Mean after = " + str(round(np.mean(afteravg), 3)))
 
-plt.legend()
+plt.legend(fontsize=11)
 plt.show()
 
 log_endtime = datetime.datetime.now()

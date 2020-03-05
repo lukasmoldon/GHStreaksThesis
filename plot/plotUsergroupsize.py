@@ -51,13 +51,13 @@ for day in plotdata:
     values.append(plotdata[day])
 
 dates = matplotlib.dates.date2num(list_of_datetimes)
-matplotlib.pyplot.plot_date(dates, values, '-', color="#08415C")
+matplotlib.pyplot.plot_date(dates, values, '-', color="#17719B")
 
 
-plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='#FC5524', label="Design change")
-plt.xlabel("Time", fontsize=11)
-plt.ylabel("Observed usergroup size", fontsize=11)
-plt.legend()
+plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='#D3685D', label="Design change")
+plt.xlabel("Time", fontsize=13)
+plt.ylabel("Size of observed user group", fontsize=13)
+plt.legend(fontsize=11)
 plt.show()
 
 

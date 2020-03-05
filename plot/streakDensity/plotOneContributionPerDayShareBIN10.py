@@ -55,7 +55,7 @@ while i < len(plotdata_before):
     values.append(plotdata_before[str(i)])
     i += 1
 
-p1 = ax.bar(indices, values, width, align='center', label="Year after the change", color="#E5C35E")
+p1 = ax.bar(indices, values, width, align='center', label="Year after the change", color="#17719B")
 
 beforeavg = []
 for el in values:
@@ -72,7 +72,7 @@ while i < len(plotdata_after):
     i += 1
 
 
-p2 = ax.bar(indices, values, width, align='center', label="Year after the change", color="#17719B")
+p2 = ax.bar(indices, values, width, align='center', label="Year after the change", color="#32A875")
 
 afteravg = []
 for el in values:
@@ -83,11 +83,11 @@ axes.set_ylim([0.25,0.45])
 ax.set_xticks([0,1,2,3,4,5,6,7,8,9])
 ax.set_xticklabels(["0%-10%", "10%-20%", "20%-30%", "30%-40%", "40%-50%", "50%-60%", "60%-70%", "70%-80%", "80%-90%", "90%-100%"])
 plt.axhline(y=0.1, c="r")
-plt.ylabel("Share of 1 contribution days over all streaks with length > 60", fontsize=11)
-plt.xlabel("Streaks lifetime", fontsize=11)
-plt.hlines(y=np.mean(beforeavg), xmin=-width, xmax=10-2*width+0.05, color='b', label="Mean before = " + str(round(np.mean(beforeavg), 3)))
-plt.hlines(y=np.mean(afteravg), xmin=-width, xmax=10-2*width+0.05, color='orange', label="Mean after = " + str(round(np.mean(afteravg), 3)))
-plt.legend()
+plt.ylabel("Share of 1 contribution days over all streaks with length > 60", fontsize=13)
+plt.xlabel("Streaks lifetime", fontsize=13)
+plt.hlines(y=np.mean(beforeavg), xmin=-width, xmax=10-2*width+0.05, color="#17719B", label="Mean before = " + str(round(np.mean(beforeavg), 3)))
+plt.hlines(y=np.mean(afteravg), xmin=-width, xmax=10-2*width+0.05, color="#32A875", label="Mean after = " + str(round(np.mean(afteravg), 3)))
+plt.legend(fontsize=11)
 plt.show()
 
 
