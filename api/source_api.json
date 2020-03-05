@@ -1,0 +1,37 @@
+{
+    "__INPUT__": "https://api.github.com/search/repositories?q=100+days?page=1",
+    "__OUTPUT_CLASS_1__": {
+        "0": "https://api.github.com/repos/kallaway/100-days-of-code",
+        "1": "https://api.github.com/repos/harinij/100DaysOfCode",
+        "2": "https://api.github.com/repos/harunshimanto/100-Days-Of-ML-Code",
+        "3": "https://api.github.com/repos/Avik-Jain/100-Days-Of-ML-Code",
+        "4": "https://api.github.com/repos/coells/100days",
+        "5": "https://api.github.com/repos/talkpython/100daysofcode-with-python-course",
+        "6": "https://api.github.com/repos/harshitahluwalia7895/100DaysOfMLCode"
+    },
+    "__OUTPUT_CLASS_2__": {
+        "7": "https://api.github.com/repos/xandeer/100-days-of-code",
+        "8": "https://api.github.com/repos/twostraws/100",
+        "9": "https://api.github.com/repos/karakarakaraff/100-days-of-code",
+        "10": "https://api.github.com/repos/CypherPoet/100-days-of-swiftui-and-combine",
+        "11": "https://api.github.com/repos/fnplus/100DaysOfCode",
+        "12": "https://api.github.com/repos/jangidkrishna/100_days_of_algo",
+        "13": "https://api.github.com/repos/mimukit/100-days-of-code-log",
+        "14": "https://api.github.com/repos/shafayeatsumit/100_days_of_algo",
+        "15": "https://api.github.com/repos/Sabbir1996/100-Days-Of-Code",
+        "16": "https://api.github.com/repos/SeshanPillay25/100-days-of-code",
+        "17": "https://api.github.com/repos/akashgiricse/100DaysOfML",
+        "18": "https://api.github.com/repos/EduApps-CDG/100DaysOfCode",
+        "19": "https://api.github.com/repos/rowmatrix/100-days-of-code",
+        "20": "https://api.github.com/repos/jhrcook/100DaysOfSwift",
+        "21": "https://api.github.com/repos/subhashb/100-days-of-ml",
+        "22": "https://api.github.com/repos/Jeet1994/100DaysOfCode",
+        "23": "https://api.github.com/repos/bapspatil/100ishDaysOfCode",
+        "24": "https://api.github.com/repos/TarangRanpara/100-days-of-coding-challenge",
+        "25": "https://api.github.com/repos/gjergjk71/100Days-Python-Challenge",
+        "26": "https://api.github.com/repos/Avi-1996/100-Days-Code-Challenge",
+        "27": "https://api.github.com/repos/wenyizag/CSS-100-Day-Challenge",
+        "28": "https://api.github.com/repos/kateamethyst/100DaysCSSChallenge",
+        "29": "https://api.github.com/repos/dashcroft/100-days-of-code"
+    }
+}
