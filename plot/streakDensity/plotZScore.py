@@ -62,10 +62,10 @@ for userid in plotdata_after:
 #sns.distplot(after, bins=10, kde=True, rug=True)
 
 plt.hist(after, histtype='step', bins=5000, density=True, range=(-10,50), color="#32A875", label="After", cumulative=True, linewidth=1.2)
-plt.axvline(x=np.mean(after), color='#32A875', label="Mean after = " + str(round(np.mean(after), 2)), linewidth=1.3)
+plt.axvline(x=np.mean(after), color='#32A875', label="Mean after = " + str(round(np.mean(after), 2)), linewidth=2)
 
 plt.hist(before, histtype='step', bins=5000, density=True, range=(-10,50), color="#17719B", label="Before", cumulative=True, linewidth=1.2)
-plt.axvline(x=np.mean(before), color='#17719B', label="Mean before = " + str(round(np.mean(before), 2)), linewidth=1.3)
+plt.axvline(x=np.mean(before), color='#17719B', label="Mean before = " + str(round(np.mean(before), 2)), linewidth=2)
 
 plt.xlabel("z score distribution", fontsize=13)
 plt.ylabel("Share of users with z score ≤ x (CDF)", fontsize=13)

@@ -83,12 +83,12 @@ for week in observed_weeks:
     if start < changedate:
         plt.plot(x, values, '-', color="#17719B", linewidth=1.3)
     else:
-        plt.plot(x, values, '-', color="#32A875", linewidth=1.3)
+        plt.plot(x, values, '-', color='#D3685D', linewidth=1.3)
 
 x = []
 values = []
 plt.plot(x, values, '-', color="#17719B", label="Before")
-plt.plot(x, values, '-', color="#32A875", label="After")
+plt.plot(x, values, '-', color='#D3685D', label="After")
 plt.xlabel("Days", fontsize=13)
 plt.ylabel("Share of streaks surviving at least x days", fontsize=13)
 plt.legend(fontsize=11)

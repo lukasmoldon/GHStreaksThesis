@@ -18,8 +18,8 @@ import matplotlib.pyplot as plt
 
 
 # ---------- CONFIG ------------
-minlen = 110
-maxlen = 220
+minlen = 30
+maxlen = 110
 # ------------------------------
 
 
@@ -45,7 +45,7 @@ while i <= maxlen:
     i += 1
     
     
-matplotlib.pyplot.plot(x, values, '-', label="Male before", color="#17719B")
+matplotlib.pyplot.plot(x, values, '-', label="Male before", color="#17719B", linewidth=2)
 plt.xlabel("Maximum achieved streak length in users lifetime (cumulative)", fontsize=13)
 plt.ylabel("Users in %", fontsize=13)
 
@@ -64,7 +64,7 @@ while i <= maxlen:
         values.append(0)
     i += 1
 
-matplotlib.pyplot.plot(x, values, '-', label="Female before", color="#D3685D")
+matplotlib.pyplot.plot(x, values, '-', label="Female before", color="#D3685D", linewidth=2)
 
 
 
@@ -81,7 +81,7 @@ while i <= maxlen:
         values.append(0)
     i += 1
 
-matplotlib.pyplot.plot(x, values, '-', label="Male after", color="#32A875")
+matplotlib.pyplot.plot(x, values, '-', label="Male after", color="#32A875", linewidth=2)
 
 
 
@@ -97,7 +97,7 @@ while i <= maxlen:
         values.append(0)
     i += 1
 
-matplotlib.pyplot.plot(x, values, '-', label="Female after", color="#E5C35E")
+matplotlib.pyplot.plot(x, values, '-', label="Female after", color="#E5C35E", linewidth=2)
 
 plt.legend(fontsize=11)
 plt.show()

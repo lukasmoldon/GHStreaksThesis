@@ -47,7 +47,7 @@ matplotlib.pyplot.plot_date(dates, values, '-', color='#17719B')
 
 plt.xlabel("Time", fontsize=13)
 plt.ylabel("Probability of having a new personal record streak", fontsize=13)
-plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='#D3685D', label="Design change")
+plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='#D3685D', label="Design change", linewidth=2.3)
 
 plt.axvline(x=datetime.datetime.strptime("2015-03-26", datetimeFormat).date(), color='#8C8C8C', ls="--", label="GitHub Server DDoS-Attack (2015)")
 plt.axvline(x=datetime.datetime.strptime("2016-12-06", datetimeFormat).date(), color='#8C8C8C', ls="--", label="GitHub Major Service Outage (2016)")

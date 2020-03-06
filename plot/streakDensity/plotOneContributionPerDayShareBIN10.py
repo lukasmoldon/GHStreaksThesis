@@ -85,8 +85,8 @@ ax.set_xticklabels(["0%-10%", "10%-20%", "20%-30%", "30%-40%", "40%-50%", "50%-6
 plt.axhline(y=0.1, c="r")
 plt.ylabel("Share of 1 contribution days over all streaks with length > 60", fontsize=13)
 plt.xlabel("Streaks lifetime", fontsize=13)
-plt.hlines(y=np.mean(beforeavg), xmin=-width, xmax=10-2*width+0.05, color="#17719B", label="Mean before = " + str(round(np.mean(beforeavg), 3)))
-plt.hlines(y=np.mean(afteravg), xmin=-width, xmax=10-2*width+0.05, color="#32A875", label="Mean after = " + str(round(np.mean(afteravg), 3)))
+plt.hlines(y=np.mean(beforeavg), xmin=-width, xmax=10-2*width+0.05, color="#17719B", label="Mean before = " + str(round(np.mean(beforeavg), 3)), linewidth=2)
+plt.hlines(y=np.mean(afteravg), xmin=-width, xmax=10-2*width+0.05, color="#32A875", label="Mean after = " + str(round(np.mean(afteravg), 3)), linewidth=2)
 plt.legend(fontsize=11)
 plt.show()
 

@@ -81,7 +81,7 @@ matplotlib.pyplot.plot_date(dates, values, '-', label="Germany", color="#E5C35E"
 plt.xlabel("Time", fontsize=13)
 plt.ylabel("Share of users having a streak of length > 20 days", fontsize=13)
 
-plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='#D3685D', label="Design change")
+plt.axvline(x=datetime.datetime.strptime("2016-05-19", datetimeFormat).date(), color='#D3685D', label="Design change", linewidth=2.5)
 plt.axvline(x=datetime.datetime.strptime("2016-12-25", datetimeFormat).date(), color='#8C8C8C', ls=":", label="Christmas")
 plt.axvline(x=datetime.datetime.strptime("2017-12-25", datetimeFormat).date(), color='#8C8C8C', ls=":")
 plt.axvline(x=datetime.datetime.strptime("2015-12-25", datetimeFormat).date(), color='#8C8C8C', ls=":")
