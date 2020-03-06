@@ -12,7 +12,7 @@ from datetime import timedelta, date
 # ---------- INPUT -------------
 path_source_userdata = "/home/lmoldon/data/users_reduced.json"
 path_source_streakdata = "/home/lmoldon/data/user_streaks.json"
-path_user_restriction = "/home/lmoldon/results/identifyStreakers/100DaysOfCodeUsers.json"
+path_user_restriction = "/home/lmoldon/results/identifyStreakers/100DaysFORKERS.json"
 # ------------------------------
 
 
@@ -22,10 +22,10 @@ path_results = "/home/lmoldon/results/goalAchiever.json"
 
 
 # ---------- CONFIG ------------
-thresholds = [50, 100, 105, 120]  # minimum streak length to get plotted
+thresholds = [50, 100, 105, 155]  # minimum streak length to get plotted
 totalvalues = True
-observedtime_start = date(2011, 1, 1)
-observedtime_end = date(2019, 4, 1)
+observedtime_start = date(2015, 1, 1)
+observedtime_end = date(2019, 1, 1)
 # ------------------------------
 
 
@@ -134,7 +134,7 @@ for userid in streakdata:
 
 for threshold in first_hit:
     for userid in first_hit[threshold]:
-        for day in daterange(first_hit[threshold][userid], observedtime_end):
+        for day in daterange(max(first_hit[threshold][userid], observedtime_start), observedtime_end):
             plotdata[str(threshold)][str(day)] += 1
 
 
