@@ -3,7 +3,6 @@ import pandas as pd
 import logging
 import datetime
 import json
-import ijson
 # ------------------------------
 
 
@@ -27,8 +26,8 @@ chunksize = 1000000
 # ---------- INITIAL -----------
 logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
 cnt_projects = 0
-cnt_langauges = {} # key = langauge name, value = count
-result_langauges = {}
+cnt_languages = {} # key = langauge name, value = count
+result_languages = {}
 # ------------------------------
 
 
@@ -48,11 +47,11 @@ for chunk in pd.read_csv(path_source_language, chunksize=chunksize, header=None,
     for row in list(chunk.values):
         if str(row[0]) in standaloneIDs:
             cnt_projects += 1
-            result_langauges[str(row[0])] = str(row[1])
-            if str(row[1]) in cnt_langauges:
-                cnt_langauges[str(row[1])] += 1
+            result_languages[str(row[0])] = str(row[1])
+            if str(row[1]) in cnt_languages:
+                cnt_languages[str(row[1])] += 1
             else:
-                cnt_langauges[str(row[1])] = 1
+                cnt_languages[str(row[1])] = 1
     cnt += 1
     logging.info("Chunk counter = " + str(cnt))
 
@@ -60,11 +59,11 @@ for chunk in pd.read_csv(path_source_language, chunksize=chunksize, header=None,
 logging.info("Storing data ... (1/2)")
 
 with open(path_results_language, "w") as fp:
-    json.dump(result_langauges, fp)
+    json.dump(result_languages, fp)
 
 logging.info("Storing data ... (2/2)")
 
-stats_final = dict({c: v for c, v in sorted(cnt_langauges.items(), key=lambda item: item[1])})
+stats_final = dict({c: v for c, v in sorted(cnt_languages.items(), key=lambda item: item[1])})
 
 with open(path_results_stats, "w") as fp:
     json.dump(stats_final, fp)
