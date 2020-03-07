@@ -60,6 +60,10 @@ with open(path_source_genderdata, "r") as fp:
 with open(path_source_merge, "r") as fp:
     merge = json.load(fp)
 
+del weekdata["2016-04-18"]
+del weekdata["2016-05-16"]
+del weekdata["2016-06-13"]
+
 if country != "":
     for userID in genderdata:
         if genderdata[userID]["country"] in merge:

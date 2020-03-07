@@ -72,7 +72,7 @@ while i < len(plotdata_after):
 p2 = ax.bar(indices, values, width, align='center', color="#32A875")
 
 axes = plt.gca()
-axes.set_ylim([0.085,0.11])
+axes.set_ylim([0.08,0.11])
 ax.set_xticks([0,1,2,3,4,5,6,7,8,9])
 ax.set_xticklabels(["0%-10%", "10%-20%", "20%-30%", "30%-40%", "40%-50%", "50%-60%", "60%-70%", "70%-80%", "80%-90%", "90%-100%"])
 plt.axhline(y=0.1, c="#D3685D", linewidth=2)
