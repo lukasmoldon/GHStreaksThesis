@@ -82,25 +82,32 @@ if country != "" or gender != "":
                     del weekdata[str(day)][userID]
 
 cnt = 1 # index of current week
-change_cnt = -1 # index of first week after the change = cut
 if not userlevel:
     for day in daterange(observed_start, observed_end):
-        if str(day) in weekdata:
+        if str(day) in weekdata and str(day) != str(changedate):
             x.append(cnt)
             y.append(weekdata[str(day)]["RW"])
             if day > changedate and change_cnt == -1:
                 change_cnt = cnt
             cnt += 1
+        if str(day) in weekdata and str(day) == str(changedate):
+            change_cnt = cnt
+            print()
+            print(str(change_cnt) + ": " + str(day) + " (excluded week as cut point for treatment)")
+            cnt += 1
 else:
     for day in daterange(observed_start, observed_end):
-        if str(day) in weekdata:
+        if str(day) in weekdata and str(day) != str(changedate):
             for userID in weekdata[str(day)]:
                 if country == "" or genderdata[userID]["country"] == country:
                     if gender == "" or genderdata[userID]["gender"] == gender:
                         x.append(cnt)
                         y.append(weekdata[str(day)][userID]["RW"])
-            if day > changedate and change_cnt == -1:
-                change_cnt = cnt
+            cnt += 1
+        if str(day) in weekdata and str(day) == str(changedate):
+            change_cnt = cnt
+            print()
+            print(str(change_cnt) + ": " + str(day) + " (excluded week as cut point for treatment)")
             cnt += 1
 
 data = pd.DataFrame({'y': y, 'x': x})
@@ -110,6 +117,11 @@ data = pd.DataFrame({'y': y, 'x': x})
 
 data_rdd = rdd.truncated_data(data, 'x', bandwidth, cut=change_cnt)
 
+print()
+print("Number of observations per week in this model: ")
+print(data_rdd["x"].value_counts())
+print()
+print()
 model = rdd.rdd(data_rdd, 'x', 'y', cut=change_cnt)
 print()
 print(model.fit().summary())
