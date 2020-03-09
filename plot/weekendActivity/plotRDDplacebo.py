@@ -53,10 +53,10 @@ logging.info("Done. (1/2)")
 
 logging.info("Creating plot ...")
 
-matplotlib.pyplot.plot_date(dates, values, '-')
+matplotlib.pyplot.plot_date(dates, values, '-', color="#17719B")
 matplotlib.pyplot.plot_date(dates, lb, '-', alpha=0.2, color="#E5C35E")
 plt.axhline(0, color="black", linewidth=0.6)
-plt.axhline(plotdata["2016-05-16"]["TREATED"], color="blue", label="On real changedate: " + str(plotdata["2016-05-16"]["TREATED"])) # 16th may for monday index
+plt.axhline(plotdata["2016-05-16"]["TREATED"], color="#17719B", label="On real changedate: " + str(plotdata["2016-05-16"]["TREATED"])) # 16th may for monday index
 matplotlib.pyplot.plot_date(dates, ub, '-', alpha=0.2, color="#32A875")
 plt.fill_between(dates, ub, values, alpha=0.3, color="#32A875")
 plt.fill_between(dates, lb, values, alpha=0.3, color="#E5C35E")
