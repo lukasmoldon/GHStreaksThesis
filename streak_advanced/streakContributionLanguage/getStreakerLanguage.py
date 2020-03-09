@@ -70,14 +70,16 @@ for commitid in commits:
     userid = str(commits[commitid]["committer_id"])
     if userid in data_maximum:
         if data_maximum[userid] >= threshold:
-            performed = datetime.datetime.strptime(commits[commitid]["created_at"], datetimeFormat).date()
-            if performed >= observed_start and performed <= observed_end:
-                if commits[commitid]["project_id"] in data_language:
-                    if data_language[commits[commitid]["project_id"]] in user_languages[userid]:
-                        user_languages[userid][data_language[commits[commitid]["project_id"]]] += 1
-                    else:
-                        user_languages[userid][data_language[commits[commitid]["project_id"]]] = 1
-
+            try:
+                performed = datetime.datetime.strptime(commits[commitid]["created_at"], datetimeFormat).date()
+                if performed >= observed_start and performed <= observed_end:
+                    if commits[commitid]["project_id"] in data_language:
+                        if data_language[commits[commitid]["project_id"]] in user_languages[userid]:
+                            user_languages[userid][data_language[commits[commitid]["project_id"]]] += 1
+                        else:
+                            user_languages[userid][data_language[commits[commitid]["project_id"]]] = 1
+            except:
+                pass
 cnt_users_total = 0
 for userid in data_maximum:
 
