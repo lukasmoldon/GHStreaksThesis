@@ -19,7 +19,7 @@ path_results_stats = "/home/lmoldon/results/project_languages_distribution_strea
 
 
 # ---------- CONFIG ------------
-threshold = 60 # streak length
+threshold = 30 # streak length
 minimumContributions = 50 # minimum amount of contributions in main languages to be counted
 observed_start = date(2013, 5, 19)
 observed_end = date(2016, 5, 19)
@@ -53,6 +53,31 @@ logging.info("Done. (1/3)")
 
 logging.info("Accessing language data ...")
 
+user_languages = {}
+for userid in data_maximum:
+    if data_maximum[userid] >= threshold:
+        user_languages[userid] = {}
+
+
+cnt_commits_total = 0
+
+for commitid in commits:
+    
+    cnt_commits_total += 1
+    if cnt_commits_total % 10000000 == 0:
+        logging.info(str(cnt_commits_total/1000000) + " million commits computed")
+
+    userid = str(commits[commitid]["committer_id"])
+    if userid in data_maximum:
+        if data_maximum[userid] >= threshold:
+            performed = datetime.datetime.strptime(commits[commitid]["created_at"], datetimeFormat).date()
+            if performed >= observed_start and performed <= observed_end:
+                if commits[commitid]["project_id"] in data_language:
+                    if data_language[commits[commitid]["project_id"]] in user_languages[userid]:
+                        user_languages[userid][data_language[commits[commitid]["project_id"]]] += 1
+                    else:
+                        user_languages[userid][data_language[commits[commitid]["project_id"]]] = 1
+
 cnt_users_total = 0
 for userid in data_maximum:
 
@@ -61,24 +86,11 @@ for userid in data_maximum:
         logging.info(str(cnt_users_total/1000) + "k users computed")
 
     if data_maximum[userid] >= threshold:
-
-        user_languages = {}
-
-        for commitid in commits:
-            if commits[commitid]["committer_id"] == userid:
-                performed = datetime.datetime.strptime(commits[commitid]["created_at"], datetimeFormat).date()
-                if performed >= observed_start and performed <= observed_end:
-                    if commits[commitid]["project_id"] in data_language:
-                        if data_language[commits[commitid]["project_id"]] in user_languages:
-                            user_languages[data_language[commits[commitid]["project_id"]]] += 1
-                        else:
-                            user_languages[data_language[commits[commitid]["project_id"]]] = 1
-        
         maximum = 0
         maximum_lang = ""
-        for lang in user_languages:
-            if user_languages[lang] > maximum:
-                maximum = user_languages[lang]
+        for lang in user_languages[userid]:
+            if user_languages[userid][lang] > maximum:
+                maximum = user_languages[userid][lang]
                 maximum_lang = lang
         
         if maximum > minimumContributions:
