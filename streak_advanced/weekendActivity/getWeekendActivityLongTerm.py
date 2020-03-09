@@ -8,6 +8,7 @@ from datetime import date, timedelta
 
 # ---------- INPUT -------------
 path_source = "/home/lmoldon/data/contributions_per_user_per_day.json"
+path_source_maximum = "/home/lmoldon/data/maximumStreak.json"
 # ------------------------------
 
 
@@ -21,6 +22,7 @@ observed_start = date(2015, 5, 18) # this must be a monday
 observed_end = date(2016, 5, 15) # this must be a sunday
 #observed_start = date(2016, 5, 23) # this must be a monday
 #observed_end = date(2017, 5, 21) # this must be a sunday
+streakmin = 30
 # ------------------------------
 
 
@@ -54,6 +56,8 @@ log_starttime = datetime.datetime.now()
 logging.info("Loading data ...")
 with open(path_source, "r") as fp:
     contributiondata = json.load(fp)
+with open(path_source_maximum, "r") as fp:
+    data_maximum = json.load(fp)
 logging.info("Done (1/2)")
 
 
@@ -63,6 +67,20 @@ i = observed_start
 while i < observed_end:
     weekdata[str(i)] = {"WD": 0, "WE": 0, "RW:": 0} # RW: ratio weekend activity
     i += timedelta(days=7)
+
+
+if streakmin > 1:
+    delIDs = set()
+
+    for userID in contributiondata:
+        if userID not in data_maximum:
+            delIDs.add(userID)
+        elif data_maximum[userID] < streakmin:
+            delIDs.add(userID)
+            
+    for userID in delIDs:
+        del contributiondata[userID]
+
 
 for userID in contributiondata:
 
@@ -78,8 +96,10 @@ for userID in contributiondata:
             else:
                 weekdata[str(monday)]["WE"] += contributiondata[userID][day]
 
+sum_controbutions = 0
 for index in weekdata:
     weekdata[index]["RW"] = weekdata[index]["WE"] / (weekdata[index]["WD"] + weekdata[index]["WE"])
+    sum_controbutions += (weekdata[index]["WD"] + weekdata[index]["WE"])
 
 res = 0
 for index in weekdata:
@@ -90,6 +110,8 @@ res /= len(weekdata)
 logging.info("Done (2/2)")
 
 logging.info("Avg weekend activity: " + str(res))
+logging.info("Total: " + str(sum_controbutions))
+logging.info("Total less: " + str(sum_controbutions*res))
 
 
 
