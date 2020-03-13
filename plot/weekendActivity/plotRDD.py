@@ -105,17 +105,17 @@ else:
 
 
 rdd_before_x = list(range(1, change_cnt))
-rdd_before_y = [0.196+0.0007*el for el in rdd_before_x]
+rdd_before_y = [0.2016+0.0004*el for el in rdd_before_x]
 rdd_before_x[-1] += 0.5
 rdd_after_x = list(range(change_cnt-1, cnt))
-rdd_after_y = [0.196+0.0007*el-0.0193 for el in rdd_after_x]
+rdd_after_y = [0.2016+0.0004*el-0.0241 for el in rdd_after_x]
 rdd_after_x[0] += 0.5
     
 plt.scatter(x,y, s=0.0001, color='#17719B')
 plt.plot(rdd_before_x, rdd_before_y, color='#32A875', label='RDD')
 plt.plot(rdd_after_x, rdd_after_y, color='#32A875')
-plt.xlabel("Week")
-plt.ylabel("ratio of weekend activity per user")
+plt.xlabel("Week", fontsize=13)
+plt.ylabel("ratio of weekend activity per user", fontsize=13)
 plt.axvline(x=change_cnt-0.5, color="r", label="Changedate")
 plt.legend()
 plt.show()
