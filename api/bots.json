@@ -1,0 +1,887 @@
+{
+    "0": {
+        "url": "https://github.com/CrowdinBot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "1": {
+        "url": "https://github.com/dpb587",
+        "inDatabase": "True",
+        "streakOver7": "True"
+    },
+    "2": {
+        "url": "https://github.com/decidim-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "3": {
+        "url": "https://github.com/currencybot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "4": {
+        "url": "https://github.com/coorpacademybot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "5": {
+        "url": "https://github.com/datosargentina-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "6": {
+        "url": "https://github.com/doppins-bot",
+        "inDatabase": "True",
+        "streakOver7": "True"
+    },
+    "7": {
+        "url": "https://github.com/copperdocbot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "8": {
+        "url": "https://github.com/devtube-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "9": {
+        "url": "https://github.com/dotnet-build-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "10": {
+        "url": "https://github.com/dependencies-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "11": {
+        "url": "https://github.com/dotty-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "12": {
+        "url": "https://github.com/traviscibot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "13": {
+        "url": "https://github.com/dotnet-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "14": {
+        "url": "https://github.com/dpfrakes-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "15": {
+        "url": "https://github.com/gitlab-relenda",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "16": {
+        "url": "https://github.com/elife-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "17": {
+        "url": "https://github.com/ejdquotes-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "18": {
+        "url": "https://github.com/gitbook-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "19": {
+        "url": "https://github.com/greenkeeperio-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "20": {
+        "url": "https://github.com/fcc-mirror-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "21": {
+        "url": "https://github.com/ForbesLindesay-Bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "22": {
+        "url": "https://github.com/glotbot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "23": {
+        "url": "https://github.com/egov-commit-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "24": {
+        "url": "https://github.com/electron-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "25": {
+        "url": "https://github.com/dune-community-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "26": {
+        "url": "https://github.com/enginered-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "27": {
+        "url": "https://github.com/gitbot1738",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "28": {
+        "url": "https://github.com/garybot2",
+        "inDatabase": "True",
+        "streakOver7": "False"
+    },
+    "29": {
+        "url": "https://github.com/element-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "30": {
+        "url": "https://github.com/graviteeio",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "31": {
+        "url": "https://github.com/femtocleaner",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "32": {
+        "url": "https://github.com/svc-excavator-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "33": {
+        "url": "https://github.com/dragonbot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "34": {
+        "url": "https://github.com/f1jobs-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "35": {
+        "url": "https://github.com/FTL13-Bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "36": {
+        "url": "https://github.com/FlexGet-Bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "37": {
+        "url": "https://github.com/homeassistant",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "38": {
+        "url": "https://github.com/HassBot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "39": {
+        "url": "https://github.com/grommet-github-bot",
+        "inDatabase": "True",
+        "streakOver7": "False"
+    },
+    "40": {
+        "url": "https://github.com/haxe-ci",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "41": {
+        "url": "https://github.com/hubbed",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "42": {
+        "url": "https://github.com/hubbed1",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "43": {
+        "url": "https://github.com/isrustfastyet",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "44": {
+        "url": "https://github.com/hsimbot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "45": {
+        "url": "https://github.com/ideinbot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "46": {
+        "url": "https://github.com/homebrew-version-migration-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "47": {
+        "url": "https://github.com/inara",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "48": {
+        "url": "https://github.com/jenkins-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "49": {
+        "url": "https://github.com/hunter-cache-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "50": {
+        "url": "https://github.com/hakuneko-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "51": {
+        "url": "https://github.com/InwitofitkaBot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "52": {
+        "url": "https://github.com/IMGBOT",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "53": {
+        "url": "https://github.com/javafxports-github-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "54": {
+        "url": "https://github.com/jenkins-x-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "55": {
+        "url": "https://github.com/Jenkins",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "56": {
+        "url": "https://github.com/koideploy-commit-bot",
+        "inDatabase": "True",
+        "streakOver7": "True"
+    },
+    "57": {
+        "url": "https://github.com/24emebot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "58": {
+        "url": "https://github.com/jsdelivrbot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "59": {
+        "url": "https://github.com/johnpbloch-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "60": {
+        "url": "https://github.com/ChipsKernelBot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "61": {
+        "url": "https://github.com/mergify",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "62": {
+        "url": "https://github.com/jujubot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "63": {
+        "url": "https://github.com/kaitai",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "64": {
+        "url": "https://github.com/moz-wptsync-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "65": {
+        "url": "https://github.com/moba-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "66": {
+        "url": "https://github.com/lahwaacz",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "67": {
+        "url": "https://github.com/jhipster-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "68": {
+        "url": "https://github.com/js-org-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "69": {
+        "url": "https://github.com/jetstack-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "70": {
+        "url": "https://github.com/lektor-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "71": {
+        "url": "https://github.com/joe-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "72": {
+        "url": "https://github.com/mergify-test2",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "73": {
+        "url": "https://github.com/mergify-test1",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "74": {
+        "url": "https://github.com/mergify-test3",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "75": {
+        "url": "https://github.com/freelawbot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "76": {
+        "url": "https://github.com/limesurvey-translations",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "77": {
+        "url": "https://github.com/miss-islington",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "78": {
+        "url": "https://github.com/muibot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "79": {
+        "url": "https://github.com/jollygoodbot",
+        "inDatabase": "True",
+        "streakOver7": "True"
+    },
+    "80": {
+        "url": "https://github.com/mixpanel-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "81": {
+        "url": "https://github.com/lokalise-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "82": {
+        "url": "https://github.com/ledger-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "83": {
+        "url": "https://github.com/MakeSchoolBot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "84": {
+        "url": "https://github.com/kendo-bot",
+        "inDatabase": "True",
+        "streakOver7": "False"
+    },
+    "85": {
+        "url": "https://github.com/mumukibot",
+        "inDatabase": "True",
+        "streakOver7": "True"
+    },
+    "86": {
+        "url": "https://github.com/koding-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "87": {
+        "url": "https://github.com/lasp-lang-evaluator",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "88": {
+        "url": "https://github.com/devkitdoc",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "89": {
+        "url": "https://github.com/njgingrich-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "90": {
+        "url": "https://github.com/nodejs-crowdin",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "91": {
+        "url": "https://github.com/poetroid-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "92": {
+        "url": "https://github.com/openstax-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "93": {
+        "url": "https://github.com/phpmyadmin-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "94": {
+        "url": "https://github.com/pints-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "95": {
+        "url": "https://github.com/ophobe-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "96": {
+        "url": "https://github.com/ophobe-python-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "97": {
+        "url": "https://github.com/ophobe-js-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "98": {
+        "url": "https://github.com/nba-espn-stats-and-info-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "99": {
+        "url": "https://github.com/ParadiseSS13-Bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "100": {
+        "url": "https://github.com/opentraveldata-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "101": {
+        "url": "https://github.com/niveristand-diff-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "102": {
+        "url": "https://github.com/netkan-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "103": {
+        "url": "https://github.com/nextcloud-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "104": {
+        "url": "https://github.com/okkez-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "105": {
+        "url": "https://github.com/nur-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "106": {
+        "url": "https://github.com/PlayFabJenkinsBot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "107": {
+        "url": "https://github.com/oclif-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "108": {
+        "url": "https://github.com/sauron-gamma-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "109": {
+        "url": "https://github.com/paperjs-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "110": {
+        "url": "https://github.com/PJBot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "111": {
+        "url": "https://github.com/nba-espn-stats-and-info-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "112": {
+        "url": "https://github.com/oll-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "113": {
+        "url": "https://github.com/openhab-bot",
+        "inDatabase": "True",
+        "streakOver7": "False"
+    },
+    "114": {
+        "url": "https://github.com/openmrs-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "115": {
+        "url": "https://github.com/npmcdn-to-unpkg-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "116": {
+        "url": "https://github.com/poggit-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "117": {
+        "url": "https://github.com/predix-adoption-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "118": {
+        "url": "https://github.com/pure-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "119": {
+        "url": "https://github.com/pytorchbot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "120": {
+        "url": "https://github.com/PX4BuildBot",
+        "inDatabase": "True",
+        "streakOver7": "True"
+    },
+    "121": {
+        "url": "https://github.com/pxw-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "122": {
+        "url": "https://github.com/recipe-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "123": {
+        "url": "https://github.com/qmk-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "124": {
+        "url": "https://github.com/raspberrypitranslationsbot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "125": {
+        "url": "https://github.com/reactjs-translation-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "126": {
+        "url": "https://github.com/regro-cf-autotick-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "127": {
+        "url": "https://github.com/raspberrypilearningbot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "128": {
+        "url": "https://github.com/regro-cf-autotick-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "129": {
+        "url": "https://github.com/radadata-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "130": {
+        "url": "https://github.com/rte-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "131": {
+        "url": "https://github.com/slamdata-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "132": {
+        "url": "https://github.com/snyk-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "133": {
+        "url": "https://github.com/Sentry-Bot-Anfema",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "134": {
+        "url": "https://github.com/Reviewer-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "135": {
+        "url": "https://github.com/serra-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "136": {
+        "url": "https://github.com/semantic-release-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "137": {
+        "url": "https://github.com/siteleaf-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "138": {
+        "url": "https://github.com/snap-ci-build-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "139": {
+        "url": "https://github.com/snyk-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "140": {
+        "url": "https://github.com/SiliconChip",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "141": {
+        "url": "https://github.com/sisyphus-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "142": {
+        "url": "https://github.com/sel-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "143": {
+        "url": "https://github.com/scrutinizer-test-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "144": {
+        "url": "https://github.com/tgs-bot-ghost",
+        "inDatabase": "True",
+        "streakOver7": "True"
+    },
+    "145": {
+        "url": "https://github.com/tf-release-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "146": {
+        "url": "https://github.com/suse-cf-ci-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "147": {
+        "url": "https://github.com/svc-excavator-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "148": {
+        "url": "https://github.com/bundlerbot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "149": {
+        "url": "https://github.com/terraform-acc-tests",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "150": {
+        "url": "https://github.com/spectator-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "151": {
+        "url": "https://github.com/SyliusBot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "152": {
+        "url": "https://github.com/dlang-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "153": {
+        "url": "https://github.com/grid-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "154": {
+        "url": "https://github.com/translatewiki",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "155": {
+        "url": "https://github.com/thundernest-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "156": {
+        "url": "https://github.com/thewca-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "157": {
+        "url": "https://github.com/yoshi-automation",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "158": {
+        "url": "https://github.com/va-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "159": {
+        "url": "https://github.com/test-site-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "160": {
+        "url": "https://github.com/tweakCompatible-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "161": {
+        "url": "https://github.com/vvv-school-bot",
+        "inDatabase": "True",
+        "streakOver7": "False"
+    },
+    "162": {
+        "url": "https://github.com/upload-bot-5n7aq",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "163": {
+        "url": "https://github.com/violinist-bot",
+        "inDatabase": "True",
+        "streakOver7": "True"
+    },
+    "164": {
+        "url": "https://github.com/wso2-jenkins-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "165": {
+        "url": "https://github.com/wet-boew-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "166": {
+        "url": "https://github.com/Verniy-Bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "167": {
+        "url": "https://github.com/webuildsg-bot",
+        "inDatabase": "True",
+        "streakOver7": "True"
+    },
+    "168": {
+        "url": "https://github.com/lostanlen-bot",
+        "inDatabase": "True",
+        "streakOver7": "False"
+    },
+    "169": {
+        "url": "https://github.com/ubo-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "170": {
+        "url": "https://github.com/zenossbot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "171": {
+        "url": "https://github.com/yahoo-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "172": {
+        "url": "http://github.com/yogstation13-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "173": {
+        "url": "https://github.com/scala-steward",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "174": {
+        "url": "https://github.com/dependabot-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "175": {
+        "url": "https://github.com/fossabot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    },
+    "176": {
+        "url": "https://github.com/pyup-bot",
+        "inDatabase": "False",
+        "streakOver7": "False"
+    }
+}
