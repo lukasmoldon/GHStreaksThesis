@@ -11,8 +11,8 @@ import numpy as np
 
 
 # ---------- INPUT -------------
-path_source_before = "C:/Users/Lukas/Desktop/oneCommitPerDayBehav/streakOneContributionDaysShareMIN60BIN10BEFORE.json"
-path_source_after = "C:/Users/Lukas/Desktop/oneCommitPerDayBehav/streakOneContributionDaysShareMIN60BIN10AFTER.json"
+path_source_before = "C:/Users/Lukas/Desktop/streakOneContributionDaysShareMIN60BIN10BEFORE.json"
+path_source_after = "C:/Users/Lukas/Desktop/streakOneContributionDaysShareMIN60BIN10AFTER.json"
 # ------------------------------
 
 
@@ -55,7 +55,7 @@ while i < len(plotdata_before):
     values.append(plotdata_before[str(i)])
     i += 1
 
-p1 = ax.bar(indices, values, width, align='center', label="Year after the change", color="#17719B")
+p1 = ax.bar(indices, values, width, align='center', label="Year before the change", color="#17719B")
 
 beforeavg = []
 for el in values:
@@ -72,7 +72,7 @@ while i < len(plotdata_after):
     i += 1
 
 
-p2 = ax.bar(indices, values, width, align='center', label="Year after the change", color="#32A875")
+p2 = ax.bar(indices, values, width, align='center', label="Year after the change", color="#32A875", hatch="\\")
 
 afteravg = []
 for el in values:
@@ -85,8 +85,8 @@ ax.set_xticklabels(["0%-10%", "10%-20%", "20%-30%", "30%-40%", "40%-50%", "50%-6
 plt.axhline(y=0.1, c="r")
 plt.ylabel("Share of 1 contribution days within all streaks with length > 60", fontsize=13)
 plt.xlabel("Streaks lifetime", fontsize=13)
-plt.hlines(y=np.mean(beforeavg), xmin=-width, xmax=10-2*width+0.05, color="#17719B", label="Mean before = " + str(round(np.mean(beforeavg), 3)), linewidth=2)
-plt.hlines(y=np.mean(afteravg), xmin=-width, xmax=10-2*width+0.05, color="#32A875", label="Mean after = " + str(round(np.mean(afteravg), 3)), linewidth=2)
+plt.hlines(y=np.mean(beforeavg), xmin=-width, xmax=10-2*width+0.05, color="#17719B", label="Mean before = " + str(round(np.mean(beforeavg), 3)), linewidth=2, linestyle=":")
+plt.hlines(y=np.mean(afteravg), xmin=-width, xmax=10-2*width+0.05, color="#32A875", label="Mean after = " + str(round(np.mean(afteravg), 3)), linewidth=2, linestyle="--")
 plt.legend(fontsize=11)
 plt.show()
 
