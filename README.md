@@ -1,5 +1,12 @@
 # GHStreaksThesis
-Code for my bachelor thesis on GitHub's streak feature (using data from GHTorrent). The thesis paper can be found [>>here<<](https://johanneswachs.com/papers/BachelorMoldon.pdf) .
+Code for my bachelor thesis on GitHub's streak feature (using data from [GHTorrent](https://ghtorrent.org/)). 
+
+
+--- 
+* The thesis paper (50 pages) can be found [>>here<<](https://johanneswachs.com/papers/BachelorMoldon.pdf) .
+* The arxiv paper (12 pages) can be found [>>here<<](https://arxiv.org/abs/2006.02371) .
+---
+
 
 ## Directories
 * **api** - Scripts for gathering stargazers and forkers of specific repositories via the GitHub API. Additional results of the bot detection and 100DaysOfCode participants search (both JSON)
