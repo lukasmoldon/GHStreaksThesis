@@ -46,11 +46,11 @@ if debugmode:
 else:
     logging.basicConfig(format='%(asctime)s [%(levelname)s] - %(message)s', datefmt='%d-%m-%y %H:%M:%S', level=logging.INFO)
 
+useragent = useragent + "  Contact: " + email
+
 session = requests_html.HTMLSession()
 gdetector = gender.Detector(case_sensitive=False)
 geolocator = Nominatim(user_agent=useragent)
-
-useragent = useragent + "  Contact: " + email
 
 link_userinfo = "https://api.github.com/users/"
 cnt_users = 0
