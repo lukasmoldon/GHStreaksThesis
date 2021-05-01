@@ -3,6 +3,7 @@ This repository provides the code for "*How Gamification Affects Software Develo
 
 
 --- 
+* The ICSE paper (11 pages) is available [>>here<<](https://www.computer.org/csdl/proceedings-article/icse/2021/029600a549/1sEXoczR0TC) .
 * The arxiv preprint (11 pages) is available [>>here<<](https://arxiv.org/abs/2006.02371) .
 * The thesis paper (50 pages) is available [>>here<<](https://johanneswachs.com/papers/BachelorMoldon.pdf) .
 ---
@@ -12,7 +13,7 @@ This repository provides the code for "*How Gamification Affects Software Develo
 The project consists of different directories, which get described below. All scripts either use the raw csv data from GHTorrent or previous computed json/csv files by other files. At the beginning of each script there exists an *INPUT* section which includes the paths for all required files for the computation and an *OUTPUT* section for the corresponding resulting files with their paths. Running scripts from the **api** folder requires a [personal access token for the GitHub API](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token), the corresponding credentials can be inserted in the *CONFIG* section of each api file.
 
 ## Data
-The most important data sets will be published on Zenodo in May. Please note that the file *"commits_reduced.json"* is not part of this data set due to its large size and Zenodo's file size limit of 50GB. Alternatively you can use the [GHTorrent MySQL database](https://ghtorrent.org/downloads.html) to compute every data set locally with our code.
+The most important data sets are [available on Zenodo](https://zenodo.org/record/4710603#.YI0lFaGxWUk). Please note that the file *"commits_reduced.json"* is not part of this data set due to its large size and Zenodo's file size limit of 50GB. Alternatively you can use the [GHTorrent MySQL database](https://ghtorrent.org/downloads.html) to compute every data set locally with our code.
 
 ### Directories
 * **api** - Scripts for gathering stargazers and forkers of specific repositories via the GitHub API. Additional results of the bot detection and 100DaysOfCode participants search (both JSON)
