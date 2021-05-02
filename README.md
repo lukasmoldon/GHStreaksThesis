@@ -8,6 +8,7 @@ This repository provides the code for "*How Gamification Affects Software Develo
 * The thesis paper (50 pages) is available [>>here<<](https://johanneswachs.com/papers/BachelorMoldon.pdf) .
 ---
 
+[![How Gamification Affects Software Developers:Cautionary Evidence from a Natural Experiment on GitHub](https://img.youtube.com/vi/lR8DpCNQNBU/0.jpg)](https://www.youtube.com/watch?v=lR8DpCNQNBU)
 
 ## How to use
 The project consists of different directories, which get described below. All scripts either use the raw csv data from GHTorrent or previous computed json/csv files by other files. At the beginning of each script there exists an *INPUT* section which includes the paths for all required files for the computation and an *OUTPUT* section for the corresponding resulting files with their paths. Running scripts from the **api** folder requires a [personal access token for the GitHub API](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token), the corresponding credentials can be inserted in the *CONFIG* section of each api file.
