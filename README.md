@@ -3,7 +3,8 @@ This repository provides the code for "*How Gamification Affects Software Develo
 
 
 --- 
-* The ICSE paper (11 pages) is available [>>here<<](https://www.computer.org/csdl/proceedings-article/icse/2021/029600a549/1sEXoczR0TC) .
+* The ICSE 2021 paper (11 pages) is available [>>here<<](https://www.computer.org/csdl/proceedings-article/icse/2021/029600a549/1sEXoczR0TC) .
+* SE2022 summary (2 pages) is available [>>here<<](https://dl.gi.de/handle/20.500.12116/37976) .
 * The arxiv preprint (11 pages) is available [>>here<<](https://arxiv.org/abs/2006.02371) .
 * The thesis paper (50 pages) is available [>>here<<](https://johanneswachs.com/papers/BachelorMoldon.pdf) .
 ---
